@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>wangEdit富文本编辑器</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <script type="text/javascript" th:src="@{/js/jquery3.4.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/wangEdit/wangEditor.min.js}"></script>
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+    <legend>wangEditor富文本编辑器</legend>
+</fieldset>
+<div>
+    <div class="layui-col-md8 layui-col-lg-offset2" id="editor">
+        <p>这里面没有东西</p>
+    </div>
+</div>
+<div class="layui-row">
+    <button id="get-html">上传内容</button>
+    <button id="get-text">获取内容，无样式</button>
+    <button id="show-rich-text">从数据库获取内容</button>
+</div>
+
+
+<script type="text/javascript">
+    var E = window.wangEditor;
+    var editor = new E("#editor");
+    editor.customConfig.menus = [
+        'head',  // 标题
+        'bold',  // 粗体
+        'fontSize',  // 字号
+        'fontName',  // 字体
+        'italic',  // 斜体
+        'underline',  // 下划线
+        'strikeThrough',  // 删除线
+        'foreColor',  // 文字颜色
+        'backColor',  // 背景颜色
+        'link',  // 插入链接
+        'list',  // 列表
+        'justify',  // 对齐方式
+        'emoticon',  // 表情
+        'image',  // 插入图片
+        'table',  // 表格
+        'undo',  // 撤销
+        'redo'  // 重复
+    ];
+    editor.customConfig.uploadImgServer = '/upload';
+    editor.create();
+</script>
+
+<script type="text/javascript">
+    $("#get-html").click(function () {
+        var rich = editor.txt.html();
+        saveRiceContent(rich);
+    });
+    $("#get-text").click(function () {
+        alert(editor.txt.text());
+    });
+
+    function saveRiceContent(data) {
+        console.log(data);
+        $.ajax({
+            url:"/rich",
+            contentType: "application/json; charset=utf-8",
+            type: "post",
+            dataType: "json",
+            data: JSON.stringify(data),
+            success:function (result) {
+                console.log(result);
+            }
+        })
+    }
+    
+</script>
+<script type="text/javascript">
+    $("#show-rich-text").click(function () {
+        $.ajax({
+            url:"/rich",
+            type:"GET",
+            success:function (result) {
+                console.log(result.data.rich);
+                var str = result.data.rich;
+                // 将所有的 \" 转化为 " 输出
+                var rich = str.replace(/\\"/g,"\"");
+                // 取出头尾 " "
+                rich = rich.substr(1);
+                rich = rich.substr(0, rich.length-1);
+                // 清空编辑区内容
+                editor.txt.clear();
+                // 将内容在编辑区显示
+                editor.txt.html(rich);
+            }
+        })
+    });
+</script>
+</body>
+</html>
