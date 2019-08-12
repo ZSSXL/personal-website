@@ -71,13 +71,8 @@ public class FileController {
     @PostMapping("/upload")
     public ServerResponse<Map> upload(@RequestParam(value = "files", required = false) MultipartFile files, HttpServletRequest request) {
         String path = request.getSession().getServletContext().getRealPath("upload");
-        //System.out.println("size:"+files.length);
-        System.out.println("files:" + files);
-        System.out.println(path);
         Map<String, Object> fileMap = Maps.newHashMap();
-        System.out.println("file:" + files);
         System.out.println(files.getOriginalFilename());
-        System.out.println(files.toString());
         String targetFileName = fileService.upload(files, path);
         String url = FtpProperties.HTTP_PREFIX + targetFileName;
 
@@ -96,26 +91,23 @@ public class FileController {
      * @return Map
      */
     @PostMapping("/rich_upload")
-    public Map richTextImgUpload(@RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
-
+    public Map<String, Object> richTextImgUpload(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> resultMap = Maps.newHashMap();
-        // 富文本中对于返回值有自己的要求，使用wangEditor所以按照该要求进行返回
+        Map<String, String> dataMap = Maps.newHashMap();
         String path = request.getSession().getServletContext().getRealPath("upload");
         String targetFileName = fileService.upload(file, path);
         if (StringUtils.isBlank(targetFileName)) {
-            resultMap.put("success", false);
+            resultMap.put("code", 1);
             resultMap.put("msg", "上传失败");
             return resultMap;
-
         }
         String url = FtpProperties.HTTP_PREFIX + targetFileName;
-        resultMap.put("success", true);
+        dataMap.put("src", url);
+        resultMap.put("code", 0);
         resultMap.put("msg", "上传成功");
-        resultMap.put("file_path", url);
-        response.addHeader("Access-Controller-Allow-Header", "X-File-Name"); // 与前端的约定，必须要有
+        resultMap.put("data", dataMap);
         return resultMap;
     }
-
 }
 
 
