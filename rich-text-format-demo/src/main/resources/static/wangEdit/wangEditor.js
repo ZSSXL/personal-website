@@ -303,7 +303,7 @@
                 var styleArr = void 0,
                     resultArr = [];
                 if (style) {
-                    // 将 style 按照 ; 拆分为数组
+                    // 将  按照 ; 拆分为数组
                     styleArr = style.split(';');
                     styleArr.forEach(function (item) {
                         // 对每项样式，按照 : 拆分为 key 和 value
@@ -4113,7 +4113,7 @@
                 }
             }
 
-            editor.cmd.do('insertHTML', '<img src="' + link + '" style="max-width:100%;"/>');
+            editor.cmd.do('insertHTML', '<img src="' + link + '" style="width: 30%;"/>');
 
             // 验证图片 url 是否有效，无效的话给出提示
             var img = document.createElement('img');

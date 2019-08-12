@@ -16,7 +16,7 @@
     <legend>layui富文本编辑器</legend>
 </fieldset>
 <textarea class="layui-textarea" id="LAY_demo1" style="display: none">
-
+    <p>测试</p>
 </textarea>
 <div class="layui-row">
     <button class="layui-btn site-demo-layedit" data-type="content">获取编辑器的内容</button>
@@ -33,7 +33,7 @@
         layedit.set({
             uploadImage: {
                 url: "/rich_upload" //接口url
-                ,type: "post" //默认post
+                , type: "post" //默认post
             }
         });
 
@@ -61,6 +61,7 @@
             }
             , selection: function () {
                 alert(layedit.getSelection(index));
+                1
             }
         };
 
