@@ -11,6 +11,7 @@ public interface FileService {
 
     /**
      * 上传文件
+     *
      * @param file multipartFile
      * @param path 文件路径
      * @return String

@@ -26,19 +26,17 @@ public class FileServiceImpl implements FileService {
         // 获取原始文件的文件名
         String fileName = file.getOriginalFilename();
         // 获取扩展名
-        String fileExtensionName = fileName.substring(fileName.lastIndexOf(".")+1);
-        // System.out.println(fileExtensionName);
-        String uploadFileName = UUID.randomUUID().toString()+"."+fileExtensionName;
-        // System.out.println(uploadFileName);
-        log.info("开始上传文件,上传文件的源文件名是:{},上传的路径是:{},上传后的文件名:{}",fileName,path,uploadFileName);
+        String fileExtensionName = fileName.substring(fileName.lastIndexOf(".") + 1);
+        String uploadFileName = UUID.randomUUID().toString() + "." + fileExtensionName;
+        log.info("开始上传文件,上传文件的源文件名是:{},上传的路径是:{},上传后的文件名:{}", fileName, path, uploadFileName);
 
         File fileDir = new File(path);
-        if(!fileDir.exists()){
+        if (!fileDir.exists()) {
             fileDir.setWritable(true);
             fileDir.mkdirs();
         }
 
-        File targetFile = new File(path,uploadFileName);
+        File targetFile = new File(path, uploadFileName);
         try {
             file.transferTo(targetFile);
             // 至此，文件已经上传至upload文件夹成功
@@ -49,7 +47,7 @@ public class FileServiceImpl implements FileService {
             // 上传完成后删除upload下面的文件
             targetFile.delete();
         } catch (IOException e) {
-            log.error("上传文件异常",e);
+            log.error("上传文件异常", e);
         }
         return targetFile.getName();
     }

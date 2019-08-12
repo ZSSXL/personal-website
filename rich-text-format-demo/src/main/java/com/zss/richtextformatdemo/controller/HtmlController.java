@@ -16,7 +16,7 @@ public class HtmlController {
 
     @GetMapping("/{page}")
     public String pageJump(@PathVariable String page) {
-        System.out.println("page:"+page);
+        System.out.println("page:" + page);
         return page;
     }
 

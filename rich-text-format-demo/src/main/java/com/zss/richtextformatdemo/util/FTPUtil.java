@@ -1,5 +1,6 @@
 package com.zss.richtextformatdemo.util;
 
+import com.zss.richtextformatdemo.config.FtpProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.net.ftp.FTPClient;
 
@@ -14,17 +15,6 @@ import java.util.List;
 @Slf4j
 public class FTPUtil {
 
-    private static final String ftpIp = "192.168.1.114";
-    private static final String ftpUser = "zssftp";
-    private static final String ftpPass = "20171109";
-
-    public FTPUtil(String ip, int port, String user, String pwd) {
-        this.ip = ip;
-        this.port = port;
-        this.user = user;
-        this.pwd = pwd;
-    }
-
     /**
      * 返回上传成功还是失败
      *
@@ -32,12 +22,10 @@ public class FTPUtil {
      * @return boolean
      */
     public static boolean uploadFile(List<File> fileList) throws IOException {
-        FTPUtil ftpUtil = new FTPUtil(ftpIp, 21, ftpUser, ftpPass);
+        FTPUtil ftpUtil = new FTPUtil(FtpProperties.FTP_IP, FtpProperties.FTP_PORT, FtpProperties.FTP_USERNAME, FtpProperties.FTP_PASSWORD);
         log.info("开始连接ftp服务器");
-        // System.out.println("开始连接ftp服务器");
-        boolean result = ftpUtil.uploadFile("images", fileList);
+        boolean result = ftpUtil.uploadFile(FtpProperties.FTP_REMOTE_PATH, fileList);
         log.info("开始连接ftp服务器,结束上传,上传结果:{}", result);
-        // System.out.println("开始连接ftp服务器,结束上传,上传结果:"+result);
         return result;
     }
 
@@ -52,7 +40,7 @@ public class FTPUtil {
         //连接FTP服务器
         if (connectServer(this.ip, this.port, this.user, this.pwd)) {
             try {
-                ftpClient.changeWorkingDirectory(remotePath); // 是否需要切换文件夹，如果传过来的是null，那就不切换
+                ftpClient.changeWorkingDirectory(FtpProperties.FTP_REMOTE_PATH); // 是否需要切换文件夹，如果传过来的是null，那就不切换
                 ftpClient.setBufferSize(102400);      // 缓冲区
                 ftpClient.setControlEncoding("UTF-8");
                 ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE); // 文件类型设置成二进制类型，避免出现乱码
@@ -93,6 +81,13 @@ public class FTPUtil {
     private String user;
     private String pwd;
     private FTPClient ftpClient;
+
+    public FTPUtil(String ip, int port, String user, String pwd) {
+        this.ip = ip;
+        this.port = port;
+        this.user = user;
+        this.pwd = pwd;
+    }
 
     public String getIp() {
         return ip;
