@@ -45,7 +45,46 @@
         'undo',  // 撤销
         'redo'  // 重复
     ];
-    editor.customConfig.uploadImgServer = '/upload';
+    editor.customConfig.uploadImgServer = '/uploads';
+    editor.customConfig.uploadImgHooks = {
+        fail: function (xhr, editor, result) {
+            // 上传错误触发
+            alert("图片上传失败了");
+        }
+    };
+
+    editor.customConfig.customUploadImg = function (files, insert) {
+        var formData = new FormData();
+        for (var i = 0; i < files.length; i++) {
+            formData.append("files", files[i]);
+        }
+        $.ajax({
+            url: "/uploads",
+            type: "POST",
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                console.log(result);
+                if (result.errno == 0) {
+                    for (var j = 0; j < result.data.length; j++) {
+                        insert(result.data[j]);
+                    }
+                } else {
+                    alert(result.msg);
+                    return false;
+                }
+            }
+        });
+
+    };
+    // 将图片大小限制为 10 m
+    editor.customConfig.uploadImgMaxSize = 10 * 1024 * 1024;
+    // 限制一次最多上传5张图片
+    editor.customConfig.uploadImgMaxLength = 5;
+
     editor.create();
 </script>
 
@@ -61,31 +100,31 @@
     function saveRiceContent(data) {
         console.log(data);
         $.ajax({
-            url:"/rich",
+            url: "/rich",
             contentType: "application/json; charset=utf-8",
             type: "post",
             dataType: "json",
             data: JSON.stringify(data),
-            success:function (result) {
+            success: function (result) {
                 console.log(result);
             }
         })
     }
-    
+
 </script>
 <script type="text/javascript">
     $("#show-rich-text").click(function () {
         $.ajax({
-            url:"/rich",
-            type:"GET",
-            success:function (result) {
+            url: "/rich",
+            type: "GET",
+            success: function (result) {
                 console.log(result.data.rich);
                 var str = result.data.rich;
                 // 将所有的 \" 转化为 " 输出
-                var rich = str.replace(/\\"/g,"\"");
+                var rich = str.replace(/\\"/g, "\"");
                 // 取出头尾 " "
                 rich = rich.substr(1);
-                rich = rich.substr(0, rich.length-1);
+                rich = rich.substr(0, rich.length - 1);
                 // 清空编辑区内容
                 editor.txt.clear();
                 // 将内容在编辑区显示

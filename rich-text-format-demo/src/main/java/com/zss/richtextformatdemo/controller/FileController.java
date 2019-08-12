@@ -6,9 +6,7 @@ import com.zss.richtextformatdemo.config.FtpProperties;
 import com.zss.richtextformatdemo.service.FileService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -22,7 +20,7 @@ import java.util.Map;
 /**
  * @author ZSS
  * @date 2019/8/11 21:10
- * @description
+ * @description 文件上传 Controller
  */
 @RestController
 public class FileController {
@@ -34,27 +32,60 @@ public class FileController {
         this.fileService = fileService;
     }
 
-    @PostMapping
-    public ServerResponse<List<String>> upload(HttpServletRequest request) {
-
+    /**
+     * 多文件上传
+     *
+     * @param request http请求
+     * @return ServerResponse<List < String>>
+     */
+    @PostMapping("/uploads")
+    public Map<String, Object> upload(@RequestParam(value = "files", required = false) List<MultipartFile> files, HttpServletRequest request) {
         String path = request.getSession().getServletContext().getRealPath("upload");
-        System.out.println(path);
-        // 上传图片
-        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
-        // 判断是否有文件上传
-        if (commonsMultipartResolver.isMultipart(request)) {
-            MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
-            List<MultipartFile> multipartFileList = multipartHttpServletRequest.getFiles("imageFiles");
-            List<String> urlList = new ArrayList<>();
-            for (MultipartFile img : multipartFileList) {
-                String targetFileName = fileService.upload(img, path);
-                String url = FtpProperties.HTTP_PREFIX + targetFileName;
-                urlList.add(url);
+        Map<String, Object> resultMap = Maps.newHashMap();
+        List<String> imgList = new ArrayList<>();
+        try {
+            if (files != null && files.size() > 0) {
+                for (MultipartFile file : files) {
+                    String targetFileName = fileService.upload(file, path);
+                    String imgUrl = FtpProperties.HTTP_PREFIX + targetFileName;
+                    imgList.add(imgUrl);
+                }
             }
-            return ServerResponse.createBySuccess("上传成功", urlList);
-        } else {
-            return ServerResponse.createByErrorMessage("没用图片上传过来");
+            resultMap.put("errno", 0);
+            resultMap.put("data", imgList);
+            return resultMap;
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("errno",1);
+            return resultMap;
         }
+    }
+
+    /**
+     * 单张图片上传
+     *
+     * @param files   files
+     * @param request request
+     * @return ServerResponse<Map>
+     */
+    @PostMapping("/upload")
+    public ServerResponse<Map> upload(@RequestParam(value = "files", required = false) MultipartFile files, HttpServletRequest request) {
+        String path = request.getSession().getServletContext().getRealPath("upload");
+        //System.out.println("size:"+files.length);
+        System.out.println("files:" + files);
+        System.out.println(path);
+        Map<String, Object> fileMap = Maps.newHashMap();
+        System.out.println("file:" + files);
+        System.out.println(files.getOriginalFilename());
+        System.out.println(files.toString());
+        String targetFileName = fileService.upload(files, path);
+        String url = FtpProperties.HTTP_PREFIX + targetFileName;
+
+        fileMap.put("uri", targetFileName);
+        fileMap.put("url", url);
+        System.out.println(fileMap);
+
+        return ServerResponse.createBySuccess(fileMap);
     }
 
     /**

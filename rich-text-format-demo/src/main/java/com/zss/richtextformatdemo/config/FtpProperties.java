@@ -15,6 +15,6 @@ public class FtpProperties {
 
     public static final String FTP_REMOTE_PATH = "images";
 
-    public static final String HTTP_PREFIX = "http://192.168.1.114/";
+    public static final String HTTP_PREFIX = "http://192.168.1.114/images/";
 
 }

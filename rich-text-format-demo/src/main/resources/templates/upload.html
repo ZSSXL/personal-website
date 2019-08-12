@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>上传图片测试</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+</head>
+<body>
+    <div class="layui-container">
+        <div class="layui-row">
+            <form name="form1" action="/upload" method="post" enctype="multipart/form-data">
+                <span>上传图片</span><input multiple id="uploadFile" type="file" name="files">
+                <input type="submit" id="uploadBtn" value="SpringMVC上传文件">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

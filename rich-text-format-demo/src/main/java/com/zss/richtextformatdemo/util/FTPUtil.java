@@ -35,7 +35,7 @@ public class FTPUtil {
         FTPUtil ftpUtil = new FTPUtil(ftpIp, 21, ftpUser, ftpPass);
         log.info("开始连接ftp服务器");
         // System.out.println("开始连接ftp服务器");
-        boolean result = ftpUtil.uploadFile("farmmall", fileList);
+        boolean result = ftpUtil.uploadFile("images", fileList);
         log.info("开始连接ftp服务器,结束上传,上传结果:{}", result);
         // System.out.println("开始连接ftp服务器,结束上传,上传结果:"+result);
         return result;
@@ -53,7 +53,7 @@ public class FTPUtil {
         if (connectServer(this.ip, this.port, this.user, this.pwd)) {
             try {
                 ftpClient.changeWorkingDirectory(remotePath); // 是否需要切换文件夹，如果传过来的是null，那就不切换
-                ftpClient.setBufferSize(10240);      // 缓冲区
+                ftpClient.setBufferSize(102400);      // 缓冲区
                 ftpClient.setControlEncoding("UTF-8");
                 ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE); // 文件类型设置成二进制类型，避免出现乱码
                 ftpClient.enterLocalPassiveMode();  // 打开被动模式
