@@ -22,6 +22,13 @@ spring:
       content-type: text/html
     mode: HTML5
 
+# vsftp 配置文件
+ftp:
+  ip: localhost
+  port: 21
+  username: ftpuser
+  password: fptuser123
+  romote-path: personal
 
 server:
   port: 8080
