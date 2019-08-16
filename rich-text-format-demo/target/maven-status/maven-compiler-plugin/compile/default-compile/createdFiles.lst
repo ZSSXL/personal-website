@@ -1,0 +1,16 @@
+com\zss\richtextformatdemo\entity\RichText$RichTextBuilder.class
+com\zss\richtextformatdemo\RichTextFormatDemoApplication.class
+com\zss\richtextformatdemo\controller\FileController.class
+com\zss\richtextformatdemo\service\impl\RichTextImpl.class
+com\zss\richtextformatdemo\common\ResponseCode.class
+com\zss\richtextformatdemo\config\FtpProperties.class
+com\zss\richtextformatdemo\service\impl\FileServiceImpl.class
+com\zss\richtextformatdemo\entity\RichText.class
+com\zss\richtextformatdemo\controller\RichController.class
+com\zss\richtextformatdemo\controller\HtmlController.class
+com\zss\richtextformatdemo\common\ServerResponse.class
+com\zss\richtextformatdemo\util\FTPUtil.class
+com\zss\richtextformatdemo\service\RichService.class
+com\zss\richtextformatdemo\service\FileService.class
+com\zss\richtextformatdemo\repository\RichTextRepository.class
+com\zss\richtextformatdemo\common\Const.class

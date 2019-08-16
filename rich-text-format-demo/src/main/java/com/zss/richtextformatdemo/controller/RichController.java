@@ -53,7 +53,7 @@ public class RichController {
 
     @GetMapping
     public ServerResponse<RichText> getRich() {
-        String richId = "088bc3dc-f0d5-473a-af70-f42d81c2e6fc";
+        String richId = "640bc29c-5670-4308-8bf9-aec03f5e5be2";
         RichText richText = richService.getRichText(richId);
         if (richText == null) {
             return ServerResponse.createByErrorMessage("查询失败");
