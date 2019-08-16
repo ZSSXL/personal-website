@@ -20,7 +20,7 @@ import javax.persistence.Id;
  * @description
  */
 @Entity(name = "ls_album_item")
-@Table(appliesTo = "ls_album_item",comment = "相册详情表")
+@Table(appliesTo = "ls_album_item", comment = "相册详情表")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

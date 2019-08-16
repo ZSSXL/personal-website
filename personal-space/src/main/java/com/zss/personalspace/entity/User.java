@@ -21,7 +21,7 @@ import java.io.Serializable;
  * @description 用户实体
  */
 @Entity(name = "ls_user")
-@Table(appliesTo = "ls_user",comment = "用户表")
+@Table(appliesTo = "ls_user", comment = "用户表")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

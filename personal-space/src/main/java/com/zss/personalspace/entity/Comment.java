@@ -21,7 +21,7 @@ import java.io.Serializable;
  * @description 评论实体
  */
 @Entity(name = "ls_comment")
-@Table(appliesTo = "ls_comment",comment = "评论表")
+@Table(appliesTo = "ls_comment", comment = "评论表")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

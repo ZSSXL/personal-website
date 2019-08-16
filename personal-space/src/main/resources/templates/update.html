@@ -1,434 +1,446 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-	<head>
-		<meta charset="utf-8" />
-		<title>Update - Photo</title>
+<head>
+    <meta charset="utf-8"/>
+    <title>Update - Photo</title>
 
-		<!-- Meta Data -->
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<meta name="format-detection" content="telephone=no" />
-		<meta name="format-detection" content="address=no" />
-		<meta name="author" content="ArtTemplate" />
-		<meta name="description" content="vCard" />
+    <!-- Meta Data -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="address=no"/>
+    <meta name="author" content="ArtTemplate"/>
+    <meta name="description" content="vCard"/>
 
-		<!-- Twitter data -->
-		<meta name="twitter:card" content="summary_large_image">
-		<meta name="twitter:site" content="@ArtTemplates">
-		<meta name="twitter:title" content="vCard">
-		<meta name="twitter:description" content="vCard">
-		<meta name="twitter:image" th:attr="content=@{/images/social.jpg}">
+    <!-- Twitter data -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@ArtTemplates">
+    <meta name="twitter:title" content="vCard">
+    <meta name="twitter:description" content="vCard">
+    <meta name="twitter:image" th:attr="content=@{/images/social.jpg}">
 
-		<!-- Open Graph data -->
-		<meta property="og:title" content="ArtTemplate" />
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content="your url website" />
-		<meta property="og:image" th:attr="content=@{/images/social.jpg}"/>
-		<meta property="og:description" content="vCard" />
-		<meta property="og:site_name" content="vCard" />
+    <!-- Open Graph data -->
+    <meta property="og:title" content="ArtTemplate"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="your url website"/>
+    <meta property="og:image" th:attr="content=@{/images/social.jpg}"/>
+    <meta property="og:description" content="vCard"/>
+    <meta property="og:site_name" content="vCard"/>
 
-		<!-- Favicons -->
-		<link rel="apple-touch-icon" sizes="144x144" th:href="@{/images/favicons/apple-touch-icon-144x144.png}">
-		<link rel="apple-touch-icon" sizes="114x114" th:href="@{/images/favicons/apple-touch-icon-114x114.png}">
-		<link rel="apple-touch-icon" sizes="72x72" th:href="@{/images/favicons/apple-touch-icon-72x72.png}">
-		<link rel="apple-touch-icon" sizes="57x57" th:href="@{/images/favicons/apple-touch-icon-57x57.png}">
-		<link rel="shortcut icon" th:href="@{/images/favicons/favicon.png}" type="image/png">
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="144x144" th:href="@{/images/favicons/apple-touch-icon-144x144.png}">
+    <link rel="apple-touch-icon" sizes="114x114" th:href="@{/images/favicons/apple-touch-icon-114x114.png}">
+    <link rel="apple-touch-icon" sizes="72x72" th:href="@{/images/favicons/apple-touch-icon-72x72.png}">
+    <link rel="apple-touch-icon" sizes="57x57" th:href="@{/images/favicons/apple-touch-icon-57x57.png}">
+    <link rel="shortcut icon" th:href="@{/images/favicons/favicon.png}" type="image/png">
 
-		<!-- Styles -->
-		<link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}" />
-		<link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}"/>
+    <!-- Styles -->
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}"/>
 
-		<!-- Fonts -->
-		<link th:href="@{https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900}" rel="stylesheet">
-		<link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
-		<link rel="stylesheet" th:href="@{/css/flaticon.css}">
+    <!-- Fonts -->
+    <link th:href="@{https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/flaticon.css}">
 
-		<link rel="stylesheet" th:href="@{/layui/css/layui.css}" />
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
 
-		<script th:src="@{/wangEdit/wangEditor.min.js}"></script>
+    <script th:src="@{/wangEdit/wangEditor.min.js}"></script>
 
-		<style type="text/css">
-			.delete {
-				width: 90%;
-				height: 100%;
-				position: absolute;
-				text-align: center;
-				line-height: 200px;
-				z-index: 10;
-				font-size: 30px;
-				background-color: rgba(255, 255, 255, 0.8);
-				color: #777;
-				opacity: 0;
-				transition-duration: 0.7s;
-				-webkit-transition-duration: 0.7s;
-			}
+    <style type="text/css">
+        .delete {
+            width: 90%;
+            height: 100%;
+            position: absolute;
+            text-align: center;
+            line-height: 200px;
+            z-index: 10;
+            font-size: 30px;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #777;
+            opacity: 0;
+            transition-duration: 0.7s;
+            -webkit-transition-duration: 0.7s;
+        }
 
-			.delete:hover {
-				cursor: pointer;
-				opacity: 1;
-			}
-		</style>
-	</head>
-	<body class="bg-triangles">
-		<!-- Preloader -->
-		<div class="preloader">
-			<div class="preloader__wrap">
-				<div class="circle-pulse">
-					<div class="circle-pulse__1"></div>
-					<div class="circle-pulse__2"></div>
-				</div>
-				<div class="preloader__progress"><span></span></div>
-			</div>
-		</div>
+        .delete:hover {
+            cursor: pointer;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-triangles">
+<!-- Preloader -->
+<div class="preloader">
+    <div class="preloader__wrap">
+        <div class="circle-pulse">
+            <div class="circle-pulse__1"></div>
+            <div class="circle-pulse__2"></div>
+        </div>
+        <div class="preloader__progress"><span></span></div>
+    </div>
+</div>
 
-		<main class="main">
-			<div class="container gutter-top">
-				<div class="row sticky-parent">
-					<!-- Sidebar -->
-					<aside class="col-12 col-md-12 col-xl-3">
-						<div class="sidebar box pb-0 sticky-column">
-							<svg class="avatar avatar--180" viewBox="0 0 188 188">
-								<g class="avatar__box">
-								    <a th:href="@{/info}"><image data-toggle="tooltip" data-placement="right" title="点击头像查看个人信息" th:href="@{/img/avatar-1.jpg}" height="100%" width="100%" /></a>
-								</g>
-							</svg>
-							<div class="text-center">
-								<h3 class="title title--h3 sidebar__user-name"><span class="weight--500">Felecia</span> Brown</h3>
-								<div class="badge badge--gray">感谢相遇，感谢有你</div>
-					
-								<!-- Social -->
-								<div class="social">
-									<a class="social__link" th:href="@{http://www.baidu.com/}"><i class="font-icon icon-smile"></i></a>
-									<a class="social__link" th:href="@{https://github.com/}"><i class="font-icon icon-github"></i></a>
-									<a class="social__link" th:href="@{https://www.google.com/}"><i class="font-icon icon-google"></i></a>
-								</div>
-							</div>
-					
-							<div class="sidebar__info box-inner box-inner--rounded">
-								<ul class="contacts-block">
-									<li class="contacts-block__item" data-toggle="tooltip" data-placement="top" title="Birthday">
-										<i class="font-icon icon-calendar"></i><span>March 12, 1995</span>
-									</li>
-									<li class="contacts-block__item" data-toggle="tooltip" data-placement="top" title="Address">
-										<i class="font-icon icon-location"></i>中国 江西 上饶
-									</li>
-									<li class="contacts-block__item" data-toggle="tooltip" data-placement="top" title="E-mail">
-										<i class="font-icon icon-envelope"></i>example@mail.com
-									</li>
-									<li class="contacts-block__item" data-toggle="tooltip" data-placement="top" title="Phone">
-										<i class="font-icon icon-phone"></i>136-4545-6767
-									</li>
-								</ul>
-								<a class="btn btn-danger btn-sm" th:href="@{#}">注销登陆</a>
-							</div>
-						</div>
-					</aside>
+<main class="main">
+    <div class="container gutter-top">
+        <div class="row sticky-parent">
+            <!-- Sidebar -->
+            <aside class="col-12 col-md-12 col-xl-3">
+                <div class="sidebar box pb-0 sticky-column">
+                    <svg class="avatar avatar--180" viewBox="0 0 188 188">
+                        <g class="avatar__box">
+                            <a th:href="@{/info}">
+                                <image data-toggle="tooltip" data-placement="right" title="点击头像查看个人信息"
+                                       th:href="@{/img/avatar-1.jpg}" height="100%" width="100%"/>
+                            </a>
+                        </g>
+                    </svg>
+                    <div class="text-center">
+                        <h3 class="title title--h3 sidebar__user-name"><span class="weight--500">Felecia</span> Brown
+                        </h3>
+                        <div class="badge badge--gray">感谢相遇，感谢有你</div>
 
-					<!-- Content -->
-					<div class="col-12 col-md-12 col-xl-9">
-						<div class="box pb-0">
-							<!-- Menu -->
-							<div class="circle-menu">
-								<div class="hamburger">
-									<div class="line"></div>
-									<div class="line"></div>
-									<div class="line"></div>
-								</div>
-							</div>
-							<div class="inner-menu">
-								<ul class="nav">
-									<li class="nav__item"><a th:href="@{/index}">主页</a></li>
-									<li class="nav__item"><a th:href="@{/resume}">Resume</a></li>
-									<li class="nav__item"><a th:href="@{/portfolio}">相册集</a></li>
-									<li class="nav__item"><a class="active" th:href="@{/blog}">日志</a></li>
-									<li class="nav__item"><a th:href="@{/contact}">Contact</a></li>
-								</ul>
-							</div>
+                        <!-- Social -->
+                        <div class="social">
+                            <a class="social__link" th:href="@{http://www.baidu.com/}"><i
+                                    class="font-icon icon-smile"></i></a>
+                            <a class="social__link" th:href="@{https://github.com/}"><i
+                                    class="font-icon icon-github"></i></a>
+                            <a class="social__link" th:href="@{https://www.google.com/}"><i
+                                    class="font-icon icon-google"></i></a>
+                        </div>
+                    </div>
 
-							<!-- Phonto -->
-							<div class="pb-2">
-								<h1 class="title title--h1 title__separate">上传照片</h1>
-							</div>
+                    <div class="sidebar__info box-inner box-inner--rounded">
+                        <ul class="contacts-block">
+                            <li class="contacts-block__item" data-toggle="tooltip" data-placement="top"
+                                title="Birthday">
+                                <i class="font-icon icon-calendar"></i><span>March 12, 1995</span>
+                            </li>
+                            <li class="contacts-block__item" data-toggle="tooltip" data-placement="top" title="Address">
+                                <i class="font-icon icon-location"></i>中国 江西 上饶
+                            </li>
+                            <li class="contacts-block__item" data-toggle="tooltip" data-placement="top" title="E-mail">
+                                <i class="font-icon icon-envelope"></i>example@mail.com
+                            </li>
+                            <li class="contacts-block__item" data-toggle="tooltip" data-placement="top" title="Phone">
+                                <i class="font-icon icon-phone"></i>136-4545-6767
+                            </li>
+                        </ul>
+                        <a class="btn btn-danger btn-sm" th:href="@{#}">注销登陆</a>
+                    </div>
+                </div>
+            </aside>
 
-							<!-- 日志主题图片 -->
-							<div class="box-inner pb-0">
-								<h2 class="title title--h3">相册封面图片</h2>
-								<div class="row">
-									<!-- Case Item -->
-									<div class="col-12 col-lg-12">
-										<div class="case-item box box__second">
-											<button id="up-btn" class="btn btn-info">选择图片</button>
-										</div>
-									</div>
-									<!-- Case Item -->
-									<div class="col-12 col-lg-12">
-										<div class="case-item box box__second">
-											<div class="row" style="text-align: center;">
-												<form enctype="multipart/form-data" name="form1">
-													<input style="opacity: 0;" id="f" type="file" name="mainImage" onchange="change()" multiple accept="image/png,image/jpg,image/gif,image/JPEG" />
-													<p><img id="preview" alt="" name="pic" style="width: 100%;height: 100%;" /></p>
-												</form>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+            <!-- Content -->
+            <div class="col-12 col-md-12 col-xl-9">
+                <div class="box pb-0">
+                    <!-- Menu -->
+                    <div class="circle-menu">
+                        <div class="hamburger">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                    </div>
+                    <div class="inner-menu">
+                        <ul class="nav">
+                            <li class="nav__item"><a th:href="@{/index}">主页</a></li>
+                            <li class="nav__item"><a th:href="@{/resume}">Resume</a></li>
+                            <li class="nav__item"><a th:href="@{/portfolio}">相册集</a></li>
+                            <li class="nav__item"><a class="active" th:href="@{/blog}">日志</a></li>
+                            <li class="nav__item"><a th:href="@{/contact}">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Phonto -->
+                    <div class="pb-2">
+                        <h1 class="title title--h1 title__separate">上传照片</h1>
+                    </div>
+
+                    <!-- 日志主题图片 -->
+                    <div class="box-inner pb-0">
+                        <h2 class="title title--h3">相册封面图片</h2>
+                        <div class="row">
+                            <!-- Case Item -->
+                            <div class="col-12 col-lg-12">
+                                <div class="case-item box box__second">
+                                    <button id="up-btn" class="btn btn-info">选择图片</button>
+                                </div>
+                            </div>
+                            <!-- Case Item -->
+                            <div class="col-12 col-lg-12">
+                                <div class="case-item box box__second">
+                                    <div class="row" style="text-align: center;">
+                                        <form enctype="multipart/form-data" name="form1">
+                                            <input style="opacity: 0;" id="f" type="file" name="mainImage"
+                                                   onchange="change()" multiple
+                                                   accept="image/png,image/jpg,image/gif,image/JPEG"/>
+                                            <p><img id="preview" alt="" name="pic" style="width: 100%;height: 100%;"/>
+                                            </p>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
-							<!-- 照片描述 -->
-							<div class="box-inner pb-0">
-								<h2 class="title title--h3">相册主题描述</h2>
-								<div class="row">
-									<!-- Case Item -->
-									<div class="col-12 col-lg-12">
-										<div class="case-item box box__second">
-											<div class="input-group">
-												<textarea class="form-control" aria-label="With textarea" placeholder="请输入文字描述"></textarea>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							
-							
-							<!-- 相册类型 -->
-							<div class="box-inner pb-0">
-								<h2 class="title title--h3">选择相册类型</h2>
-								<div class="row">
-									<!-- Case Item -->
-									<div class="col-12 col-lg-12">
-										<div class="case-item box box__second">
-											<div>
-												<input class="blue" type="radio" name="radio-gruop" value="life" checked/>
-												<span>生活</span>
-											</div>
-											<div>
-												<input class="blue" type="radio" name="radio-gruop" value="tourism"/>
-												<span>旅游</span>
-											</div>
-											<div>
-												<input class="blue" type="radio" name="radio-gruop" value="food"/>
-												<span>美食</span>
-											</div>
-											<div>
-												<input class="blue" type="radio" name="radio-gruop" value="study"/>
-												<span>学习</span>
-											</div>
-											<div>
-												<input class="blue" type="radio" name="radio-gruop" value="movie"/>
-												<span>电影</span>
-											</div>
-											<div>
-												<input class="blue" type="radio" name="radio-gruop" value="love"/>
-												<span>哈尼</span>
-											</div>
-										</div> 
-									</div>
-								</div>
-							</div>
+                    <!-- 照片描述 -->
+                    <div class="box-inner pb-0">
+                        <h2 class="title title--h3">相册主题描述</h2>
+                        <div class="row">
+                            <!-- Case Item -->
+                            <div class="col-12 col-lg-12">
+                                <div class="case-item box box__second">
+                                    <div class="input-group">
+                                        <textarea class="form-control" aria-label="With textarea"
+                                                  placeholder="请输入文字描述"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-							<!-- 上传图片 -->
-							<div class="box-inner box-inner--white">
-								<div class="row">
-									<form action="" id="formdata">
-										<div id="upload" class="btn btn-info">选择图片</div>
-										<input id="file" type="file" multiple style="display:none">
-									</form>
-								</div>
-							</div>
 
-							<div class="box-inner box-inner--white pb-0" id="gallery_list">
-								
-							</div>
-							
-							<div class="box-inner box-inner--rounded ">
-								<div class="row">
-									<button type="button" class="btn" style="float: right;" id="uploadImg">上传</button>
-								</div>
-							</div>
+                    <!-- 相册类型 -->
+                    <div class="box-inner pb-0">
+                        <h2 class="title title--h3">选择相册类型</h2>
+                        <div class="row">
+                            <!-- Case Item -->
+                            <div class="col-12 col-lg-12">
+                                <div class="case-item box box__second">
+                                    <div>
+                                        <input class="blue" type="radio" name="radio-gruop" value="life" checked/>
+                                        <span>生活</span>
+                                    </div>
+                                    <div>
+                                        <input class="blue" type="radio" name="radio-gruop" value="tourism"/>
+                                        <span>旅游</span>
+                                    </div>
+                                    <div>
+                                        <input class="blue" type="radio" name="radio-gruop" value="food"/>
+                                        <span>美食</span>
+                                    </div>
+                                    <div>
+                                        <input class="blue" type="radio" name="radio-gruop" value="study"/>
+                                        <span>学习</span>
+                                    </div>
+                                    <div>
+                                        <input class="blue" type="radio" name="radio-gruop" value="movie"/>
+                                        <span>电影</span>
+                                    </div>
+                                    <div>
+                                        <input class="blue" type="radio" name="radio-gruop" value="love"/>
+                                        <span>哈尼</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-						</div>
-						<!-- Footer -->
-						<footer class="footer">© 2019 ZSSXL</footer>
-					</div>
-				</div>
-			</div>
-		</main>
+                    <!-- 上传图片 -->
+                    <div class="box-inner box-inner--white">
+                        <div class="row">
+                            <form action="" id="formdata">
+                                <div id="upload" class="btn btn-info">选择图片</div>
+                                <input id="file" type="file" multiple style="display:none">
+                            </form>
+                        </div>
+                    </div>
 
-		<div class="back-to-top"></div>
+                    <div class="box-inner box-inner--white pb-0" id="gallery_list">
 
-		<!-- SVG masks -->
-		<svg class="svg-defs">
-			<clipPath id="avatar-box">
-				<path d="M1.85379 38.4859C2.9221 18.6653 18.6653 2.92275 38.4858 1.85453 56.0986.905299 77.2792 0 94 0c16.721 0 37.901.905299 55.514 1.85453 19.821 1.06822 35.564 16.81077 36.632 36.63137C187.095 56.0922 188 77.267 188 94c0 16.733-.905 37.908-1.854 55.514-1.068 19.821-16.811 35.563-36.632 36.631C131.901 187.095 110.721 188 94 188c-16.7208 0-37.9014-.905-55.5142-1.855-19.8205-1.068-35.5637-16.81-36.63201-36.631C.904831 131.908 0 110.733 0 94c0-16.733.904831-37.9078 1.85379-55.5141z" />
-			</clipPath>
-			<clipPath id="avatar-hexagon">
-				<path d="M0 27.2891c0-4.6662 2.4889-8.976 6.52491-11.2986L31.308 1.72845c3.98-2.290382 8.8697-2.305446 12.8637-.03963l25.234 14.31558C73.4807 18.3162 76 22.6478 76 27.3426V56.684c0 4.6805-2.5041 9.0013-6.5597 11.3186L44.4317 82.2915c-3.9869 2.278-8.8765 2.278-12.8634 0L6.55974 68.0026C2.50414 65.6853 0 61.3645 0 56.684V27.2891z" />
-			</clipPath>
-		</svg>
+                    </div>
 
-		<!-- JavaScripts -->
-		<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
-		<script th:src="@{/js/plugins.js}"></script>
-		<script th:src="@{/js/common.js}"></script>
-		<script type="text/javascript">
-			var E = window.wangEditor;
-			var editor = new E('#edit-menu', '#wangEditor');
-			// 自定义功能按钮
-			editor.customConfig.menus = [
-				'head', // 标题
-				'bold', // 粗体
-				'fontSize', // 字号
-				'fontName', // 字体
-				'italic', // 斜体
-				'underline', // 下划线
-				'strikeThrough', // 删除线
-				'foreColor', // 文字颜色
-				'backColor', // 背景颜色
-				'link', // 插入链接
-				'list', // 列表
-				'justify', // 对齐方式
-				'emoticon', // 表情
-				'image', // 插入图片
-				'table', // 表格
-				'undo', // 撤销
-				'redo' // 重复
-			];
+                    <div class="box-inner box-inner--rounded ">
+                        <div class="row">
+                            <button type="button" class="btn" style="float: right;" id="uploadImg">上传</button>
+                        </div>
+                    </div>
 
-			editor.customConfig.uploadImgServer = '/uploads';
+                </div>
+                <!-- Footer -->
+                <footer class="footer">© 2019 ZSSXL</footer>
+            </div>
+        </div>
+    </div>
+</main>
 
-			editor.create();
-		</script>
-		<script>
-			$("#up-btn").click(function() {
-				$("#f").click();
-			})
+<div class="back-to-top"></div>
 
-			function change() {
-				var pic = document.getElementById("preview"),
-					file = document.getElementById("f");
-				var ext = file.value.substring(file.value.lastIndexOf(".") + 1).toLowerCase();
-				if (ext != 'png' && ext != 'jpg' && ext != 'jpeg') {
-					alert("图片的格式必须为png或者jpg或者jpeg格式！");
-					return;
-				}
-				var isIE = navigator.userAgent.match(/MSIE/) != null,
-					isIE6 = navigator.userAgent.match(/MSIE 6.0/) != null;
-				if (isIE) {
-					file.select();
-					var reallocalpath = document.selection.createRange().text;
-					if (isIE6) {
-						pic.src = reallocalpath;
-					} else {
-						pic.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='image',th:src=\"" +
-							reallocalpath + "\")";
-						pic.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
-					}
-				} else {
-					html5Reader(file);
-				}
-			}
+<!-- SVG masks -->
+<svg class="svg-defs">
+    <clipPath id="avatar-box">
+        <path d="M1.85379 38.4859C2.9221 18.6653 18.6653 2.92275 38.4858 1.85453 56.0986.905299 77.2792 0 94 0c16.721 0 37.901.905299 55.514 1.85453 19.821 1.06822 35.564 16.81077 36.632 36.63137C187.095 56.0922 188 77.267 188 94c0 16.733-.905 37.908-1.854 55.514-1.068 19.821-16.811 35.563-36.632 36.631C131.901 187.095 110.721 188 94 188c-16.7208 0-37.9014-.905-55.5142-1.855-19.8205-1.068-35.5637-16.81-36.63201-36.631C.904831 131.908 0 110.733 0 94c0-16.733.904831-37.9078 1.85379-55.5141z"/>
+    </clipPath>
+    <clipPath id="avatar-hexagon">
+        <path d="M0 27.2891c0-4.6662 2.4889-8.976 6.52491-11.2986L31.308 1.72845c3.98-2.290382 8.8697-2.305446 12.8637-.03963l25.234 14.31558C73.4807 18.3162 76 22.6478 76 27.3426V56.684c0 4.6805-2.5041 9.0013-6.5597 11.3186L44.4317 82.2915c-3.9869 2.278-8.8765 2.278-12.8634 0L6.55974 68.0026C2.50414 65.6853 0 61.3645 0 56.684V27.2891z"/>
+    </clipPath>
+</svg>
 
-			function html5Reader(file) {
-				var file = file.files[0];
-				var reader = new FileReader();
-				reader.readAsDataURL(file);
-				reader.onload = function(e) {
-					var pic = document.getElementById("preview");
-					pic.src = this.result;
-				}
-			}
-		</script>
-		<script type="text/javascript">
-			var files = [];
-			var that = this;
-			$("#upload").click(function() {
-				$("#file").trigger("click");
-			})
+<!-- JavaScripts -->
+<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<script th:src="@{/js/plugins.js}"></script>
+<script th:src="@{/js/common.js}"></script>
+<script type="text/javascript">
+    var E = window.wangEditor;
+    var editor = new E('#edit-menu', '#wangEditor');
+    // 自定义功能按钮
+    editor.customConfig.menus = [
+        'head', // 标题
+        'bold', // 粗体
+        'fontSize', // 字号
+        'fontName', // 字体
+        'italic', // 斜体
+        'underline', // 下划线
+        'strikeThrough', // 删除线
+        'foreColor', // 文字颜色
+        'backColor', // 背景颜色
+        'link', // 插入链接
+        'list', // 列表
+        'justify', // 对齐方式
+        'emoticon', // 表情
+        'image', // 插入图片
+        'table', // 表格
+        'undo', // 撤销
+        'redo' // 重复
+    ];
 
-			// 预览图片
-			$("#file").change(function() {
-				document.getElementById("gallery_list").innerHTML = "";
-				var img = document.getElementById("file").files;
-				
-				var galleryBox = $("<div class='gallery-grid js-masonry js-filter-container row'></div>").append($("<div class='gutter-sizer col-12 col-lg-12'></div>"));
-				
-				for (var i = 0; i < img.length; i++) {
-					var file = img[i];
-					var url = URL.createObjectURL(file);
+    editor.customConfig.uploadImgServer = '/uploads';
 
-					var box = $("<img class='gallery-grid__image cover lazyload' data-zoom alt=''></div>").attr("th:src", url);
+    editor.create();
+</script>
+<script>
+    $("#up-btn").click(function () {
+        $("#f").click();
+    })
 
-					var imgBox = $("<div class='gallery-grid__image-wrap'></div>").append(box);
+    function change() {
+        var pic = document.getElementById("preview"),
+            file = document.getElementById("f");
+        var ext = file.value.substring(file.value.lastIndexOf(".") + 1).toLowerCase();
+        if (ext != 'png' && ext != 'jpg' && ext != 'jpeg') {
+            alert("图片的格式必须为png或者jpg或者jpeg格式！");
+            return;
+        }
+        var isIE = navigator.userAgent.match(/MSIE/) != null,
+            isIE6 = navigator.userAgent.match(/MSIE 6.0/) != null;
+        if (isIE) {
+            file.select();
+            var reallocalpath = document.selection.createRange().text;
+            if (isIE6) {
+                pic.src = reallocalpath;
+            } else {
+                pic.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='image',th:src=\"" +
+                    reallocalpath + "\")";
+                pic.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+            }
+        } else {
+            html5Reader(file);
+        }
+    }
 
-					var figureBox = $("<figure class='gallery-grid_item col-12 col-lg-4'></figure>");
+    function html5Reader(file) {
+        var file = file.files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function (e) {
+            var pic = document.getElementById("preview");
+            pic.src = this.result;
+        }
+    }
+</script>
+<script type="text/javascript">
+    var files = [];
+    var that = this;
+    $("#upload").click(function () {
+        $("#file").trigger("click");
+    })
 
-					var deleteIcon = document.createElement("div");
-						deleteIcon.className = 'delete';
-						deleteIcon.innerText = 'delete';
-						deleteIcon.dataset.filename = img[i].name;
-						figureBox.append(deleteIcon).append(imgBox);
+    // 预览图片
+    $("#file").change(function () {
+        document.getElementById("gallery_list").innerHTML = "";
+        var img = document.getElementById("file").files;
 
-					/* var targetObj = figureBox.appendTo("#gallery"); */
-					galleryBox.append(figureBox);
+        var galleryBox = $("<div class='gallery-grid js-masonry js-filter-container row'></div>").append($("<div class='gutter-sizer col-12 col-lg-12'></div>"));
 
-					that.files = img;
-					$(deleteIcon).click(function() {
-						var filename = $(this).data("filename");
-						$(this).parent().remove();
-						var fileList = Array.from(that.files);
+        for (var i = 0; i < img.length; i++) {
+            var file = img[i];
+            var url = URL.createObjectURL(file);
 
-						for (var j = 0; j < fileList.length; j++) {
-							if (fileList[j].name = filename) {
-								fileList.splice(j, 1);
-								break;
-							}
-						}
-						that.files = fileList
-					})
-				}
-				
-				galleryBox.appendTo("#gallery_list");
-				$("#gallery_list").trigger("create");
-			});
-			
-			// 上传图片
-			 $("#uploadImg").click(function(){
-                var files = that.files;
-                var uploadFile = new FormData($("#formdata")[0]);
-				var count = 0;
-                for(var i=0;i<files.length;i++){
-                    uploadFile.append('imgs[]',files[i]);
-					count ++;
+            var box = $("<img class='gallery-grid__image cover lazyload' data-zoom alt=''></div>").attr("th:src", url);
+
+            var imgBox = $("<div class='gallery-grid__image-wrap'></div>").append(box);
+
+            var figureBox = $("<figure class='gallery-grid_item col-12 col-lg-4'></figure>");
+
+            var deleteIcon = document.createElement("div");
+            deleteIcon.className = 'delete';
+            deleteIcon.innerText = 'delete';
+            deleteIcon.dataset.filename = img[i].name;
+            figureBox.append(deleteIcon).append(imgBox);
+
+            /* var targetObj = figureBox.appendTo("#gallery"); */
+            galleryBox.append(figureBox);
+
+            that.files = img;
+            $(deleteIcon).click(function () {
+                var filename = $(this).data("filename");
+                $(this).parent().remove();
+                var fileList = Array.from(that.files);
+
+                for (var j = 0; j < fileList.length; j++) {
+                    if (fileList[j].name = filename) {
+                        fileList.splice(j, 1);
+                        break;
+                    }
                 }
-				console.log(count);
-				
-				var checkedValue = $("input:radio:checked").val();
-				console.log(checkedValue);
-				
-				
-               /* if("undefined" != typeof(uploadFile) && uploadFile != null && uploadFile != ""){
-                    $.ajax({
-                        url:'index.php',
-                        type:'POST',
-                        data:uploadFile,
-                        async: false,
-                        cache: false,
-                        contentType: false, //不设置内容类型
-                        processData: false, //不处理数据
-                        success:function(data){
+                that.files = fileList
+            })
+        }
 
-                        },
-                        error:function(){
-                            alert("上传失败！");
-                        }
-                    })
-                }else {
+        galleryBox.appendTo("#gallery_list");
+        $("#gallery_list").trigger("create");
+    });
 
-                } */
-            });
+    // 上传图片
+    $("#uploadImg").click(function () {
+        var files = that.files;
+        var uploadFile = new FormData($("#formdata")[0]);
+        var count = 0;
+        for (var i = 0; i < files.length; i++) {
+            uploadFile.append('imgs[]', files[i]);
+            count++;
+        }
+        console.log(count);
 
-		</script>
-	</body>
+        var checkedValue = $("input:radio:checked").val();
+        console.log(checkedValue);
+
+
+        /* if("undefined" != typeof(uploadFile) && uploadFile != null && uploadFile != ""){
+             $.ajax({
+                 url:'index.php',
+                 type:'POST',
+                 data:uploadFile,
+                 async: false,
+                 cache: false,
+                 contentType: false, //不设置内容类型
+                 processData: false, //不处理数据
+                 success:function(data){
+
+                 },
+                 error:function(){
+                     alert("上传失败！");
+                 }
+             })
+         }else {
+
+         } */
+    });
+
+</script>
+</body>
 </html>
