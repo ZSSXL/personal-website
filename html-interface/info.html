@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8" />
-		<title>Main</title>
+		<title>Info</title>
 
 		<!-- Meta Data -->
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -63,7 +63,9 @@
 						<div class="sidebar box pb-0 sticky-column">
 							<svg class="avatar avatar--180" viewBox="0 0 188 188">
 								<g class="avatar__box">
-								    <a href="info.html"><image data-toggle="tooltip" data-placement="right" title="点击头像查看个人信息" href="assets/img/avatar-1.jpg" height="100%" width="100%" /></a>
+									<a href="info.html">
+										<image data-toggle="tooltip" data-placement="right" title="点击头像查看个人信息" href="assets/img/avatar-1.jpg" height="100%"
+										 width="100%" /></a>
 								</g>
 							</svg>
 							<div class="text-center">
@@ -72,7 +74,7 @@
 
 								<!-- Social -->
 								<div class="social">
-									<a class="social__link" href="http://www.baidu.com/"1><i class="font-icon icon-smile"></i></a>
+									<a class="social__link" href="http://www.baidu.com/" 1><i class="font-icon icon-smile"></i></a>
 									<a class="social__link" href="https://github.com/"><i class="font-icon icon-github"></i></a>
 									<a class="social__link" href="https://www.google.com/"><i class="font-icon icon-google"></i></a>
 								</div>
@@ -141,48 +143,41 @@
 
 							<h2 class="title title--h3">基本信息</h2>
 
-							<form id="contact-form" class="contact-form" data-toggle="validator">
-								<div class="row">
-									<div class="form-group col-12 col-md-6">
-										<i class="font-icon icon-user"></i>
-										<input type="text" class="input input__icon form-control" id="nameContact" name="nameContact" placeholder="username"
-										 required="required" autocomplete="on" oninvalid="setCustomValidity('用户名不能为空')" onkeyup="setCustomValidity('')">
-										<div class="help-block with-errors"></div>
-									</div>
-									<div class="form-group col-12 col-md-6">
-										<i class="font-icon icon-envelope"></i>
-										<input type="email" class="input input__icon form-control" id="emailContact" name="emailContact" placeholder="Email address"
-										 required="required" autocomplete="on" oninvalid="setCustomValidity('邮箱不能为空')" onkeyup="setCustomValidity('')">
-										<div class="help-block with-errors"></div>
-									</div>
-									<div class="form-group col-12 col-md-6">
-										<i class="font-icon icon-phone"></i>
-										<input type="text" class="input input__icon form-control" id="phoneContact" name="phoneContact" placeholder="Phone"
-										 required="required" autocomplete="on" oninvalid="setCustomValidity('电话不能为空')" onkeyup="setCustomValidity('')">
-										<div class="help-block with-errors"></div>
-									</div>
-									<div class="form-group col-12 col-md-6">
-										<i class="font-icon icon-calendar"></i>
-										<input type="date" class="input input__icon form-control" id="birthContact" name="bitthContact" required="required"
-										 autocomplete="on" oninvalid="setCustomValidity('请选择生日')" onkeyup="setCustomValidity('')">
-										<div class="help-block with-errors"></div>
-									</div>
-									<div class="form-group col-12 col-md-12">
-										<i class="font-icon icon-like"></i>
-										<textarea class="input__icon form-control" id="messageContact" name="messageContact" placeholder="心情(不超过14个字)"
-										 rows="1" required="required" oninvalid="setCustomValidity('Fill in the field')" onkeyup="setCustomValidity('')"></textarea>
-										<div class="help-block with-errors"></div>
+							<div class="row">
+								<div class="form-group col-12 col-md-6">
+									<i class="font-icon icon-user"></i>
+									<input type="text" class="input input__icon form-control" id="nameContact" placeholder="username">
+								</div>
+								<div class="form-group col-12 col-md-6">
+									<i class="font-icon icon-envelope"></i>
+									<input type="email" class="input input__icon form-control" id="emailContact" placeholder="Email address">
+								</div>
+								<div class="form-group col-12 col-md-6">
+									<i class="font-icon icon-phone"></i>
+									<input type="text" class="input input__icon form-control" id="phoneContact" placeholder="Phone">
+								</div>
+								<div class="form-group col-12 col-md-6">
+									<i class="font-icon icon-calendar"></i>
+									<input type="date" class="input input__icon form-control" id="birthContact" required="required">
+								</div>
+								<div class="form-group col-12 col-md-12">
+									<i class="font-icon icon-like"></i>
+									<textarea class="input__icon form-control" id="moodContact" placeholder="心情(不超过14个字)" rows="1"></textarea>
+								</div>
+								<div class="col-12 col-md-12">
+									<div class="row  align-items-center" data-toggle="distpicker" id="distpicker">
+										<i class="font-icon icon-location col-1 col-lg-1"></i>
+										<select class="col-10 col-lg-3" id="province"></select>
+										<select class="col-12 col-lg-4" id="city"></select>
+										<select class="col-12 col-lg-4" id="district"></select>
 									</div>
 								</div>
-								<div class="row">
-									<div class="col-12 col-md-6 order-2 order-md-1 text-center text-md-left">
-										<div id="validator-contact" class="hidden"></div>
-									</div>
-									<div class="col-12 col-md-6 order-1 order-md-2 text-right">
-										<button type="submit" class="btn"><i class="font-icon icon-send"></i>修改基本信息</button>
-									</div>
+							</div>
+							<div class="row" style="margin-top: 5px;">
+								<div class="col-12 col-md-12" style="text-align: right;">
+									<button class="btn" id="modify-info" style="margin-right: 0;"><i class="font-icon icon-send"></i>修改基本信息</button>
 								</div>
-							</form>
+							</div>
 
 							<div class="box-inner">
 								<h2>修改密码</h2>
@@ -193,20 +188,20 @@
 								<div class="row">
 									<div class="form-group col-12 col-lg-6">
 										<i class="font-icon"><i class="fa fa-lock"> </i></i>
-										<input type="password" class="input input__icon form-control" id="birthContact" name="bitthContact"
-										 placeholder="输入密码" required="required" autocomplete="on" oninvalid="setCustomValidity('请输入密码')" onkeyup="setCustomValidity('')">
+										<input type="password" class="input input__icon form-control" id="password" name="password" placeholder="输入密码"
+										 required="required" autocomplete="on" oninvalid="setCustomValidity('请输入密码')" onkeyup="setCustomValidity('')">
 										<div class="help-block with-errors"></div>
 									</div>
 									<div class="form-group col-12 col-lg-6">
 										<i class="font-icon"><i class="fa fa-lock"> </i></i>
-										<input type="password" class="input input__icon form-control" id="birthContact" name="bitthContact"
+										<input type="password" class="input input__icon form-control" id="password-confirm" name="passwordConfirm"
 										 placeholder="确认密码" required="required" autocomplete="on" oninvalid="setCustomValidity('请确认密码')" onkeyup="setCustomValidity('')">
 										<div class="help-block with-errors"></div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-12 col-md-12 order-1 order-md-2 text-right">
-										<button class="btn btn-primary"><i class="font-icon icon-send"></i>修改密码</button>
+										<button class="btn btn-primary" id="modify-pass"><i class="font-icon icon-send"></i>修改密码</button>
 									</div>
 								</div>
 
@@ -237,7 +232,12 @@
 		<script src="assets/js/jquery-3.4.1.min.js"></script>
 		<script src="assets/js/plugins.js"></script>
 		<script src="assets/js/common.js"></script>
+		<script class="resources library" src="assets/js/distpicker.js" type="text/javascript"></script>
 
+		<!-- 省市县三级联动 -->
+
+
+		<!-- 上传头像 -->
 		<script type="text/javascript">
 			$("#changeHeadImg").click(function() {
 				$("#file").trigger("click");
@@ -246,6 +246,47 @@
 			$("#file").change(function() {
 				var url = URL.createObjectURL(this.files[0]);
 				$("#headImg").attr("src", url);
+			});
+		</script>
+		<script type="text/javascript">
+			$("#modify-info").click(function() {
+				var province = $("#province").val();
+				var city = $("#city").val();
+				var county = $("#district").val();
+				var name = $("#nameContact").val();
+				var email = $("#emailContact").val();
+				var phone = $("#phoneContact").val();
+				var birth = $("#birthContact").val();
+				var mood = $("#moodContact").val();
+
+				var data = {
+					province,
+					city,
+					county,
+					name,
+					email,
+					phone,
+					birth,
+					mood
+				};
+				console.log(data);
+			});
+		</script>
+
+		<script type="text/javascript">
+			$("#modify-pass").click(function() {
+				var password = $("#password").val();
+				var passwordConfirm = $("#password-confirm").val();
+				var data = {password,passwordConfirm};
+				console.log(data);
+				
+				$("#distpicker").distpicker("destroy");
+				
+				$("#distpicker").distpicker({
+					province: "浙江省",
+					city: "杭州市",
+					district: "西湖区"
+				})
 			});
 		</script>
 	</body>

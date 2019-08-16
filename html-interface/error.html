@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 	<head>
 		<meta charset="utf-8" />
@@ -18,29 +18,29 @@
 		<meta name="twitter:site" content="@ArtTemplates">
 		<meta name="twitter:title" content="vCard">
 		<meta name="twitter:description" content="vCard">
-		<meta name="twitter:image" th:attr="content=@{/images/social.jpg}">
+		<meta name="twitter:image" content="assets/images/social.jpg">
 
 		<!-- Open Graph data -->
 		<meta property="og:title" content="ArtTemplate" />
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content="your url website" />
-		<meta property="og:image" th:attr="content=@{/images/social.jpg}"/>
+		<meta property="og:image" content="assets/images/social.jpg" />
 		<meta property="og:description" content="vCard" />
 		<meta property="og:site_name" content="vCard" />
 
 		<!-- Favicons -->
-		<link rel="apple-touch-icon" sizes="144x144" th:href="@{/images/favicons/apple-touch-icon-144x144.png}">
-		<link rel="apple-touch-icon" sizes="114x114" th:href="@{/images/favicons/apple-touch-icon-114x114.png}">
-		<link rel="apple-touch-icon" sizes="72x72" th:href="@{/images/favicons/apple-touch-icon-72x72.png}">
-		<link rel="apple-touch-icon" sizes="57x57" th:href="@{/images/favicons/apple-touch-icon-57x57.png}">
-		<link rel="shortcut icon" th:href="@{/images/favicons/favicon.png}" type="image/png">
+		<link rel="apple-touch-icon" sizes="144x144" href="assets/images/favicons/apple-touch-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="assets/images/favicons/apple-touch-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="assets/images/favicons/apple-touch-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicons/apple-touch-icon-57x57.png">
+		<link rel="shortcut icon" href="assets/images/favicons/favicon.png" type="image/png">
 
 		<!-- Font Awesome -->
-		<link rel="stylesheet" type="text/css" th:href="@{/libs/font-awesome-4.7.0/css/font-awesome.min.css}" />
+		<link rel="stylesheet" type="text/css" href="assets/libs/font-awesome-4.7.0/css/font-awesome.min.css" />
 
 		<!-- Styles -->
-		<link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}" />
-		<link rel="stylesheet" type="text/css" th:href="@{/layui/css/layui.css}" />
+		<link rel="stylesheet" type="text/css" href="assets/styles/style.css" />
+		<link rel="stylesheet" type="text/css" href="assets/layui/css/layui.css" />
 
 		<style type="text/css">
 			footer {
@@ -121,9 +121,9 @@
 		</svg>
 
 		<!-- JavaScripts -->
-		<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
-		<script th:src="@{/js/plugins.js}"></script>
-		<script th:src="@{/js/common.js}"></script>
+		<script src="assets/js/jquery-3.4.1.min.js"></script>
+		<script src="assets/js/plugins.js"></script>
+		<script src="assets/js/common.js"></script>
 		<script type="text/javascript">
 			$("#login-btn").click(function() {
 				var username = $("#nameContact").val();
@@ -134,7 +134,6 @@
 				} else {
 					console.log("用户名%s,密码%s", username, password);
 					alert("登录成功");
-					window.location.href = "/error.html";
 				}
 			});
 		</script>
