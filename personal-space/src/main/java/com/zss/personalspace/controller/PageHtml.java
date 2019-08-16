@@ -1,6 +1,8 @@
 package com.zss.personalspace.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * @author ZSS
@@ -9,5 +11,15 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 public class PageHtml {
+
+    /**
+     * 页面跳转
+     * @param page page
+     * @return String
+     */
+    @GetMapping("/{page}")
+    public String helloHtml(@PathVariable String page) {
+        return page;
+    }
 
 }
