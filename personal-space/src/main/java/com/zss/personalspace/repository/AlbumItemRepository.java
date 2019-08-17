@@ -1,5 +1,6 @@
 package com.zss.personalspace.repository;
 
+import com.zss.personalspace.entity.AlbumItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,5 +10,5 @@ import org.springframework.stereotype.Repository;
  * @description 相册详情持久化
  **/
 @Repository
-public interface AlbumItemRepository extends JpaRepository<AlbumRepository, String> {
+public interface AlbumItemRepository extends JpaRepository<AlbumItem, String> {
 }

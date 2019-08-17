@@ -7,8 +7,9 @@ package com.zss.personalspace.common;
 public enum ResponseCode {
 
     SUCCESS(200, "SUCCESS"),
-    ERROR(400, "ERROR"),
-    NEED_LOGIN(402, "NEED_LOGIN"),
+    ERROR(404, "ERROR"),
+    NEED_LOGIN(401, "NEED_LOGIN"),
+    PARAM_ERROR(402, "PARAM_ERROR"),
     ILLEGAL_ARGUMENT(403, "ILLEGAL_ARGUMENT");
 
     private final int code;

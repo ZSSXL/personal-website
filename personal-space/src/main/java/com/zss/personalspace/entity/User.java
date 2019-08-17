@@ -75,7 +75,7 @@ public class User implements Serializable {
     /**
      * 头像
      */
-    @Column(columnDefinition = "varchar(20) comment '头像'")
+    @Column(columnDefinition = "varchar(255) comment '头像'")
     private String headImg;
 
     /**

@@ -37,6 +37,12 @@ public class Account implements Serializable {
     private String userId;
 
     /**
+     * 用户名
+     */
+    @Column(nullable = false, columnDefinition = "varchar(50) comment '用户名'")
+    private String username;
+
+    /**
      * 用户密码
      */
     @Column(nullable = false, columnDefinition = "varchar(255) comment '用户密码'")

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="utf-8"/>
     <title>Login</title>
@@ -76,35 +75,30 @@
                     </div>
 
                     <!-- What -->
-                    <form class="contact-form" data-toggle="validator">
-                        <div class="row">
-                            <div class="form-group col-12 col-md-12">
-                                <i class="font-icon icon-user"></i>
-                                <input type="text" class="input input__icon form-control" id="nameContact"
-                                       name="nameContact" placeholder="username"
-                                       required="required" autocomplete="on" oninvalid="setCustomValidity('用户名不能为空')"
-                                       onkeyup="setCustomValidity('')"
-                                       autofocus="autofocus"/>
-                                <div class="help-block with-errors"></div>
-                            </div>
-                            <div class="form-group col-12 col-md-12">
-                                <i class="font-icon"><i class="fa fa-key"></i></i>
-                                <input type="password" class="input input__icon form-control" id="passwordContact"
-                                       name="passwordContact"
-                                       placeholder="password" required="required" autocomplete="on"
-                                       oninvalid="setCustomValidity('请输入密码')" onkeyup="setCustomValidity('')">
-                                <div class="help-block with-errors"></div>
-                            </div>
+                    <div class="row">
+                        <div class="form-group col-12 col-md-12">
+                            <i class="font-icon icon-user"></i>
+                            <input type="text" class="input input__icon form-control" id="nameContact"
+                                   name="nameContact" placeholder="username" autofocus="autofocus"/>
+                            <div class="help-block with-errors"></div>
                         </div>
-                        <div class="row">
-                            <div class="col-12 col-md-6 order-2 order-md-1 text-center text-md-left">
-                                <div id="validator-contact" class="hidden"></div>
-                            </div>
-                            <div class="col-12 col-lg-12">
-                                <button class="btn" id="login-btn" style="float:right;">登录</button>
-                            </div>
+                        <div class="form-group col-12 col-md-12">
+                            <i class="font-icon"><i class="fa fa-key"></i></i>
+                            <input type="password" class="input input__icon form-control" id="passwordContact"
+                                   name="passwordContact"
+                                   placeholder="password" required="required" autocomplete="on"
+                                   oninvalid="setCustomValidity('请输入密码')" onkeyup="setCustomValidity('')">
+                            <div class="help-block with-errors"></div>
                         </div>
-                    </form>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6 order-2 order-md-1 text-center text-md-left">
+                            <div id="validator-contact" class="hidden"></div>
+                        </div>
+                        <div class="col-12 col-lg-12">
+                            <button class="btn" id="login-btn" style="float:right;">登录</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -136,11 +130,30 @@
         if (username == "" || password == "") {
             console.log("用户名或密码不能为空");
         } else {
-            console.log("用户名%s,密码%s", username, password);
-            alert("登录成功");
-            window.location.href = "/error.html";
+            var data = {username, password};
+            login(data);
         }
     });
+
+    function login(data) {
+        $.ajax({
+            url: "/api/account",
+            contentType: "application/json;charset=utf-8",
+            type: "post",
+            dataType: "json",
+            data: JSON.stringify(data),
+            success: function (result) {
+                console.log(result)
+                if(result.status == 200){
+                    window.location.href = "/index";
+                }else if(result.status == 404){
+                    alert("登录失败");
+                    window.location.reload();
+                }
+            }
+
+        });
+    }
 </script>
 </body>
 </html>
