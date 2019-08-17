@@ -43,10 +43,7 @@
     <link th:href="@{https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900}" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
     <link rel="stylesheet" th:href="@{/css/flaticon.css}">
-
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}"/>
-
-    <script th:src="@{/wangEdit/wangEditor.min.js}"></script>
 
     <style type="text/css">
         .delete {
@@ -212,27 +209,27 @@
                             <div class="col-12 col-lg-12">
                                 <div class="case-item box box__second">
                                     <div>
-                                        <input class="blue" type="radio" name="radio-gruop" value="life" checked/>
+                                        <input class="blue" type="radio" value="life" checked/>
                                         <span>生活</span>
                                     </div>
                                     <div>
-                                        <input class="blue" type="radio" name="radio-gruop" value="tourism"/>
+                                        <input class="blue" type="radio" value="tourism"/>
                                         <span>旅游</span>
                                     </div>
                                     <div>
-                                        <input class="blue" type="radio" name="radio-gruop" value="food"/>
+                                        <input class="blue" type="radio" value="food"/>
                                         <span>美食</span>
                                     </div>
                                     <div>
-                                        <input class="blue" type="radio" name="radio-gruop" value="study"/>
+                                        <input class="blue" type="radio" value="study"/>
                                         <span>学习</span>
                                     </div>
                                     <div>
-                                        <input class="blue" type="radio" name="radio-gruop" value="movie"/>
+                                        <input class="blue" type="radio" value="movie"/>
                                         <span>电影</span>
                                     </div>
                                     <div>
-                                        <input class="blue" type="radio" name="radio-gruop" value="love"/>
+                                        <input class="blue" type="radio" value="love"/>
                                         <span>哈尼</span>
                                     </div>
                                 </div>
@@ -284,38 +281,28 @@
 <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
 <script th:src="@{/js/plugins.js}"></script>
 <script th:src="@{/js/common.js}"></script>
+
+<!-- 判断是否登录 -->
 <script type="text/javascript">
-    var E = window.wangEditor;
-    var editor = new E('#edit-menu', '#wangEditor');
-    // 自定义功能按钮
-    editor.customConfig.menus = [
-        'head', // 标题
-        'bold', // 粗体
-        'fontSize', // 字号
-        'fontName', // 字体
-        'italic', // 斜体
-        'underline', // 下划线
-        'strikeThrough', // 删除线
-        'foreColor', // 文字颜色
-        'backColor', // 背景颜色
-        'link', // 插入链接
-        'list', // 列表
-        'justify', // 对齐方式
-        'emoticon', // 表情
-        'image', // 插入图片
-        'table', // 表格
-        'undo', // 撤销
-        'redo' // 重复
-    ];
-
-    editor.customConfig.uploadImgServer = '/uploads';
-
-    editor.create();
+    window.onload = function(){
+        localStorage.removeItem("username");
+        $.ajax({
+            url:"/api/util/isLogin",
+            type:"post",
+            success:function(result){
+                if(result.status == 401){
+                    window.location.href = "/login";
+                }
+            }
+        })
+    }
 </script>
-<script>
+
+<!-- 上传主图并预览 -->
+<script type="text/javascript">
     $("#up-btn").click(function () {
         $("#f").click();
-    })
+    });
 
     function change() {
         var pic = document.getElementById("preview"),
@@ -333,7 +320,7 @@
             if (isIE6) {
                 pic.src = reallocalpath;
             } else {
-                pic.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='image',th:src=\"" +
+                pic.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='image', src=\"" +
                     reallocalpath + "\")";
                 pic.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
             }
@@ -352,6 +339,8 @@
         }
     }
 </script>
+
+<!-- 上传多张图片并预览 -->
 <script type="text/javascript">
     var files = [];
     var that = this;
@@ -366,11 +355,17 @@
 
         var galleryBox = $("<div class='gallery-grid js-masonry js-filter-container row'></div>").append($("<div class='gutter-sizer col-12 col-lg-12'></div>"));
 
+
         for (var i = 0; i < img.length; i++) {
             var file = img[i];
+
+            var reader = new FileReader();
+
+            reader.readAsDataURL(file);
+
             var url = URL.createObjectURL(file);
 
-            var box = $("<img class='gallery-grid__image cover lazyload' data-zoom alt=''></div>").attr("th:src", url);
+            var box = $("<img class='gallery-grid__image cover lazyload' data-zoom alt=''></div>").attr("src", url);
 
             var imgBox = $("<div class='gallery-grid__image-wrap'></div>").append(box);
 
@@ -382,7 +377,6 @@
             deleteIcon.dataset.filename = img[i].name;
             figureBox.append(deleteIcon).append(imgBox);
 
-            /* var targetObj = figureBox.appendTo("#gallery"); */
             galleryBox.append(figureBox);
 
             that.files = img;
