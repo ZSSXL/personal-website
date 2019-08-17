@@ -5,9 +5,9 @@ import org.springframework.stereotype.Repository;
 
 /**
  * @author ZSS
- * @date 2019/8/16 19:23
- * @description 相册详情持久化
+ * @date 2019/8/16 19:22
+ * @description 相册持久化
  **/
 @Repository
-public interface AlbumItemRepository extends JpaRepository<AlbumRepository, String> {
+public interface AlbumRepository extends JpaRepository<AlbumRepository, String> {
 }
