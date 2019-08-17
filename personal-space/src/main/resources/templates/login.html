@@ -127,8 +127,8 @@
 <script type="text/javascript">
     window.onload = function () {
         $.ajax({
-            url:"/api/util/logout",
-            type:"post",
+            url: "/api/util/logout",
+            type: "post",
         });
     }
 </script>
@@ -155,9 +155,9 @@
             dataType: "json",
             data: JSON.stringify(data),
             success: function (result) {
-                if(result.status == 200){
+                if (result.status == 200) {
                     window.location.href = "/index";
-                }else if(result.status == 404){
+                } else if (result.status == 404) {
                     alert("登录失败");
                     window.location.reload();
                 }

@@ -342,7 +342,7 @@
         $.ajax({
             url: "/api/util/logout",
             type: "post",
-            success:function (result) {
+            success: function (result) {
                 if (result.status == 200) {
                     window.location.href = "/login";
                 }

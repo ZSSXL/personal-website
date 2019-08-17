@@ -112,7 +112,8 @@
                         <button class="btn btn-danger btn-sm" id="logout-btn">注销登陆</button>
                     </div>
                 </div>
-            </aside>>
+            </aside>
+            >
             </aside>
 
             <!-- Content -->
@@ -230,7 +231,7 @@
         $.ajax({
             url: "/api/util/logout",
             type: "post",
-            success:function (result) {
+            success: function (result) {
                 if (result.status == 200) {
                     window.location.href = "/login";
                 }
