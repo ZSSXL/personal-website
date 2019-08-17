@@ -101,7 +101,7 @@ public class UserController {
      */
     @PutMapping
     public ServerResponse updateUser(HttpSession session
-            , @Valid @RequestBody UserAccountVo userAccountVo
+            , @Valid UserAccountVo userAccountVo
             , @RequestParam(value = "file", required = false) MultipartFile file
             , BindingResult result
             , HttpServletRequest request) {
@@ -113,10 +113,16 @@ public class UserController {
         } else {
             // 更新头像
             String url = uploadHeadImg(file, request);
+
+            // 如果是空，就用原来的头像
+            if (url == null) {
+                url = userAccount.getHeadImg();
+            }
+
             try {
                 // 更新用户信息
                 userService.createUser(User.builder()
-                        .userId(userAccountVo.getUserId())
+                        .userId(userAccount.getUserId())
                         .username(userAccountVo.getUsername())
                         .birthday(userAccountVo.getBirthday())
                         .address(userAccountVo.getAddress())
@@ -125,41 +131,13 @@ public class UserController {
                         .mood(userAccountVo.getMood())
                         .headImg(url)
                         .build());
-                return ServerResponse.createBySuccessMessage("创建成功");
+                userAccountVo.setUserId(userAccount.getUserId());
+                userAccountVo.setHeadImg(url);
+                session.setAttribute(Const.CURRENT_USER, userAccountVo);
+                return ServerResponse.createBySuccessMessage("更新成功");
             } catch (Exception e) {
                 e.printStackTrace();
                 return ServerResponse.createByError();
-            }
-        }
-    }
-
-    /**
-     * 修改密码
-     *
-     * @param session  session
-     * @param password 新密码
-     * @return ServerResponse
-     */
-    public ServerResponse modifyPass(HttpSession session, String password) {
-        UserAccountVo userAccount = (UserAccountVo) session.getAttribute(Const.CURRENT_USER);
-        if (userAccount == null) {
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.PARAM_ERROR.getCode(), ResponseCode.PARAM_ERROR.getDesc());
-        } else {
-            Account account = accountService.getAccount(userAccount.getUsername(), password);
-            if (account != null) {
-                return ServerResponse.createByErrorMessage("新老密码不能一样");
-            } else {
-                try{
-                    // 创建Account
-                    accountService.createAccount(Account.builder()
-                            .userId(userAccount.getUserId())
-                            .password(EncryptionUtil.MD5EncodeUtf8(password))
-                            .build());
-                    return ServerResponse.createBySuccessMessage("修改密码成功");
-                }catch (Exception e){
-                    e.printStackTrace();
-                    return ServerResponse.createByError();
-                }
             }
         }
     }

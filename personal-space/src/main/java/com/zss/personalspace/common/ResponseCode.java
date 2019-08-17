@@ -10,7 +10,7 @@ public enum ResponseCode {
     ERROR(404, "ERROR"),
     NEED_LOGIN(401, "NEED_LOGIN"),
     PARAM_ERROR(402, "PARAM_ERROR"),
-    ILLEGAL_ARGUMENT(403, "ILLEGAL_ARGUMENT");
+    SAME_PASSWORD(100, "SAME_PASSWORD");
 
     private final int code;
     private final String desc;

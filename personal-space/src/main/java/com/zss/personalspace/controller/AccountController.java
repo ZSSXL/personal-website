@@ -13,10 +13,7 @@ import com.zss.personalspace.vo.UserAccountVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -74,6 +71,39 @@ public class AccountController {
                     session.setAttribute(Const.CURRENT_USER, userAccountVo);
                     log.info("登录成功");
                     return ServerResponse.createBySuccess("登录成功");
+                }
+            }
+        }
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param session  session
+     * @param password 新密码
+     * @return ServerResponse
+     */
+    @PutMapping
+    public ServerResponse modifyPass(HttpSession session, @RequestParam("password") String password) {
+        UserAccountVo userAccount = (UserAccountVo) session.getAttribute(Const.CURRENT_USER);
+        if (userAccount == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.PARAM_ERROR.getCode(), ResponseCode.PARAM_ERROR.getDesc());
+        } else {
+            Account account = accountService.getAccount(userAccount.getUsername(), EncryptionUtil.MD5EncodeUtf8(password));
+            if (account != null) {
+                return ServerResponse.createByErrorCodeMessage(ResponseCode.SAME_PASSWORD.getCode(), "新老密码不能一样");
+            } else {
+                try {
+                    // 创建Account
+                    accountService.createAccount(Account.builder()
+                            .userId(userAccount.getUserId())
+                            .username(userAccount.getUsername())
+                            .password(EncryptionUtil.MD5EncodeUtf8(password))
+                            .build());
+                    return ServerResponse.createBySuccessMessage("修改密码成功");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return ServerResponse.createByError();
                 }
             }
         }

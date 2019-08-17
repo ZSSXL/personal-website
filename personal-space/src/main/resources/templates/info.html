@@ -271,9 +271,8 @@
 <script th:src="@{/js/common.js}"></script>
 
 <!-- 判断是否登录 -->
-<script th:inline="javascript">
+<script th:inline="javascript" type="text/javascript">
     window.onload = function () {
-
         $.ajax({
             url: "/api/util/isLogin",
             type: "post",
@@ -284,7 +283,7 @@
                     // 将地址显示在三级联动
                     var address = "";
                     address = [[${session.current_user.address}]];
-                    var item = address.split("，");
+                    var item = address.split(" ");
                     $("#distpicker").distpicker("destroy");
                     $("#distpicker").distpicker({
                         province: item[0],
@@ -298,15 +297,15 @@
 
     // 退出登录
     $("#logout-btn").click(function () {
-       $.ajax({
-           url: "/api/util/logout",
-           type: "post",
-           success:function (result) {
-               if (result.status == 200) {
-                   window.location.href = "/login";
-               }
-           }
-       })
+        $.ajax({
+            url: "/api/util/logout",
+            type: "post",
+            success: function (result) {
+                if (result.status == 200) {
+                    window.location.href = "/login";
+                }
+            }
+        })
     });
 </script>
 
@@ -327,28 +326,82 @@
 <!-- 修改基本信息 -->
 <script type="text/javascript">
     $("#modify-info").click(function () {
-        var province = $("#s_province").val();
-        var city = $("#s_city").val();
-        var county = $("#s_county").val();
+        // 拼地址
+        var address = $("#province").val() + " " + $("#city").val() + " " + $("#district").val();
+
         var name = $("#nameContact").val();
         var email = $("#emailContact").val();
         var phone = $("#phoneContact").val();
         var birth = $("#birthContact").val();
         var mood = $("#moodContact").val();
+        var file = $("#file")[0].files[0];
 
-        var data = {province, city, county, name, email, phone, birth, mood};
-        console.log(data);
+        var formData = new FormData();
+
+        formData.append("username", name);
+        formData.append("birthday", birth);
+        formData.append("address", address);
+        formData.append("phone", phone);
+        formData.append("email", email);
+        formData.append("mood", mood);
+        formData.append("file", file);
+
+        $.ajax({
+            url: "/api/user",
+            type: "PUT",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            mimeType: "multipart/form-data",
+            data: formData,
+            success: function (result) {
+                console.log(result);
+                if (result.status == 200) {
+                    alert(result.msg);
+                    window.location.reload();
+                } else {
+                    window.location.href = "/error.html";
+                }
+            }
+        });
+
     });
 </script>
 
 <!-- 修改密码 -->
 <script type="text/javascript">
-    $("#modify-pass").click(function () {
-        var password = $("#password").val();
-        var passwordConfirm = $("#password-confirm").val();
 
-        var data = {password, passwordConfirm};
-        console.log(data);
+    var password = "";
+
+    $("#password-confirm").change(function () {
+        password = $("#password").val();
+        if (password != $(this).val()) {
+            alert("新密码与确认密码不一致");
+            $(this).val("");
+            $(this).focus();
+        }
+    });
+
+    $("#modify-pass").click(function () {
+
+        $.ajax({
+
+            url: "/api/account?password=" + password,
+            type: "put",
+            success: function (result) {
+                if (result.status == 200) {
+                    alert("密码修改成功");
+                    window.location.href = "/login";
+                } else if (result.status == 100) {
+                    alert(result.msg);
+                    window.location.reload();
+                } else {
+                    window.location.href = "/error.html";
+                }
+            }
+        })
+
     });
 </script>
 </body>

@@ -155,7 +155,6 @@
             dataType: "json",
             data: JSON.stringify(data),
             success: function (result) {
-                console.log(result)
                 if(result.status == 200){
                     window.location.href = "/index";
                 }else if(result.status == 404){
