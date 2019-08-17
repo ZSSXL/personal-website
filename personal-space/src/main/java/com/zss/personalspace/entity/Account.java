@@ -39,7 +39,7 @@ public class Account implements Serializable {
     /**
      * 用户名
      */
-    @Column(nullable = false, columnDefinition = "varchar(50) comment '用户名'")
+    @Column(unique = true, nullable = false, columnDefinition = "varchar(50) comment '用户名'")
     private String username;
 
     /**

@@ -61,15 +61,19 @@
                     <svg class="avatar avatar--180" viewBox="0 0 188 188">
                         <g class="avatar__box">
                             <a th:href="@{/info}">
-                                <image data-toggle="tooltip" data-placement="right" title="点击头像查看个人信息" th:if="${session.current_user != null}"
+                                <image data-toggle="tooltip" data-placement="right" title="点击头像查看个人信息"
+                                       th:if="${session.current_user != null}"
                                        th:href="${session.current_user.headImg}" height="100%" width="100%"/>
                             </a>
                         </g>
                     </svg>
                     <div class="text-center">
-                        <h3 class="title title--h3 sidebar__user-name"><span class="weight--500" th:if="${session.current_user != null}" th:text="${session.current_user.username}"></span>
+                        <h3 class="title title--h3 sidebar__user-name"><span class="weight--500"
+                                                                             th:if="${session.current_user != null}"
+                                                                             th:text="${session.current_user.username}"></span>
                         </h3>
-                        <div class="badge badge--gray" th:if="${session.current_user != null}" th:text="${session.current_user.mood}"></div>
+                        <div class="badge badge--gray" th:if="${session.current_user != null}"
+                             th:text="${session.current_user.mood}"></div>
 
                         <!-- Social -->
                         <div class="social">
@@ -87,22 +91,26 @@
                             <li class="contacts-block__item" data-toggle="tooltip" data-placement="top"
                                 title="Birthday">
                                 <i class="font-icon icon-calendar"></i>
-                                <span th:if="${session.current_user != null}" th:text="${session.current_user.birthday}"></span>
+                                <span th:if="${session.current_user != null}"
+                                      th:text="${session.current_user.birthday}"></span>
                             </li>
                             <li class="contacts-block__item" data-toggle="tooltip" data-placement="top" title="Address">
                                 <i class="font-icon icon-location"></i>
-                                <span th:if="${session.current_user != null}" th:text="${session.current_user.address}"></span>
+                                <span th:if="${session.current_user != null}"
+                                      th:text="${session.current_user.address}"></span>
                             </li>
                             <li class="contacts-block__item" data-toggle="tooltip" data-placement="top" title="E-mail">
                                 <i class="font-icon icon-envelope"></i>
-                                <span th:if="${session.current_user != null}" th:text="${session.current_user.email}"></span>
+                                <span th:if="${session.current_user != null}"
+                                      th:text="${session.current_user.email}"></span>
                             </li>
                             <li class="contacts-block__item" data-toggle="tooltip" data-placement="top" title="Phone">
                                 <i class="font-icon icon-phone"></i>
-                                <span th:if="${session.current_user != null}" th:text="${session.current_user.phone}"></span>
+                                <span th:if="${session.current_user != null}"
+                                      th:text="${session.current_user.phone}"></span>
                             </li>
                         </ul>
-                        <a class="btn btn-danger btn-sm" th:href="@{#}">注销登陆</a>
+                        <button class="btn btn-danger btn-sm" id="logout-btn">注销登陆</button>
                     </div>
                 </div>
             </aside>
@@ -175,7 +183,8 @@
                                 <div class="swiper-slide review-item">
                                     <svg class="avatar avatar--80" viewBox="0 0 84 84">
                                         <g class="avatar__hexagon">
-                                            <image th:href="@{http://60.205.179.156/images/boy.jpg}" height="100%" width="100%"/>
+                                            <image th:href="@{http://60.205.179.156/images/boy.jpg}" height="100%"
+                                                   width="100%"/>
                                         </g>
                                     </svg>
                                     <h4 class="title title--h5">小明</h4>
@@ -187,7 +196,8 @@
                                 <div class="swiper-slide review-item">
                                     <svg class="avatar avatar--80" viewBox="0 0 84 84">
                                         <g class="avatar__hexagon">
-                                            <image th:href="@{http://60.205.179.156/images/girl.jpg}" height="100%" width="100%"/>
+                                            <image th:href="@{http://60.205.179.156/images/girl.jpg}" height="100%"
+                                                   width="100%"/>
                                         </g>
                                     </svg>
                                     <h4 class="title title--h5">小芳</h4>
@@ -268,18 +278,30 @@
 
 <!-- 判断是否登录 -->
 <script type="text/javascript">
-    window.onload = function(){
-        localStorage.removeItem("username");
+    window.onload = function () {
         $.ajax({
-            url:"/api/util/isLogin",
-            type:"post",
-            success:function(result){
-               if(result.status == 401){
-                   window.location.href = "/login";
-               }
+            url: "/api/util/isLogin",
+            type: "post",
+            success: function (result) {
+                if (result.status == 401) {
+                    window.location.href = "/login";
+                }
             }
         })
-    }
+    };
+
+    // 退出登录
+    $("#logout-btn").click(function () {
+        $.ajax({
+            url: "/api/util/logout",
+            type: "post",
+            success:function (result) {
+                if (result.status == 200) {
+                    window.location.href = "/login";
+                }
+            }
+        })
+    });
 </script>
 
 

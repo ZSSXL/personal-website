@@ -1,5 +1,6 @@
 package com.zss.personalspace.controller;
 
+import com.zss.personalspace.common.Const;
 import com.zss.personalspace.common.ResponseCode;
 import com.zss.personalspace.common.ServerResponse;
 import com.zss.personalspace.config.FtpProperties;
@@ -11,6 +12,7 @@ import com.zss.personalspace.service.UserService;
 import com.zss.personalspace.util.EncryptionUtil;
 import com.zss.personalspace.util.UUIDUtil;
 import com.zss.personalspace.vo.RegisterVo;
+import com.zss.personalspace.vo.UserAccountVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 /**
@@ -56,16 +59,7 @@ public class UserController {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.PARAM_ERROR.getCode(), ResponseCode.PARAM_ERROR.getDesc());
         } else {
             // 上传头像
-            String path = request.getSession().getServletContext().getRealPath("upload");
-            if (file != null) {
-                String targetFileName = fileService.upload(file, path);
-                log.info("上传文件成功:" + targetFileName);
-                String url = FtpProperties.HTTP_PREFIX + targetFileName;
-                // 提交给register
-                registerVo.setHeadImg(url);
-            } else {
-                registerVo.setHeadImg(null);
-            }
+            String url = uploadHeadImg(file, request);
 
             String userId = UUIDUtil.getUUID();
             try {
@@ -78,7 +72,7 @@ public class UserController {
                         .email(registerVo.getEmail())
                         .phone(registerVo.getPhone())
                         .mood(registerVo.getMood())
-                        .headImg(registerVo.getHeadImg())
+                        .headImg(url)
                         .build());
 
                 // 创建Account
@@ -92,6 +86,101 @@ public class UserController {
                 e.printStackTrace();
                 return ServerResponse.createByError();
             }
+        }
+    }
+
+    /**
+     * 更新用户信息
+     *
+     * @param session       session
+     * @param userAccountVo 用户账户实体
+     * @param file          file
+     * @param result        校验结果
+     * @param request       request
+     * @return ServerResponse
+     */
+    @PutMapping
+    public ServerResponse updateUser(HttpSession session
+            , @Valid @RequestBody UserAccountVo userAccountVo
+            , @RequestParam(value = "file", required = false) MultipartFile file
+            , BindingResult result
+            , HttpServletRequest request) {
+        UserAccountVo userAccount = (UserAccountVo) session.getAttribute(Const.CURRENT_USER);
+        if (result.hasErrors()) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.PARAM_ERROR.getCode(), ResponseCode.PARAM_ERROR.getDesc());
+        } else if (userAccount == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+        } else {
+            // 更新头像
+            String url = uploadHeadImg(file, request);
+            try {
+                // 更新用户信息
+                userService.createUser(User.builder()
+                        .userId(userAccountVo.getUserId())
+                        .username(userAccountVo.getUsername())
+                        .birthday(userAccountVo.getBirthday())
+                        .address(userAccountVo.getAddress())
+                        .email(userAccountVo.getEmail())
+                        .phone(userAccountVo.getPhone())
+                        .mood(userAccountVo.getMood())
+                        .headImg(url)
+                        .build());
+                return ServerResponse.createBySuccessMessage("创建成功");
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ServerResponse.createByError();
+            }
+        }
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param session  session
+     * @param password 新密码
+     * @return ServerResponse
+     */
+    public ServerResponse modifyPass(HttpSession session, String password) {
+        UserAccountVo userAccount = (UserAccountVo) session.getAttribute(Const.CURRENT_USER);
+        if (userAccount == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.PARAM_ERROR.getCode(), ResponseCode.PARAM_ERROR.getDesc());
+        } else {
+            Account account = accountService.getAccount(userAccount.getUsername(), password);
+            if (account != null) {
+                return ServerResponse.createByErrorMessage("新老密码不能一样");
+            } else {
+                try{
+                    // 创建Account
+                    accountService.createAccount(Account.builder()
+                            .userId(userAccount.getUserId())
+                            .password(EncryptionUtil.MD5EncodeUtf8(password))
+                            .build());
+                    return ServerResponse.createBySuccessMessage("修改密码成功");
+                }catch (Exception e){
+                    e.printStackTrace();
+                    return ServerResponse.createByError();
+                }
+            }
+        }
+    }
+
+    // ------------------------------ 私有工具 ------------------------------- //
+
+    /**
+     * 上传头像
+     *
+     * @param file    file
+     * @param request request
+     * @return String
+     */
+    private String uploadHeadImg(MultipartFile file, HttpServletRequest request) {
+        String path = request.getSession().getServletContext().getRealPath("upload");
+        if (file != null) {
+            String targetFileName = fileService.upload(file, path);
+            log.info("上传文件成功:" + targetFileName);
+            return FtpProperties.HTTP_PREFIX + targetFileName;
+        } else {
+            return null;
         }
     }
 }

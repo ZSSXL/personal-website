@@ -3,6 +3,8 @@ package com.zss.personalspace.vo;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author ZSS
  * @date 2019/8/17 10:56
@@ -15,11 +17,13 @@ public class UserAccountVo {
     /**
      * 用户id
      */
+    @NotNull
     private String userId;
 
     /**
      * 用户名
      */
+    @NotNull
     private String username;
 
     /**
@@ -45,6 +49,7 @@ public class UserAccountVo {
     /**
      * 心情
      */
+    @NotNull
     private String mood;
 
     /**

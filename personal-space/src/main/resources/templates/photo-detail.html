@@ -67,19 +67,22 @@
                         <g class="avatar__box">
                             <a th:href="@{/info}">
                                 <image data-toggle="tooltip" data-placement="right" title="点击头像查看个人信息"
-                                       th:href="@{/img/avatar-1.jpg}" height="100%"
-                                       width="100%"/>
+                                       th:if="${session.current_user != null}"
+                                       th:href="${session.current_user.headImg}" height="100%" width="100%"/>
                             </a>
                         </g>
                     </svg>
                     <div class="text-center">
-                        <h3 class="title title--h3 sidebar__user-name"><span class="weight--500">Felecia</span> Brown
+                        <h3 class="title title--h3 sidebar__user-name"><span class="weight--500"
+                                                                             th:if="${session.current_user != null}"
+                                                                             th:text="${session.current_user.username}"></span>
                         </h3>
-                        <div class="badge badge--gray">感谢相遇，感谢有你</div>
+                        <div class="badge badge--gray" th:if="${session.current_user != null}"
+                             th:text="${session.current_user.mood}"></div>
 
                         <!-- Social -->
                         <div class="social">
-                            <a class="social__link" th:href="@{http://www.baidu.com/}" 1><i
+                            <a class="social__link" th:href="@{http://www.baidu.com/}"><i
                                     class="font-icon icon-smile"></i></a>
                             <a class="social__link" th:href="@{https://github.com/}"><i
                                     class="font-icon icon-github"></i></a>
@@ -92,19 +95,27 @@
                         <ul class="contacts-block">
                             <li class="contacts-block__item" data-toggle="tooltip" data-placement="top"
                                 title="Birthday">
-                                <i class="font-icon icon-calendar"></i><span>March 12, 1995</span>
+                                <i class="font-icon icon-calendar"></i>
+                                <span th:if="${session.current_user != null}"
+                                      th:text="${session.current_user.birthday}"></span>
                             </li>
                             <li class="contacts-block__item" data-toggle="tooltip" data-placement="top" title="Address">
-                                <i class="font-icon icon-location"></i>中国 江西 上饶
+                                <i class="font-icon icon-location"></i>
+                                <span th:if="${session.current_user != null}"
+                                      th:text="${session.current_user.address}"></span>
                             </li>
                             <li class="contacts-block__item" data-toggle="tooltip" data-placement="top" title="E-mail">
-                                <i class="font-icon icon-envelope"></i>example@mail.com
+                                <i class="font-icon icon-envelope"></i>
+                                <span th:if="${session.current_user != null}"
+                                      th:text="${session.current_user.email}"></span>
                             </li>
                             <li class="contacts-block__item" data-toggle="tooltip" data-placement="top" title="Phone">
-                                <i class="font-icon icon-phone"></i>136-4545-6767
+                                <i class="font-icon icon-phone"></i>
+                                <span th:if="${session.current_user != null}"
+                                      th:text="${session.current_user.phone}"></span>
                             </li>
                         </ul>
-                        <a class="btn btn--blue-gradient" th:href="@{#}">注销登陆</a>
+                        <button class="btn btn-danger btn-sm" id="logout-btn">注销登陆</button>
                     </div>
                 </div>
             </aside>
@@ -322,6 +333,35 @@
 <script th:src="@{/js/plugins.js}"></script>
 <script th:src="@{/js/common.js}"></script>
 <script th:src="@{/layui/layui.all.js}" charset="UTF-8"></script>
+
+<!-- 判断是否登录 -->
+<script type="text/javascript">
+    window.onload = function () {
+        $.ajax({
+            url: "/api/util/isLogin",
+            type: "post",
+            success: function (result) {
+                if (result.status == 401) {
+                    window.location.href = "/login";
+                }
+            }
+        })
+    };
+
+    // 退出登录
+    $("#logout-btn").click(function () {
+        $.ajax({
+            url: "/api/util/logout",
+            type: "post",
+            success:function (result) {
+                if (result.status == 200) {
+                    window.location.href = "/login";
+                }
+            }
+        })
+    });
+</script>
+
 <script type="text/javascript">
     layui.use('layedit', function () {
         var layedit = layui.layedit,
