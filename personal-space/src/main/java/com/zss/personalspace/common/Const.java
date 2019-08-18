@@ -17,4 +17,14 @@ public class Const {
      */
     public static final String CURRENT_USER = "current_user";
 
+    /**
+     * 默认当前页
+     */
+    public static final String DEFAULT_PAGE_NUMBER = "0";
+
+    /**
+     * 默认分页条数
+     */
+    public static final Integer DEFAULT_PAGE_SIZE = 6;
+
 }

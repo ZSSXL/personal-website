@@ -157,7 +157,7 @@
                             <div class="col-12 col-lg-12">
                                 <div class="case-item box box__second">
                                     <form class="col-12 col-lg-12">
-                                        <input class="form-control" type="text" placeholder="请输入日志主题"
+                                        <input id="theme" class="form-control" type="text" placeholder="请输入日志主题"
                                                autofocus="autofocus"/>
                                     </form>
                                 </div>
@@ -201,7 +201,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-12 order-1 order-md-2 text-right">
-                                <button class="btn btn-primary"><i class="font-icon icon-send"></i>提交</button>
+                                <button class="btn btn-primary" id="update-blog"><i class="font-icon icon-send"></i>上传日志</button>
                             </div>
                         </div>
                     </div>
@@ -285,6 +285,44 @@
     ];
 
     editor.customConfig.uploadImgServer = '/uploads';
+    editor.customConfig.uploadImgHooks = {
+        fail: function (xhr, editor, result) {
+            // 上传错误触发
+            alert("图片上传失败了");
+        }
+    };
+
+    editor.customConfig.customUploadImg = function (files, insert) {
+        var formData = new FormData();
+        for (var i = 0; i < files.length; i++) {
+            formData.append("files", files[i]);
+        }
+        $.ajax({
+            url: "/api/util/uploads",
+            type: "POST",
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                console.log(result);
+                if (result.errno == 0) {
+                    for (var j = 0; j < result.data.length; j++) {
+                        insert(result.data[j]);
+                    }
+                } else {
+                    alert(result.msg);
+                    return false;
+                }
+            }
+        });
+
+    };
+    // 将图片大小限制为 10 m
+    editor.customConfig.uploadImgMaxSize = 10 * 1024 * 1024;
+    // 限制一次最多上传5张图片
+    editor.customConfig.uploadImgMaxLength = 5;
 
     editor.create();
 </script>
@@ -327,6 +365,41 @@
             pic.src = this.result;
         }
     }
+</script>
+
+<script type="text/javascript">
+
+    $("#update-blog").click(function () {
+        var theme = $("#theme").val();
+        var file = $("#f")[0].files[0];
+        var content = editor.txt.html();
+
+        var formData = new FormData();
+
+        formData.append("theme",theme);
+        formData.append("content",content);
+        formData.append("file",file);
+
+        $.ajax({
+            url: "/api/blog",
+            type: "post",
+            cache: false,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            mimeType: "multipart/form-data",
+            data: formData,
+            success: function (result) {
+                if (result.status == 200) {
+                    alert(result.msg);
+                    window.location.href = "/write";
+                } else {
+                    window.location.href = "/error.html";
+                }
+            }
+        });
+    });
+
 </script>
 </body>
 </html>

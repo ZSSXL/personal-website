@@ -155,7 +155,7 @@ public class UserController {
         String path = request.getSession().getServletContext().getRealPath("upload");
         if (file != null) {
             String targetFileName = fileService.upload(file, path);
-            log.info("上传文件成功:" + targetFileName);
+            log.info("上传头像成功:" + targetFileName);
             return FtpProperties.HTTP_PREFIX + targetFileName;
         } else {
             return null;

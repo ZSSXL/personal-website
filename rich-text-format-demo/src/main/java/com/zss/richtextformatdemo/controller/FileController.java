@@ -33,7 +33,7 @@ public class FileController {
     }
 
     /**
-     * 多文件上传
+     * 多文件上传 wangEditor
      *
      * @param request http请求
      * @return ServerResponse<List < String>>
@@ -84,7 +84,7 @@ public class FileController {
     }
 
     /**
-     * 上传富文本图片
+     * 上传富文本图片 layui
      *
      * @param file    文件流
      * @param request 亲贵

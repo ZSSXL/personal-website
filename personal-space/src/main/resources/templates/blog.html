@@ -140,89 +140,13 @@
                         <h1 class="title title--h1 title__separate">Blog</h1>
                     </div>
 
-                    <!-- News -->
-                    <div class="news-grid pb-0">
-                        <!-- Post -->
-                        <article class="news-item box">
-                            <div class="news-item__image-wrap overlay overlay--45">
-                                <div class="news-item__date">Sep 16, 2019</div>
-                                <a class="news-item__link" th:href="@{/blog-detail}"></a>
-                                <img class="cover lazyload" th:src="@{/img/image_02.jpg}" alt=""/>
-                            </div>
-                            <div class="news-item__caption">
-                                <h2 class="title title--h4">Design Conferences in 2019</h2>
-                                <p>Veritatis et quasi architecto beatae vitae dicta sunt, explicabo.</p>
-                            </div>
-                        </article>
+                    <!-- Blogs -->
+                    <div class="news-grid pb-0" id="blog-list">
 
-                        <!-- Post -->
-                        <article class="news-item box">
-                            <div class="news-item__image-wrap overlay overlay--45">
-                                <div class="news-item__date">Sep 15, 2019</div>
-                                <a class="news-item__link" th:href="@{/blog-detail}"></a>
-                                <img class="cover lazyload" th:src="@{/img/image_06.jpg}" alt=""/>
-                            </div>
-                            <div class="news-item__caption">
-                                <h2 class="title title--h4">Best Fonts Every Designer</h2>
-                                <p>Sed ut perspiciatis, nam libero tempore, cum soluta nobis est eligendi.</p>
-                            </div>
-                        </article>
+                    </div>
 
-                        <!-- Post -->
-                        <article class="news-item box">
-                            <div class="news-item__image-wrap overlay overlay--45">
-                                <div class="news-item__date">Sep 14, 2019</div>
-                                <a class="news-item__link" th:href="@{/blog-detail}"></a>
-                                <img class="cover lazyload" th:src="@{/img/image_08.jpg}" alt=""/>
-                            </div>
-                            <div class="news-item__caption">
-                                <h2 class="title title--h4">Design Digest #80</h2>
-                                <p>Excepteur sint occaecat cupidatat no proident, quis nostrum exercitationem ullam
-                                    corporis suscipit.</p>
-                            </div>
-                        </article>
-
-                        <!-- Post -->
-                        <article class="news-item box">
-                            <div class="news-item__image-wrap overlay overlay--45">
-                                <div class="news-item__date">Sep 13, 2019</div>
-                                <a class="news-item__link" th:href="@{/blog-detail}"></a>
-                                <img class="cover lazyload" th:src="@{/img/image_07.jpg}" alt=""/>
-                            </div>
-                            <div class="news-item__caption">
-                                <h2 class="title title--h4">UI Interactions of the week</h2>
-                                <p>Excepteur sint occaecat cupidatat no proident, quis nostrum exercitationem ullam
-                                    corporis suscipit.</p>
-                            </div>
-                        </article>
-
-                        <!-- Post -->
-                        <article class="news-item box">
-                            <div class="news-item__image-wrap overlay overlay--45">
-                                <div class="news-item__date">Sep 12, 2019</div>
-                                <a class="news-item__link" th:href="@{/blog-detail}"></a>
-                                <img class="cover lazyload" th:src="@{/img/image_05.jpg}" alt=""/>
-                            </div>
-                            <div class="news-item__caption">
-                                <h2 class="title title--h4">The Forgotten Art of Spacing</h2>
-                                <p>Excepteur sint occaecat cupidatat no proident, quis nostrum exercitationem ullam
-                                    corporis suscipit.</p>
-                            </div>
-                        </article>
-
-                        <!-- Post -->
-                        <article class="news-item box">
-                            <div class="news-item__image-wrap overlay overlay--45">
-                                <div class="news-item__date">Sep 15, 2019</div>
-                                <a class="news-item__link" th:href="@{/blog-detail}"></a>
-                                <img class="cover lazyload" th:src="@{/img/image_01.jpg}" alt=""/>
-                            </div>
-                            <div class="news-item__caption">
-                                <h2 class="title title--h4">Design Digest #79</h2>
-                                <p>Excepteur sint occaecat cupidatat no proident, quis nostrum exercitationem ullam
-                                    corporis suscipit.</p>
-                            </div>
-                        </article>
+                    <div class="box-inner box-inner--rounded box-inner--white text-center">
+                           <p id="point"></p>
                     </div>
                 </div>
 
@@ -252,7 +176,11 @@
 
 <!-- 判断是否登录 -->
 <script type="text/javascript">
+    var totalPages = 0; // 总页数
+    var currentPage = 0; // 当前页
+
     window.onload = function () {
+        getALlPage(currentPage);
         $.ajax({
             url: "/api/util/isLogin",
             type: "post",
@@ -275,6 +203,62 @@
                 }
             }
         })
+    });
+</script>
+
+<!-- 显示信息 -->
+<script type="text/javascript">
+    window.onscroll = function () {
+        // 总高度
+        var winScrollHeight = document.documentElement.scrollHeight;
+        // 滚动的高度
+        var winScrollTop = document.documentElement.scrollTop;
+        // 屏幕高度
+        var winClientHeight = document.documentElement.clientHeight;
+
+        if (winScrollTop + winClientHeight == winScrollHeight) {
+            if (currentPage < totalPages - 1) {
+                getALlPage(currentPage + 1);
+            } else {
+               $("#point").text("到底了!!!");
+            }
+        }
+    };
+
+    function getALlPage(page) {
+        $.ajax({
+            url: "/api/blog?page=" + page,
+            type: "get",
+            success: function (result) {
+                console.log(result);
+                analyticalData(result)
+            }
+        })
+    }
+
+    function analyticalData(result) {
+        totalPages = result.data.totalPages;
+        currentPage = result.data.number;
+
+        var blogs = result.data.content;
+        $.each(blogs, function (index, blog) {
+            var dateDiv = $("<div class='news-item__date'></div>").append(new Date(blog.createTime).toLocaleString());
+            var aJump = $("<a class='news-item__link jump'></a>").attr("blog-id",blog.blogId);
+            var coverImg = $("<img class='cover lazyload'/>").attr("src", blog.coverImg);
+            var headDiv = $("<div class='news-item__image-wrap overlay overlay--45'></div>").append(dateDiv).append(aJump).append(coverImg);
+
+            var theme = $("<h2 class='title title--h4'></h2>").append(blog.theme)
+            var bodyDiv = $("<div class='news-item__caption'></div>").append(theme);
+
+            $("<article class='news-item box'></article>").append(headDiv).append(bodyDiv).appendTo("#blog-list");
+        });
+        $("#blog-list").trigger("create");
+    }
+
+    $(document).on("click",".jump",function () {
+        var blogId = $(this).attr("blog-id");
+        localStorage.setItem("blogId",blogId);
+        window.location.href = "/blog-detail";
     });
 </script>
 

@@ -152,59 +152,42 @@
                         <div class="single-post">
                             <div class="post-thumnile">
                                 <div class="single-image" style="text-align: center;">
-                                    <img th:src="@{/images/blog/1.jpg}" alt="blog">
+                                    <img id="cover-img" alt="blog">
                                 </div>
                             </div>
 
                             <!-- tittle -->
                             <div class="post-title" style="margin-top: 10px;">
-                                <h3>Tourism in cox's bazar</h3>
+                                <h3 id="blog-title"></h3>
                             </div>
 
                             <!-- author and date -->
                             <div class="row" style="margin-top: 10px;">
                                 <div class="col-4 col-lg-3">
                                     <i class="fa fa-pencil fa-lg" style="float: left;">&nbsp;&nbsp;</i>
-                                    <p>小明</p>
+                                    <p id="author"></p>
                                 </div>
                                 <div class="col-4 col-lg-3">
                                     <i class="fa fa-calendar fa-lg" style="float: left;">&nbsp;&nbsp;</i>
-                                    <p>20 Jan 2018 </p>
+                                    <p id="create-time"></p>
                                 </div>
                                 <div class="col-4 col-lg-3">
                                     <i class="fa fa-thumbs-o-up fa-lg" style="float: left;">&nbsp;&nbsp;</i>
                                     <p>( <span>25</span> )</p>
                                 </div>
                             </div>
-                            <div class="blog-content" style="margin-top: 10px;">
-                                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lorem ipsum dolor sit amet,
-                                    consectetur adipiscing elit. Etiam tincidunt nulla ac felis pharetra lacinia.
-                                    Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ultrices
-                                    sapien. Aliquam
-                                    dignissim hendrerit sem at porta. Integer interdum elementum felis, nec mattis ipsum
-                                    luctus congue. Fusce
-                                    cursus tempus ex ut faucibus. Praesent ultricies lacus at enim sollicitudin laoreet.
-                                    Pellentesque ac viverra
-                                    dui. Nam rutrum magna ac nulla consequat, aliquet dictum quam viverra. Aenean
-                                    placerat justo ac pretium
-                                    viverra. Ut quam tortor, facilisis ut pellentesque vel, euismod in elit. Morbi vel
-                                    sollicitudin ligula. Ut
-                                    vehicula velit erat, et semper massa iaculis a. Fusce non ornare lacus, sed
-                                    condimentum elit.</p>
-                                <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lorem ipsum dolor sit amet,
-                                    consectetur adipiscing elit. Etiam tincidunt nulla ac felis pharetra lacinia.
-                                    Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ultrices
-                                    sapien. Aliquam
-                                    dignissim hendrerit sem at porta. Integer interdum elementum felis, nec mattis ipsum
-                                    luctus congue. Fusce
-                                    cursus tempus ex ut faucibus. Praesent ultricies lacus at enim sollicitudin laoreet.
-                                    Pellentesque ac viverra
-                                    dui. Nam rutrum magna ac nulla consequat, aliquet dictum quam viverra. Aenean
-                                    placerat justo ac pretium
-                                    viverra. Ut quam tortor, facilisis ut pellentesque vel, euismod in elit. Morbi vel
-                                    sollicitudin ligula. Ut
-                                    vehicula velit erat, et semper massa iaculis a. Fusce non ornare lacus, sed
-                                    condimentum elit.</p>
+                        </div>
+                    </div>
+
+                    <div class="box-inner">
+                        <div class="row">
+                            <!-- Case Item -->
+                            <div class="col-12 col-lg-12">
+                                <div class="case-item box box__second">
+                                    <div class="blog-content" style="margin-top: 10px;" id="blog-content">
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -299,7 +282,8 @@
                     window.location.href = "/login";
                 }
             }
-        })
+        });
+        showBlog();
     };
 
     // 退出登录
@@ -333,6 +317,30 @@
         });
     })
 </script>
+<script type="text/javascript">
+    function showBlog() {
+        var blogId = localStorage.getItem("blogId");
+        console.log(blogId);
+        $.ajax({
+            url: "/api/blog/" + blogId,
+            type: "get",
+            success: function (result) {
+                console.log(result);
+                analyticalData(result)
+            }
+        });
+    }
 
+    function analyticalData(result) {
+        var data = result.data;
+        $("#cover-img").attr("src", data.coverImg);
+        $("#blog-title").text(data.theme);
+        $("#blog-content").append(data.content);
+        $("#author").text(data.author);
+        $("#create-time").text(new Date(data.createTime).toLocaleString());
+    }
+
+
+</script>
 </body>
 </html>
