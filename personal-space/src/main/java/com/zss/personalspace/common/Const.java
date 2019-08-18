@@ -27,4 +27,9 @@ public class Const {
      */
     public static final Integer DEFAULT_PAGE_SIZE = 6;
 
+    /**
+     * 初始点赞数
+     */
+    public static final Integer INIT_LIKE_COUNT = 0;
+
 }

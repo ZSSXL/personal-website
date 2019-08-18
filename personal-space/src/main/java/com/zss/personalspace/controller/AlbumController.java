@@ -6,11 +6,9 @@ import com.zss.personalspace.common.ServerResponse;
 import com.zss.personalspace.config.FtpProperties;
 import com.zss.personalspace.entity.Album;
 import com.zss.personalspace.entity.AlbumItem;
+import com.zss.personalspace.entity.Like;
 import com.zss.personalspace.entity.User;
-import com.zss.personalspace.service.AlbumItemService;
-import com.zss.personalspace.service.AlbumService;
-import com.zss.personalspace.service.FileService;
-import com.zss.personalspace.service.UserService;
+import com.zss.personalspace.service.*;
 import com.zss.personalspace.util.UUIDUtil;
 import com.zss.personalspace.vo.AlbumDetailVo;
 import com.zss.personalspace.vo.AlbumVo;
@@ -41,13 +39,15 @@ public class AlbumController {
     private final AlbumItemService albumItemService;
     private final FileService fileService;
     private final UserService userService;
+    private final LikeService likeService;
 
     @Autowired
-    public AlbumController(AlbumService albumService, AlbumItemService albumItemService, FileService fileService, UserService userService) {
+    public AlbumController(AlbumService albumService, AlbumItemService albumItemService, FileService fileService, UserService userService, LikeService likeService) {
         this.albumService = albumService;
         this.albumItemService = albumItemService;
         this.fileService = fileService;
         this.userService = userService;
+        this.likeService = likeService;
     }
 
     /**
@@ -75,6 +75,7 @@ public class AlbumController {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         } else {
             String albumId = UUIDUtil.getUUID();
+            String likeId = UUIDUtil.getUUID();
             // 上传封面
             String url = uploadCoverImg(file, request);
             // 上传其他图片
@@ -90,6 +91,11 @@ public class AlbumController {
                 albumItemService.createAlbumItem(AlbumItem.builder()
                         .albumId(albumId)
                         .photos(urls)
+                        .build());
+                likeService.createLike(Like.builder()
+                        .likeId(likeId)
+                        .likeOf(albumId)
+                        .likeCount(Const.INIT_LIKE_COUNT)
                         .build());
                 return ServerResponse.createBySuccessMessage("上传相册成功");
             } catch (Exception e) {

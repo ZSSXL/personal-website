@@ -6,11 +6,9 @@ import com.zss.personalspace.common.ServerResponse;
 import com.zss.personalspace.config.FtpProperties;
 import com.zss.personalspace.entity.Blog;
 import com.zss.personalspace.entity.BlogItem;
+import com.zss.personalspace.entity.Like;
 import com.zss.personalspace.entity.User;
-import com.zss.personalspace.service.BlogItemService;
-import com.zss.personalspace.service.BlogService;
-import com.zss.personalspace.service.FileService;
-import com.zss.personalspace.service.UserService;
+import com.zss.personalspace.service.*;
 import com.zss.personalspace.util.UUIDUtil;
 import com.zss.personalspace.vo.BlogDetailVo;
 import com.zss.personalspace.vo.BlogVo;
@@ -38,13 +36,15 @@ public class BlogController {
     private final BlogService blogService;
     private final BlogItemService blogItemService;
     private final UserService userService;
+    private final LikeService likeService;
 
     @Autowired
-    public BlogController(FileService fileService, BlogService blogService, BlogItemService blogItemService, UserService userService) {
+    public BlogController(FileService fileService, BlogService blogService, BlogItemService blogItemService, UserService userService, LikeService likeService) {
         this.fileService = fileService;
         this.blogService = blogService;
         this.blogItemService = blogItemService;
         this.userService = userService;
+        this.likeService = likeService;
     }
 
     /**
@@ -67,6 +67,8 @@ public class BlogController {
         } else {
 
             String blogId = UUIDUtil.getUUID();
+            String likeId = UUIDUtil.getUUID();
+
             String url = uploadCoverImg(file, request);
 
             try {
@@ -80,6 +82,13 @@ public class BlogController {
                         .blogId(blogId)
                         .content(blogVo.getContent())
                         .build());
+
+                likeService.createLike(Like.builder()
+                        .likeId(likeId)
+                        .likeOf(blogId)
+                        .likeCount(Const.INIT_LIKE_COUNT)
+                        .build());
+
                 return ServerResponse.createBySuccessMessage("上传成功");
             } catch (Exception e) {
                 e.printStackTrace();
