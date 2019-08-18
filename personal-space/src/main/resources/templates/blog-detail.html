@@ -163,11 +163,11 @@
 
                             <!-- author and date -->
                             <div class="row" style="margin-top: 10px;">
-                                <div class="col-4 col-lg-3">
+                                <div class="col-3 col-lg-3">
                                     <i class="fa fa-pencil fa-lg" style="float: left;">&nbsp;&nbsp;</i>
                                     <p id="author"></p>
                                 </div>
-                                <div class="col-4 col-lg-3">
+                                <div class="col-5 col-lg-3">
                                     <i class="fa fa-calendar fa-lg" style="float: left;">&nbsp;&nbsp;</i>
                                     <p id="create-time"></p>
                                 </div>
@@ -320,12 +320,11 @@
 <script type="text/javascript">
     function showBlog() {
         var blogId = localStorage.getItem("blogId");
-        console.log(blogId);
         $.ajax({
             url: "/api/blog/" + blogId,
             type: "get",
             success: function (result) {
-                console.log(result);
+               // console.log(result);
                 analyticalData(result)
             }
         });

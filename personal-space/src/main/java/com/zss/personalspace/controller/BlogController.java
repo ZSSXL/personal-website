@@ -124,27 +124,31 @@ public class BlogController {
         if (userAccountVo == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         } else {
-            Blog blog = blogService.getBlogById(blogId);
-            if (blog == null) {
-                return ServerResponse.createByError();
+            if (blogId == null) {
+                return ServerResponse.createByErrorCodeMessage(ResponseCode.PARAM_ERROR.getCode(), ResponseCode.PARAM_ERROR.getDesc());
+            } else {
+                Blog blog = blogService.getBlogById(blogId);
+                if (blog == null) {
+                    return ServerResponse.createByError();
+                }
+                BlogItem blogItem = blogItemService.getBlogItemById(blogId);
+                if (blogItem == null) {
+                    return ServerResponse.createByError();
+                }
+                User user = userService.getUser(blog.getAuthor());
+                if (user == null) {
+                    return ServerResponse.createByError();
+                }
+                BlogDetailVo blogDetailVo = BlogDetailVo.builder()
+                        .blogId(blogId)
+                        .author(user.getUsername())
+                        .theme(blog.getTheme())
+                        .coverImg(blog.getCoverImg())
+                        .content(blogItem.getContent())
+                        .createTime(blogItem.getCreateTime())
+                        .build();
+                return ServerResponse.createBySuccess(blogDetailVo);
             }
-            BlogItem blogItem = blogItemService.getBlogItemById(blogId);
-            if (blogItem == null) {
-                return ServerResponse.createByError();
-            }
-            User user = userService.getUser(blog.getAuthor());
-            if (user == null) {
-                return ServerResponse.createByError();
-            }
-            BlogDetailVo blogDetailVo = BlogDetailVo.builder()
-                    .blogId(blogId)
-                    .author(user.getUsername())
-                    .theme(blog.getTheme())
-                    .coverImg(blog.getCoverImg())
-                    .content(blogItem.getContent())
-                    .createTime(blogItem.getCreateTime())
-                    .build();
-            return ServerResponse.createBySuccess(blogDetailVo);
         }
     }
 

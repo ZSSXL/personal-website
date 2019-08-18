@@ -222,6 +222,8 @@
             } else {
                $("#point").text("到底了!!!");
             }
+        } else {
+            $("#point").text("");
         }
     };
 
@@ -252,7 +254,6 @@
 
             $("<article class='news-item box'></article>").append(headDiv).append(bodyDiv).appendTo("#blog-list");
         });
-        $("#blog-list").trigger("create");
     }
 
     $(document).on("click",".jump",function () {
@@ -260,6 +261,7 @@
         localStorage.setItem("blogId",blogId);
         window.location.href = "/blog-detail";
     });
+
 </script>
 
 </body>

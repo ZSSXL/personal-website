@@ -165,132 +165,15 @@
                             <input type="hidden" name="changemetoo"/>
                         </div>
 
-                        <!-- Content -->
-                        <div class="gallery-grid js-masonry js-filter-container">
-                            <div class="gutter-sizer"></div>
+                        <div class="gallery-grid js-masonry js-filter-container row" style="margin-top: 20px;"
+                             id="album-list">
+                            <div class="gutter-sizer col-12 col-lg-12"></div>
 
-                            <!-- Item 1 -->
-                            <figure class="gallery-grid__item category-tourism">
-                                <div class="gallery-grid__image-wrap">
-                                    <a class="news-item__link" th:href="@{/photo-detail}"></a>
-                                    <img class="gallery-grid__image cover lazyload" th:src="@{/img/image_01.jpg}"
-                                         data-zoom alt=""/>
-                                </div>
-                                <figcaption class="gallery-grid__caption">
-                                    <h4 class="title gallery-grid__title">Half Avocado</h4>
-                                    <span class="gallery-grid__category">Concept</span>
-                                </figcaption>
-                            </figure>
-
-                            <!-- Item 2 -->
-                            <figure class="gallery-grid__item category-tourism">
-                                <div class="gallery-grid__image-wrap">
-                                    <a class="news-item__link" th:href="@{/photo-detail}"></a>
-                                    <img class="gallery-grid__image cover lazyload" th:src="@{/img/image_02.jpg}"
-                                         data-zoom alt=""/>
-                                </div>
-                                <figcaption class="gallery-grid__caption">
-                                    <h4 class="title gallery-grid__title">Pink Flamingo</h4>
-                                    <span class="gallery-grid__category">Concept</span>
-                                </figcaption>
-                            </figure>
-
-                            <!-- Item 3 -->
-                            <figure class="gallery-grid__item category-daily">
-                                <div class="gallery-grid__image-wrap">
-                                    <img class="gallery-grid__image cover lazyload" th:src="@{/img/image_03.jpg}"
-                                         data-zoom alt=""/>
-                                </div>
-                                <figcaption class="gallery-grid__caption">
-                                    <h4 class="title gallery-grid__title">Abstract</h4>
-                                    <span class="gallery-grid__category">Design</span>
-                                </figcaption>
-                            </figure>
-
-                            <!-- Item 4 -->
-                            <figure class="gallery-grid__item category-daily">
-                                <div class="gallery-grid__image-wrap">
-                                    <img class="gallery-grid__image cover lazyload" th:src="@{/img/image_04.jpg}"
-                                         data-zoom alt=""/>
-                                </div>
-                                <figcaption class="gallery-grid__caption">
-                                    <h4 class="title gallery-grid__title">Abstract #2</h4>
-                                    <span class="gallery-grid__category">Design</span>
-                                </figcaption>
-                            </figure>
-
-                            <!-- Item 5 -->
-                            <figure class="gallery-grid__item category-daily">
-                                <div class="gallery-grid__image-wrap">
-                                    <img class="gallery-grid__image cover lazyload" th:src="@{/img/image_05.jpg}"
-                                         data-zoom alt=""/>
-                                </div>
-                                <figcaption class="gallery-grid__caption">
-                                    <h4 class="title gallery-grid__title">Abstract #3</h4>
-                                    <span class="gallery-grid__category">Design</span>
-                                </figcaption>
-                            </figure>
-
-                            <!-- Item 6 -->
-                            <figure class="gallery-grid__item category-life">
-                                <div class="gallery-grid__image-wrap">
-                                    <img class="gallery-grid__image cover lazyload" th:src="@{/img/image_06.jpg}"
-                                         data-zoom alt=""/>
-                                </div>
-                                <figcaption class="gallery-grid__caption">
-                                    <h4 class="title gallery-grid__title">Golden Gate</h4>
-                                    <span class="gallery-grid__category">Life</span>
-                                </figcaption>
-                            </figure>
-
-                            <!-- Item 7 -->
-                            <figure class="gallery-grid__item category-tourism">
-                                <div class="gallery-grid__image-wrap">
-                                    <img class="gallery-grid__image cover lazyload" th:src="@{/img/image_07.jpg}"
-                                         data-zoom alt=""/>
-                                </div>
-                                <figcaption class="gallery-grid__caption">
-                                    <h4 class="title gallery-grid__title">Peach</h4>
-                                    <span class="gallery-grid__category">Concept</span>
-                                </figcaption>
-                            </figure>
-
-                            <!-- Item 8 -->
-                            <figure class="gallery-grid__item category-life">
-                                <div class="gallery-grid__image-wrap">
-                                    <img class="gallery-grid__image cover lazyload" th:src="@{/img/image_08.jpg}"
-                                         data-zoom alt=""/>
-                                </div>
-                                <figcaption class="gallery-grid__caption">
-                                    <h4 class="title gallery-grid__title">Abstract #4</h4>
-                                    <span class="gallery-grid__category">Design</span>
-                                </figcaption>
-                            </figure>
-
-                            <!-- Item 9 -->
-                            <figure class="gallery-grid__item category-life">
-                                <div class="gallery-grid__image-wrap">
-                                    <img class="gallery-grid__image cover lazyload" th:src="@{/img/image_09.jpg}"
-                                         data-zoom alt=""/>
-                                </div>
-                                <figcaption class="gallery-grid__caption">
-                                    <h4 class="title gallery-grid__title">Hedgehog</h4>
-                                    <span class="gallery-grid__category">Life</span>
-                                </figcaption>
-                            </figure>
-
-                            <!-- Item 9 -->
-                            <figure class="gallery-grid__item category-food">
-                                <div class="gallery-grid__image-wrap">
-                                    <img class="gallery-grid__image cover lazyload" th:src="@{/images/img/5.jpg}"
-                                         data-zoom alt=""/>
-                                </div>
-                                <figcaption class="gallery-grid__caption">
-                                    <h4 class="title gallery-grid__title">Hedgehog</h4>
-                                    <span class="gallery-grid__category">Life</span>
-                                </figcaption>
-                            </figure>
                         </div>
+                    </div>
+
+                    <div class="box-inner box-inner--rounded box-inner--white text-center">
+                        <p id="point"></p>
                     </div>
                 </div>
 
@@ -316,11 +199,15 @@
 <!-- JavaScripts -->
 <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
 <script th:src="@{/js/plugins.js}"></script>
-<script th:src="@{/js/common.js}"></script>
 
 <!-- 判断是否登录 -->
 <script type="text/javascript">
+
+    var totalPages = 0; // 总页数
+    var currentPage = 0; // 当前页
+
     window.onload = function () {
+        getALlPage(0);
         $.ajax({
             url: "/api/util/isLogin",
             type: "post",
@@ -329,7 +216,7 @@
                     window.location.href = "/login";
                 }
             }
-        })
+        });
     };
 
     // 退出登录
@@ -343,6 +230,71 @@
                 }
             }
         })
+    });
+</script>
+
+<script type="text/javascript">
+    window.onscroll = function () {
+        // 总高度
+        var winScrollHeight = document.documentElement.scrollHeight;
+        // 滚动的高度
+        var winScrollTop = document.documentElement.scrollTop;
+        // 屏幕高度
+        var winClientHeight = document.documentElement.clientHeight;
+
+        if (winScrollTop + winClientHeight == winScrollHeight) {
+            if (currentPage < totalPages - 1) {
+                getALlPage(currentPage + 1);
+            } else {
+                $("#point").text("到底了!!!");
+            }
+        } else {
+            $("#point").text("");
+        }
+
+    };
+
+    function getALlPage(page) {
+        $.ajax({
+            url: "/api/album?page=" + page,
+            type: "get",
+            async: false,
+            success: function (result) {
+                // console.log(result);
+                analyticalData(result);
+            }
+        })
+    }
+
+    function analyticalData(result) {
+        totalPages = result.data.totalPages;
+        currentPage = result.data.number;
+
+        var albums = result.data.content;
+        $.each(albums, function (index, album) {
+            var aJump = $("<a class='news-item__link jump'></a>").attr("album-id", album.albumId);
+            var coverImg = $("<img class='gallery-grid__image cover lazyload' data-zoom/>").attr("src", album.coverImg);
+            var headDiv = $("<div class='gallery-grid__image-wrap'></div>").append(aJump).append(coverImg);
+
+            var theme = $("<h4 class='title gallery-grid__title'></h4>").append(album.theme);
+            var type = $("<span class='gallery-grid__category'></span>").append(album.type);
+            var body = $("<figcaption class='gallery-grid__caption'></figcaption>").append(theme).append(type);
+
+            var figureBox = $("<figure></figure>").attr("class", "gallery-grid__item col-12 col-lg-12 category-" + album.type).append(headDiv).append(body);
+
+            $("#album-list").append(figureBox);
+        });
+
+        // 重新加载common.js文件
+        $.getScript("/js/common.js");
+    }
+</script>
+
+<script type="text/javascript">
+    $(document).on("click", ".jump", function () {
+        var albumId = $(this).attr("album-id");
+        localStorage.setItem("albumId",albumId);
+        window.location.href = "/photo-detail";
     });
 </script>
 

@@ -1,6 +1,8 @@
 package com.zss.personalspace.repository;
 
 import com.zss.personalspace.entity.Album;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,4 +13,13 @@ import org.springframework.stereotype.Repository;
  **/
 @Repository
 public interface AlbumRepository extends JpaRepository<Album, String> {
+
+    /**
+     * 查询所有
+     *
+     * @param pageable 分页信息
+     * @return Page<Album>
+     */
+    Page<Album> findAll(Pageable pageable);
+
 }

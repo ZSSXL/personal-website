@@ -135,7 +135,7 @@
                         <ul class="nav">
                             <li class="nav__item"><a th:href="@{/index}">主页</a></li>
                             <li class="nav__item"><a th:href="@{/resume}">Resume</a></li>
-                            <li class="nav__item"><a class="active" th:href="@{/portfolio}">相册</a></li>
+                            <li class="nav__item"><a class="active" th:href="@{/portfolio}">相册集</a></li>
                             <li class="nav__item"><a th:href="@{/blog}">日志</a></li>
                             <li class="nav__item"><a th:href="@{/contact}">Contact</a></li>
                         </ul>
@@ -152,104 +152,22 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
                                 <i class="fa fa-pencil fa-lg" style="float: left;">&nbsp;&nbsp;</i>
-                                <span>小明</span>
+                                <span id="publish">小明</span>
                             </li>
                             <li class="list-group-item">
                                 <i class="fa fa-calendar fa-lg" style="float: left;">&nbsp;&nbsp;</i>
-                                <span>2019年8月13日</span>
+                                <span id="create-time">2019年8月13日</span>
                             </li>
                             <li class="list-group-item"><i class="fa fa-pinterest fa-lg" style="float: left;">&nbsp;&nbsp;</i>
-                                <p>Felecia was hired to create a corporate identity. We were very pleased with
-                                    the work done.Felecia was hired to create a corporate identity. We were very pleased
-                                    with the work
-                                    done.Felecia was hired to create a corporate identity. We were very pleased with the
-                                    work done.</p>
+                                <p id="theme"></p>
                             </li>
                         </ul>
 
-                        <!-- Content -->
-                        <div class="gallery-grid js-masonry js-filter-container" style="margin-top: 10px;">
-                            <div class="gutter-sizer"></div>
-                            <!-- Item 1 -->
-                            <figure class="gallery-grid__item">
-                                <div class="gallery-grid__image-wrap">
-                                    <img class="gallery-grid__image cover lazyload" th:src="@{/images/img/1.jpg}"
-                                         data-zoom alt=""/>
-                                </div>
-                            </figure>
-
-                            <!-- Item 2 -->
-                            <figure class="gallery-grid__item category-concept">
-                                <div class="gallery-grid__image-wrap">
-                                    <img class="gallery-grid__image cover lazyload" th:src="@{/img/image_02.jpg}"
-                                         data-zoom alt=""/>
-                                </div>
-                            </figure>
-
-                            <!-- Item 3 -->
-                            <figure class="gallery-grid__item category-design">
-                                <div class="gallery-grid__image-wrap">
-                                    <img class="gallery-grid__image cover lazyload" th:src="@{/img/image_03.jpg}"
-                                         data-zoom alt=""/>
-                                </div>
-                            </figure>
-
-                            <!-- Item 4 -->
-                            <figure class="gallery-grid__item category-design">
-                                <div class="gallery-grid__image-wrap">
-                                    <img class="gallery-grid__image cover lazyload" th:src="@{/img/image_04.jpg}"
-                                         data-zoom alt=""/>
-                                </div>
-                            </figure>
-
-                            <!-- Item 5 -->
-                            <figure class="gallery-grid__item category-design">
-                                <div class="gallery-grid__image-wrap">
-                                    <img class="gallery-grid__image cover lazyload" th:src="@{/img/image_05.jpg}"
-                                         data-zoom alt=""/>
-                                </div>
-                            </figure>
-
-                            <!-- Item 6 -->
-                            <figure class="gallery-grid__item category-life">
-                                <div class="gallery-grid__image-wrap">
-                                    <img class="gallery-grid__image cover lazyload" th:src="@{/img/image_06.jpg}"
-                                         data-zoom alt=""/>
-                                </div>
-                            </figure>
-
-                            <!-- Item 7 -->
-                            <figure class="gallery-grid__item category-concept">
-                                <div class="gallery-grid__image-wrap">
-                                    <img class="gallery-grid__image cover lazyload" th:src="@{/img/image_07.jpg}"
-                                         data-zoom alt=""/>
-                                </div>
-                            </figure>
-
-                            <!-- Item 8 -->
-                            <figure class="gallery-grid__item category-design">
-                                <div class="gallery-grid__image-wrap">
-                                    <img class="gallery-grid__image cover lazyload" th:src="@{/img/image_08.jpg}"
-                                         data-zoom alt=""/>
-                                </div>
-                            </figure>
-
-                            <!-- Item 9 -->
-                            <figure class="gallery-grid__item category-life">
-                                <div class="gallery-grid__image-wrap">
-                                    <img class="gallery-grid__image cover lazyload" th:src="@{/img/image_09.jpg}"
-                                         data-zoom alt=""/>
-                                </div>
-                            </figure>
-
-                            <!-- Item 10 -->
-                            <figure class="gallery-grid__item category-life">
-                                <div class="gallery-grid__image-wrap">
-                                    <img class="gallery-grid__image cover lazyload" th:src="@{/img/image_09.jpg}"
-                                         data-zoom alt=""/>
-                                </div>
-                            </figure>
+                        <div class="gallery-grid js-masonry js-filter-container row" style="margin-top: 20px;"
+                             id="photo-list">
+                            <div class="gutter-sizer col-12 col-lg-12"></div>
                         </div>
+
                     </div>
 
                     <!-- What -->
@@ -331,7 +249,6 @@
 <!-- JavaScripts -->
 <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
 <script th:src="@{/js/plugins.js}"></script>
-<script th:src="@{/js/common.js}"></script>
 <script th:src="@{/layui/layui.all.js}" charset="UTF-8"></script>
 
 <!-- 判断是否登录 -->
@@ -345,7 +262,8 @@
                     window.location.href = "/login";
                 }
             }
-        })
+        });
+        showAlbum();
     };
 
     // 退出登录
@@ -378,6 +296,56 @@
             ]
         });
     })
+</script>
+
+<script type="text/javascript">
+
+    function showAlbum() {
+        var albumId = localStorage.getItem("albumId");
+        $.ajax({
+            url: "/api/album/" + albumId,
+            type: "get",
+            success: function (result) {
+                analyticalData(result)
+            }
+        });
+    }
+
+    function analyticalData(result) {
+        var data = result.data;
+        $("#publish").text(data.publish);
+        $("#create-time").text(new Date(data.createTime).toLocaleString());
+        $("#theme").text(data.theme);
+
+        var photos = data.photos;
+        photos = photos.replace("[", "");
+        photos = photos.replace("]", "");
+        var urls = new Array();
+        urls = photos.split(",");
+        showImages(urls);
+    }
+
+    function showImages(urls) {
+        $.each(urls, function (index, url) {
+            var img = $("<img class='gallery-grid__image cover lazyload' data-zoom alt=''/>").attr("src", url);
+            var divBox = $("<div class='gallery-grid__image-wrap col-12 col-lg-12'></div>").append(img);
+            $("<figure class='gallery-grid__item'></figure>").append(divBox).appendTo("#photo-list");
+        });
+
+        // 重新加载common.js文件
+        $.getScript("/js/common.js");
+
+        $("#photo-list").trigger("create");
+
+    }
+
+    function reloadStylesheets() {
+        var queryString = '?reload=' + new Date().getTime();
+        $('link[rel="stylesheet"]').each(function () {
+            this.href = this.href.replace(/\?.*|$/, queryString);
+        });
+    }
+
 </script>
 </body>
 </html>
