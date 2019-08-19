@@ -17,4 +17,12 @@ public interface LikeService {
      */
     Like createLike(Like like);
 
+    /**
+     * 通过所属id查询点赞信息
+     *
+     * @param ofId 所属id
+     * @return Like
+     */
+    Like getLikeByLikeOf(String ofId);
+
 }

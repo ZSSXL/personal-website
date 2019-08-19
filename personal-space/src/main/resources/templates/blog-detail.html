@@ -167,13 +167,13 @@
                                     <i class="fa fa-pencil fa-lg" style="float: left;">&nbsp;&nbsp;</i>
                                     <p id="author"></p>
                                 </div>
-                                <div class="col-5 col-lg-3">
+                                <div class="col-6 col-lg-6">
                                     <i class="fa fa-calendar fa-lg" style="float: left;">&nbsp;&nbsp;</i>
                                     <p id="create-time"></p>
                                 </div>
-                                <div class="col-4 col-lg-3">
-                                    <i class="fa fa-thumbs-o-up fa-lg" style="float: left;">&nbsp;&nbsp;</i>
-                                    <p>( <span>25</span> )</p>
+                                <div class="col-3 col-lg-3">
+                                    <i id="like" class="fa fa-thumbs-o-up fa-lg" style="float: left;">&nbsp;&nbsp;</i>
+                                    <p>( <span id="like-count">25</span> )</p>
                                 </div>
                             </div>
                         </div>
@@ -324,7 +324,7 @@
             url: "/api/blog/" + blogId,
             type: "get",
             success: function (result) {
-               // console.log(result);
+                // console.log(result);
                 analyticalData(result)
             }
         });
@@ -337,7 +337,26 @@
         $("#blog-content").append(data.content);
         $("#author").text(data.author);
         $("#create-time").text(new Date(data.createTime).toLocaleString());
+        $("#like").attr("like-id",data.likeId);
+        $("#like-count").text(data.likeCount);
     }
+
+    $("#like").click(function () {
+        var likeId = $(this).attr("like-id");
+        var likeOf = localStorage.getItem("blogId");
+        var likeCount = $("#like-count").text();
+        $("#like-count").text(parseInt(likeCount) + 1);
+
+        let data = {likeId, likeOf, likeCount};
+
+        $.ajax({
+            url: "/api/like",
+            contentType: "application/json; charset=utf-8",
+            type: "put",
+            dataType: "json",
+            data: JSON.stringify(data),
+        })
+    });
 
 
 </script>

@@ -42,6 +42,16 @@ public class BlogDetailVo {
     private String content;
 
     /**
+     * 点赞id
+     */
+    private String likeId;
+
+    /**
+     * 点赞数
+     */
+    private Integer likeCount;
+
+    /**
      * 创建日期
      */
     private Long createTime;

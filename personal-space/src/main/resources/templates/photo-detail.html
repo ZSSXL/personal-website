@@ -152,11 +152,15 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
                                 <i class="fa fa-pencil fa-lg" style="float: left;">&nbsp;&nbsp;</i>
-                                <span id="publish">小明</span>
+                                <span id="publish"></span>
+                                <div style="display: inline-block;float: right;width:4rem;">
+                                    <i id="like" class="fa fa-thumbs-o-up fa-lg" style="float: left;">&nbsp;&nbsp;</i>
+                                    <p>( <span id="like-count">25</span> )</p>
+                                </div>
                             </li>
                             <li class="list-group-item">
                                 <i class="fa fa-calendar fa-lg" style="float: left;">&nbsp;&nbsp;</i>
-                                <span id="create-time">2019年8月13日</span>
+                                <span id="create-time"></span>
                             </li>
                             <li class="list-group-item"><i class="fa fa-pinterest fa-lg" style="float: left;">&nbsp;&nbsp;</i>
                                 <p id="theme"></p>
@@ -316,6 +320,8 @@
         $("#publish").text(data.publish);
         $("#create-time").text(new Date(data.createTime).toLocaleString());
         $("#theme").text(data.theme);
+        $("#like").attr("like-id", data.likeId);
+        $("#like-count").text(data.likeCount);
 
         var photos = data.photos;
         photos = photos.replace("[", "");
@@ -345,6 +351,23 @@
             this.href = this.href.replace(/\?.*|$/, queryString);
         });
     }
+
+    $("#like").click(function () {
+        var likeId = $(this).attr("like-id");
+        var likeOf = localStorage.getItem("albumId");
+        var likeCount = $("#like-count").text();
+        $("#like-count").text(parseInt(likeCount) + 1);
+
+        let data = {likeId, likeOf, likeCount};
+
+        $.ajax({
+            url: "/api/like",
+            contentType: "application/json; charset=utf-8",
+            type: "put",
+            dataType: "json",
+            data: JSON.stringify(data),
+        })
+    });
 
 </script>
 </body>

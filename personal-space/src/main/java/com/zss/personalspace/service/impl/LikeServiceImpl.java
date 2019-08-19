@@ -25,4 +25,9 @@ public class LikeServiceImpl implements LikeService {
     public Like createLike(Like like) {
         return likeRepository.save(like);
     }
+
+    @Override
+    public Like getLikeByLikeOf(String ofId) {
+        return likeRepository.findByLikeOf(ofId).orElse(null);
+    }
 }

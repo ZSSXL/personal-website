@@ -156,6 +156,10 @@ public class AlbumController {
                 if (user == null) {
                     return ServerResponse.createByError();
                 }
+                Like like = likeService.getLikeByLikeOf(album.getAlbumId());
+                if(like == null){
+                    return ServerResponse.createByError();
+                }
                 AlbumDetailVo albumDetailVo = AlbumDetailVo.builder()
                         .publish(user.getUsername())
                         .albumId(album.getAlbumId())
@@ -164,6 +168,8 @@ public class AlbumController {
                         .createTime(album.getCreateTime())
                         .type(album.getType())
                         .photos(albumItem.getPhotos())
+                        .likeId(like.getLikeId())
+                        .likeCount(like.getLikeCount())
                         .build();
                 return ServerResponse.createBySuccess(albumDetailVo);
             }

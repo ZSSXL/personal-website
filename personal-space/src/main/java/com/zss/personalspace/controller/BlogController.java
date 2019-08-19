@@ -148,6 +148,10 @@ public class BlogController {
                 if (user == null) {
                     return ServerResponse.createByError();
                 }
+                Like like = likeService.getLikeByLikeOf(blog.getBlogId());
+                if(like == null){
+                    return ServerResponse.createByError();
+                }
                 BlogDetailVo blogDetailVo = BlogDetailVo.builder()
                         .blogId(blogId)
                         .author(user.getUsername())
@@ -155,6 +159,8 @@ public class BlogController {
                         .coverImg(blog.getCoverImg())
                         .content(blogItem.getContent())
                         .createTime(blogItem.getCreateTime())
+                        .likeId(like.getLikeId())
+                        .likeCount(like.getLikeCount())
                         .build();
                 return ServerResponse.createBySuccess(blogDetailVo);
             }
