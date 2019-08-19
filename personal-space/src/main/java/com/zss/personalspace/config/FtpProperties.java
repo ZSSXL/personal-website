@@ -17,6 +17,6 @@ public class FtpProperties {
 
     public static final Integer FTP_PORT = 21;
 
-    public static final String HTTP_PREFIX = "http://60.205.179.156/images/";
+    public static final String HTTP_PREFIX = "http://60.205.179.156:8001/images/";
 
 }
