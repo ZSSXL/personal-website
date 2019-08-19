@@ -31,7 +31,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public Page<Album> getAllAlbumByPaging(Integer page) {
-        return albumRepository.findAll(PageRequest.of(page, Const.DEFAULT_PAGE_SIZE));
+        return albumRepository.findAllByOrderByCreateTimeAsc(PageRequest.of(page, Const.DEFAULT_PAGE_SIZE));
     }
 
     @Override

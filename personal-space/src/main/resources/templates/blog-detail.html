@@ -195,42 +195,8 @@
                     <!-- What -->
                     <div class="box-inner pb-0">
                         <h2 class="title title--h3">评论列表</h2>
-                        <div class="row">
-                            <!-- Case Item -->
-                            <div class="col-12 col-lg-12">
-                                <div class="case-item box box__second">
-                                    <img class="case-item__icon" th:src="@{/img/avatar-1.jpg}" alt=""/>
-                                    <div>
-                                        <h3 class="title title--h5"><strong>小芳</strong></h3>
-                                        <div class="comment-content">
-                                            <p class="case-item__caption">The most modern and high-quality design made
-                                                at a professional level.</p>
-                                        </div>
-                                        <div class="row">
-                                            <small class="col-8 col-lg-10">2019年8月14日</small>
-                                            <a class="col-4 col-lg-2 fa fa-thumbs-o-up"><i> ( <span>47</span> )</i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="row" id="comment-list">
 
-                            <!-- Case Item -->
-                            <div class="col-12 col-lg-12">
-                                <div class="case-item box box__second">
-                                    <img class="case-item__icon" th:src="@{/img/avatar-2.jpg}" alt=""/>
-                                    <div>
-                                        <h3 class="title title--h5"><strong>小芳</strong></h3>
-                                        <div class="comment-content">
-                                            <p class="case-item__caption">I make high-quality photos of any category at
-                                                a professional level.</p>
-                                        </div>
-                                        <div class="row">
-                                            <small class="col-8 col-lg-10">2019年8月14日</small>
-                                            <a class="col-4 col-lg-2 fa fa-thumbs-o-up"><i> ( <span>47</span> )</i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -238,16 +204,16 @@
                         <h3 class="comment_titleform">发表评论</h3>
                     </div>
                     <div class="box-inner box-inner--rounded box-inner--white">
-								<textarea class="layui-textarea" id="LAY_demo" style="display: none;">
-									输入你的评论
-								</textarea>
+                        <textarea class="layui-textarea" id="LAY_demo" style="display: none;">输入你的评论</textarea>
                         <div class="swiper-container js-carousel-review swiper-container-initialized swiper-container-horizontal">
-                            <button class="btn btn-primary" style="float: right;">提交评论</button>
+                            <button class="btn btn-primary site-demo-layedit" style="float: right;" data-type="content">
+                                提交评论
+                            </button>
                         </div>
                     </div>
                 </div>
                 <!-- Footer -->
-                <footer class="footer">© 2019 vCard</footer>
+                <footer class="footer">Copyright © 2019 ZSS&XL</footer>
             </div>
         </div>
     </div>
@@ -284,6 +250,7 @@
             }
         });
         showBlog();
+        getComments();
     };
 
     // 退出登录
@@ -301,6 +268,8 @@
 </script>
 
 <script type="text/javascript">
+    var comment = "";
+
     layui.use('layedit', function () {
         var layedit = layui.layedit,
             $ = layui.jquery;
@@ -315,6 +284,18 @@
                 , 'face' //表情
             ]
         });
+        //获取评论内容
+        var active = {
+            content: function () {
+                comment = layedit.getContent(index);
+            }
+        };
+
+        $(".site-demo-layedit").on("click", function () {
+            var type = $(this).data("type");
+            active[type] ? active[type].call(this) : "";
+            commitComment();
+        });
     })
 </script>
 <script type="text/javascript">
@@ -324,7 +305,6 @@
             url: "/api/blog/" + blogId,
             type: "get",
             success: function (result) {
-                // console.log(result);
                 analyticalData(result)
             }
         });
@@ -337,7 +317,7 @@
         $("#blog-content").append(data.content);
         $("#author").text(data.author);
         $("#create-time").text(new Date(data.createTime).toLocaleString());
-        $("#like").attr("like-id",data.likeId);
+        $("#like").attr("like-id", data.likeId);
         $("#like-count").text(data.likeCount);
     }
 
@@ -358,6 +338,81 @@
         })
     });
 
+    // 上传评论内容
+    function commitComment() {
+        var commentOf = localStorage.getItem("blogId");
+        let data = {commentOf, comment};
+        $.ajax({
+            url: "/api/comment",
+            contentType: "application/json; charset=utf-8",
+            type: "post",
+            dataType: "json",
+            async: false,
+            data: JSON.stringify(data),
+            success: function (result) {
+                if (result.status == 200) {
+                    getComments();
+                } else {
+                    window.location.href = "/error.html";
+                }
+            }
+        })
+    }
+</script>
+
+
+<!-- 显示评论 -->
+<script>
+    function getComments() {
+        var commentOf = localStorage.getItem("blogId");
+        $.ajax({
+            url: "/api/comment/" + commentOf,
+            type: "get",
+            success: function (result) {
+                if (result.data.length == 0) {
+                    noComment();
+                } else {
+                    showComments(result);
+                }
+            }
+        });
+    }
+
+    function noComment() {
+        var h = $("<h4>暂时没有评论，快去抢沙发吧！<h4>");
+        var itemDiv = $("<div class='cast-item box box__second'></div>").append(h);
+        $("<div class='col-12 col-lg-12'></div>").append(itemDiv).appendTo("#comment-list");
+    }
+
+
+    function showComments(result) {
+        $("#comment-list").empty();
+        var comments = result.data;
+        $.each(comments, function (index, comment) {
+            var img = $("<img class='case-item__icon' alt=''>").attr("src", comment.headImg);
+
+            var author = $("<h3 class='title title--h5'></h3>").append($("<strong></strong>").append(comment.commentAuthor));
+            var content = $("<div class='comment-content'></div>").append($("<p class='case-item__caption'></p>").append(comment.comment));
+
+            var date = $("<small class='col-8 col-lg-10'></small>").append(new Date(comment.createTime).toLocaleString());
+            var like = $("<a class='col-4 col-lg-2 fa fa-thumbs-o-up like-test'></a>").append($("<i> </i>").append($("<span></span>").append(comment.likeCount))).attr("like-id", comment.likeId).attr("like-of", comment.commentId);
+            var rowDiv = $("<div class='row'></div>").append(date).append(like);
+
+            var bodyDiv = $("<div></div>").append(author).append(content).append(rowDiv);
+
+            var itemDiv = $("<div class='case-item box box__second'></div>").append(img).append(bodyDiv);
+            $("<div class='col-12 col-lg-12'></div>").append(itemDiv).appendTo("#comment-list");
+        });
+    }
+
+    $(document).on("click", ".like-test", function () {
+        var likeId = $(this).attr("like-id");
+        var likeOf = $(this).attr("like-of");
+        var likeCount = $(this).find("i").find("span").text();
+        $(this).find("i").find("span").text(parseInt(likeCount) + 1);
+        let data = {likeId, likeOf, likeCount};
+        addLikeCount(data);
+    });
 
 </script>
 </body>

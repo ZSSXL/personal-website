@@ -20,6 +20,6 @@ public interface AlbumRepository extends JpaRepository<Album, String> {
      * @param pageable 分页信息
      * @return Page<Album>
      */
-    Page<Album> findAll(Pageable pageable);
+    Page<Album> findAllByOrderByCreateTimeAsc(Pageable pageable);
 
 }

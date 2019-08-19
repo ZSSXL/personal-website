@@ -31,7 +31,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Page<Blog> getAllByPaging(Integer page) {
-        return blogRepository.findAll(PageRequest.of(page, Const.DEFAULT_PAGE_SIZE));
+        return blogRepository.findAllByOrderByCreateTimeAsc(PageRequest.of(page, Const.DEFAULT_PAGE_SIZE));
     }
 
     @Override

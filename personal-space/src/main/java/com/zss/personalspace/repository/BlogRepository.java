@@ -20,6 +20,6 @@ public interface BlogRepository extends JpaRepository<Blog, String> {
      * @param pageable 分页信息
      * @return Page<Blog>
      */
-    Page<Blog> findAll(Pageable pageable);
+    Page<Blog> findAllByOrderByCreateTimeAsc(Pageable pageable);
 
 }
