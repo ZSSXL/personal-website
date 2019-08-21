@@ -299,7 +299,6 @@
         'redo' // 重复
     ];
 
-    editor.customConfig.uploadImgServer = '/uploads';
     editor.customConfig.uploadImgHooks = {
         fail: function (xhr, editor, result) {
             // 上传错误触发
@@ -321,7 +320,7 @@
             contentType: false,
             processData: false,
             success: function (result) {
-                console.log(result);
+                // console.log(result);
                 if (result.errno == 0) {
                     for (var j = 0; j < result.data.length; j++) {
                         insert(result.data[j]);

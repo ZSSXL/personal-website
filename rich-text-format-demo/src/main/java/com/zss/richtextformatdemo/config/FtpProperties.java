@@ -7,7 +7,7 @@ package com.zss.richtextformatdemo.config;
  */
 public class FtpProperties {
 
-    public static final String FTP_IP = "60.205.179.156";
+    public static final String FTP_IP = "192.168.1.114";
 
     public static final String FTP_USERNAME = "zssftp";
 
@@ -17,6 +17,6 @@ public class FtpProperties {
 
     public static final Integer FTP_PORT = 21;
 
-    public static final String HTTP_PREFIX = "http://60.205.179.156/images/";
+    public static final String HTTP_PREFIX = "http://192.168.1.114/images/";
 
 }
