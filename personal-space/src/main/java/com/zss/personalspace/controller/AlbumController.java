@@ -4,10 +4,7 @@ import com.zss.personalspace.common.Const;
 import com.zss.personalspace.common.ResponseCode;
 import com.zss.personalspace.common.ServerResponse;
 import com.zss.personalspace.config.FtpProperties;
-import com.zss.personalspace.entity.Album;
-import com.zss.personalspace.entity.AlbumItem;
-import com.zss.personalspace.entity.Like;
-import com.zss.personalspace.entity.User;
+import com.zss.personalspace.entity.*;
 import com.zss.personalspace.service.*;
 import com.zss.personalspace.util.UUIDUtil;
 import com.zss.personalspace.vo.AlbumDetailVo;
@@ -40,14 +37,16 @@ public class AlbumController {
     private final FileService fileService;
     private final UserService userService;
     private final LikeService likeService;
+    private final ArchiveService archiveService;
 
     @Autowired
-    public AlbumController(AlbumService albumService, AlbumItemService albumItemService, FileService fileService, UserService userService, LikeService likeService) {
+    public AlbumController(AlbumService albumService, AlbumItemService albumItemService, FileService fileService, UserService userService, LikeService likeService, ArchiveService archiveService) {
         this.albumService = albumService;
         this.albumItemService = albumItemService;
         this.fileService = fileService;
         this.userService = userService;
         this.likeService = likeService;
+        this.archiveService = archiveService;
     }
 
     /**
@@ -76,6 +75,7 @@ public class AlbumController {
         } else {
             String albumId = UUIDUtil.getUUID();
             String likeId = UUIDUtil.getUUID();
+            String archiveId = UUIDUtil.getUUID();
             // 上传封面
             String url = uploadCoverImg(file, request);
             // 上传其他图片
@@ -97,6 +97,14 @@ public class AlbumController {
                         .likeOf(albumId)
                         .likeCount(Const.INIT_LIKE_COUNT)
                         .build());
+                archiveService.createArchive(Archive.builder()
+                        .archiveId(archiveId)
+                        .theme(albumVo.getTheme())
+                        .coverImg(url)
+                        .archiveOf(albumId)
+                        .type(Const.ArchiveType.ALBUM)
+                        .build());
+                log.info("上传相册成功");
                 return ServerResponse.createBySuccessMessage("上传相册成功");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -157,7 +165,7 @@ public class AlbumController {
                     return ServerResponse.createByError();
                 }
                 Like like = likeService.getLikeByLikeOf(album.getAlbumId());
-                if(like == null){
+                if (like == null) {
                     return ServerResponse.createByError();
                 }
                 AlbumDetailVo albumDetailVo = AlbumDetailVo.builder()

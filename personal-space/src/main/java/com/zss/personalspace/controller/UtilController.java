@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +102,7 @@ public class UtilController {
      * @return Map
      */
     @PostMapping("/upload")
-    public Map<String, Object> richTextImgUpload(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
+    public Map<String, Object> richTextImgUpload(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request) {
         Map<String, Object> resultMap = Maps.newHashMap();
         Map<String, String> dataMap = Maps.newHashMap();
         String path = request.getSession().getServletContext().getRealPath("upload");

@@ -8,7 +8,7 @@ package com.zss.personalspace.common;
 public class Const {
 
     /**
-     * 加盐
+     * 加盐 千万不要改动这里 sdavsdvvasjndvjahsdfghaskldcnmajsdg
      */
     public static final String ENCRYPTION_SALT = "sdavsdvvasjndvjahsdfghaskldcnmajsdg";
 
@@ -25,11 +25,19 @@ public class Const {
     /**
      * 默认分页条数
      */
-    public static final Integer DEFAULT_PAGE_SIZE = 6;
+    public static final Integer DEFAULT_PAGE_SIZE = 12;
 
     /**
      * 初始点赞数
      */
     public static final Integer INIT_LIKE_COUNT = 0;
+
+    /**
+     * 归档类型
+     */
+    public interface ArchiveType {
+        String ALBUM = "ALBUM";
+        String BLOG = "BLOG";
+    }
 
 }

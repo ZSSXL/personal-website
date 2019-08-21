@@ -16,30 +16,48 @@ import javax.persistence.Id;
 
 /**
  * @author ZSS
- * @date 2019/8/16 18:14
- * @description 相册详情实体
+ * @date 2019/8/20 17:39
+ * @description 归档实体
  */
-@Entity(name = "ls_album_item")
-@Table(appliesTo = "ls_album_item", comment = "相册详情表")
+@Entity(name = "ls_archive")
+@Table(appliesTo = "ls_archive", comment = "归档表")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @EntityListeners(AuditingEntityListener.class)
-public class AlbumItem {
+public class Archive {
 
     /**
-     * 相册id
+     * 归档id
      */
     @Id
-    @Column(columnDefinition = "varchar(100) comment '相册id'")
-    private String albumId;
+    @Column(columnDefinition = "varchar(100) comment '归档id'")
+    private String archiveId;
 
     /**
-     * 图片
+     * 归档所属
      */
-    @Column(nullable = false, columnDefinition = "text comment '图片'")
-    private String photos;
+    @Column(unique = true, nullable = false, columnDefinition = "varchar(255) comment '归档所属'")
+    private String archiveOf;
+
+    /**
+     * 封面图片
+     */
+    @Column(unique = true, nullable = false, columnDefinition = "varchar(255) comment '封面图片'")
+    private String coverImg;
+
+    /**
+     * 主题
+     */
+    @Column(columnDefinition = "varchar(255) comment '主题'")
+    private String theme;
+
+    /**
+     * 类型
+     */
+    @Column(nullable = false, columnDefinition = "varchar(20) comment '类型'")
+    private String type;
 
     /**
      * 创建日期

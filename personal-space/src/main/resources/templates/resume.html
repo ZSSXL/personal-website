@@ -128,7 +128,7 @@
                     <div class="inner-menu">
                         <ul class="nav">
                             <li class="nav__item"><a th:href="@{/index}">主页</a></li>
-                            <li class="nav__item"><a class="active" th:href="@{/resume}">Resume</a></li>
+                            <li class="nav__item"><a class="active" th:href="@{/resume}">归档</a></li>
                             <li class="nav__item"><a th:href="@{/portfolio}">相册集</a></li>
                             <li class="nav__item"><a th:href="@{/blog}">日志</a></li>
                             <li class="nav__item"><a th:href="@{/contact}">Contact</a></li>
@@ -145,124 +145,19 @@
                         <div class="row">
                             <div class="col-12 col-lg-12">
                                 <p class="title title--h5">
-                                    <i class="fa fa-history fa-2x" aria-hidden="true"></i> 太棒了，现在共有<strong>123</strong>篇日志，<strong>34</strong>个相册
+                                    <i class="fa fa-history fa-2x" aria-hidden="true"></i> 太棒了,现在共有<strong
+                                        id="total-number"></strong>条记录,继续努力吧!!!
                                 </p>
-                                <div class="timeline">
-
-                                    <!-- Item -->
-                                    <article class="timeline__item row">
-                                        <h2 class="title title--h3 timeline__title col-12 col-lg-12"
-                                            style="margin-bottom: 30px;">现在</h2>
-                                    </article>
-
-                                    <!-- Item -->
-                                    <article class="timeline__item row">
-                                        <span class="timeline__period col-12 col-lg-2"
-                                              style="float: left;">08-16 16:23<i>&nbsp;</i></span>
-                                        <h5 class="title title--h5 timeline__title col-12 col-lg-8">University School of
-                                            the Arts vs
-                                            vfdkfbdrghaegha</h5>
-                                        <figure class="gallery-grid__item" style="padding: 20px;">
-                                            <div class="gallery-grid__image-wrap">
-                                                <img class="gallery-grid__image cover lazyload"
-                                                     th:src="@{/images/img/1.jpg}" data-zoom alt=""/>
-                                            </div>
-                                        </figure>
-                                    </article>
-
-                                    <!-- Item -->
-                                    <article class="timeline__item row">
-                                        <span class="timeline__period col-12 col-lg-2"
-                                              style="float: left;">08-16 16:23<i>&nbsp;</i></span>
-                                        <h5 class="title title--h5 timeline__title col-12 col-lg-8">New York Academy of
-                                            Art</h5>
-                                        <figure class="gallery-grid__item" style="padding: 20px;">
-                                            <div class="gallery-grid__image-wrap">
-                                                <img class="gallery-grid__image cover lazyload"
-                                                     th:src="@{/images/img/2.jpg}" data-zoom alt=""/>
-                                            </div>
-                                        </figure>
-                                    </article>
-
-                                    <!-- Item -->
-                                    <article class="timeline__item row">
-                                        <span class="timeline__period col-12 col-lg-2"
-                                              style="float: left;">08-16 16:23<i>&nbsp;</i></span>
-                                        <h5 class="title title--h5 timeline__title col-12 col-lg-8">High School of Art
-                                            and Design</h5>
-                                        <figure class="gallery-grid__item" style="padding: 20px;">
-                                            <div class="gallery-grid__image-wrap">
-                                                <img class="gallery-grid__image cover lazyload"
-                                                     th:src="@{/images/img/3.jpg}" data-zoom alt=""/>
-                                            </div>
-                                        </figure>
-                                    </article>
-
-                                    <!-- Item -->
-                                    <article class="timeline__item row">
-                                        <h2 class="title title--h3 timeline__title col-12 col-lg-8"
-                                            style="margin-bottom: 30px;">2018</h2>
-                                    </article>
-
-                                    <!-- Item -->
-                                    <article class="timeline__item row">
-                                        <span class="timeline__period col-12 col-lg-2"
-                                              style="float: left;">08-16 16:23<i>&nbsp;</i></span>
-                                        <h5 class="title title--h5 timeline__title col-12 col-lg-8">High School of Art
-                                            and Design</h5>
-                                        <figure class="gallery-grid__item" style="padding: 20px;">
-                                            <div class="gallery-grid__image-wrap">
-                                                <img class="gallery-grid__image cover lazyload"
-                                                     th:src="@{/images/img/4.jpg}" data-zoom alt=""/>
-                                            </div>
-                                        </figure>
-                                    </article>
+                                <div class="timeline" id="archive-list">
+                                    <!-- 归档时间轴 -->
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="box-inner box-inner--rounded">
-                        <nav>
-                            <ul class="pagination pagination-sm justify-content-center">
-                                <li class="page-item">
-                                    <a class="page-link" href="#">
-                                        <span>首页</span>
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                </li>
-                                <li class="page-item active">
-                                    <a class="page-link" href="#">1</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">2</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">3</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">4</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">5</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">
-                                        <span>尾页</span>
-                                    </a>
-                                </li>
-                            </ul>
+                        <nav id="page-ul">
+
                         </nav>
                     </div>
                 </div>
@@ -289,11 +184,13 @@
 <!-- JavaScripts -->
 <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
 <script th:src="@{/js/plugins.js}"></script>
-<script th:src="@{/js/common.js}"></script>
 <script th:src="@{/js/clicklove.js}"></script>
 
 <!-- 判断是否登录 -->
 <script type="text/javascript">
+    var totalPages = 0; // 总页数
+    var currentPage = 0; // 当前页
+
     window.onload = function () {
         $.ajax({
             url: "/api/util/isLogin",
@@ -303,7 +200,8 @@
                     window.location.href = "/login";
                 }
             }
-        })
+        });
+        getArchive(currentPage);
     };
 
     // 退出登录
@@ -318,6 +216,181 @@
             }
         })
     });
+</script>
+
+<script type="text/javascript">
+    function getArchive(page) {
+        $.ajax({
+            url: "/api/archive?page=" + page,
+            type: "get",
+            success: function (result) {
+                $("#total-number").text(result.data.totalElements);
+                analyticalData(result);
+                build_page_li(result);
+            }
+        })
+    }
+
+    function analyticalData(result) {
+        totalPages = result.data.totalPages;
+        currentPage = result.data.number;
+
+        $("#archive-list").empty();
+        let archives = result.data.content;
+
+        var startArticle = $("<article class='timeline__item row'></article>")
+            .append($("<h2 class='title title--h3 timeline__title col-12 col-lg-12' style='margin-bottom: 30px;'>现在</h2>"));
+        if (currentPage == 0) {
+            $("#archive-list").append(startArticle);
+        }
+
+        $.each(archives, function (index, archive) {
+            var timeSpan = $("<span class='timeline__period col-12 col-lg-3' style='float: left;'></span>").append(printTimeFormat(archive.createTime));
+            var theme = $("<h5 class='title title--h5 timeline__title col-12 col-lg-9 show-detail' style='cursor:pointer;'></h5>").append(archive.theme)
+                .attr("archive-of", archive.archiveOf).attr("archive-type", archive.type);
+
+            var img = $("<img class='gallery-grid__image-wrap cover lazyload' data-zoom alt=''>").attr("src", archive.coverImg);
+            var imgDiv = $("<div class='gallery-grid__image'></div>").append(img);
+            var figure = $("<figure class='gallery-grid__item' style='padding: 20px;'></figure>").append(imgDiv);
+
+            $("<article class='timeline__item row'></article>").append(timeSpan).append(theme).append(figure).appendTo("#archive-list");
+
+        });
+
+        var endArticle = $("<article class='timeline__item row'></article>")
+            .append($("<h2 class='title title--h3 timeline__title col-12 col-lg-12' style='margin-bottom: 30px;'>啊呀，被你抓住尾巴了!!!</h2>"));
+
+        if (currentPage == totalPages - 1) {
+            $("#archive-list").append(endArticle);
+        }
+
+        // 重新加载common.js文件
+        $.getScript("/js/common.js");
+
+    }
+
+    // 格式化时间
+    function printTimeFormat(timestamp) {
+        var date = new Date(timestamp);
+
+        y = date.getFullYear() + "-";
+
+        M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';  // 获取月份(0-11,0代表1月,用的时候记得加上1)
+        d = date.getDate() + " ";  // 获取日(1-31)
+
+        h = date.getHours() + ":";  // 获取小时数(0-23)
+        m = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();  // 获取分钟数(0-59)
+        return y + M + d + h + m;
+    }
+
+    $(document).on("click", ".show-detail", function () {
+        var archiveOf = $(this).attr("archive-of");
+        var archiveType = $(this).attr("archive-type");
+        if (archiveType == "ALBUM") {
+            localStorage.setItem("albumId", archiveOf);
+            window.location.href = "/photo-detail";
+        } else if (archiveType == "BLOG") {
+            localStorage.setItem("blogId", archiveOf);
+            window.location.href = "/blog-detail";
+        } else {
+            return false;
+        }
+    });
+
+</script>
+
+<!-- 解析分页 -->
+<script>
+
+    function build_page_li(result) {
+        $("#page-ul").empty();
+
+        var ul = $("<ul class='pagination pagination-sm justify-content-center'></ul>");
+        // 首页
+        var firstPageLi = $("<li class='page-item'></li>").append($("<a class='page-link' href='#'></a>").append("首页"));
+        // 前一页
+        var prePageLi = $("<li class='page-item'></li>")
+            .append($("<a class='page-link' href='#' aria-label='Previous'></a>")
+                .append($("<span aria-hidden='true'>&laquo;</span>")).append($("<span class='sr-only'>Previous</span>")));
+        // 判断是否还有上一页，没有则disable
+        if (result.data.first == true) {
+            firstPageLi.addClass("disabled");
+            prePageLi.addClass("disabled");
+        } else {
+            firstPageLi.click(function () {
+                getArchive(0);
+            });
+            prePageLi.click(function () {
+                getArchive(currentPage - 1);
+            });
+        }
+
+        ul.append(firstPageLi).append(prePageLi);
+        // ------------------------------------------  //
+
+        if (totalPages >= 5) {
+            if (currentPage >= 2) {
+                for (i = currentPage - 2; i <= currentPage + 2; i++) {
+                    var numLi = $("<li class='page-item'></li>").append($("<a class='page-link page-jump'></a>").append(i + 1));
+                    if (currentPage == i) {
+                        numLi.addClass("active");
+                    }
+                    if(totalPages == i){
+                        break;
+                    }
+                    ul.append(numLi);
+                }
+            } else {
+                for (i = 0; i < 5; i++) {
+                    let numLi = $("<li class='page-item'></li>").append($("<a class='page-link page-jump'></a>").append(i + 1));
+                    if (currentPage == i) {
+                        numLi.addClass("active");
+                    }
+                    ul.append(numLi);
+                }
+            }
+        } else { // todo 解决分页的问题
+            for (i = 0; i < totalPages; i++) {
+                let numLi = $("<li class='page-item'></li>").append($("<a class='page-link page-jump'></a>").append(i + 1));
+                if (currentPage == i) {
+                    numLi.addClass("active");
+                }
+                ul.append(numLi);
+            }
+        }
+
+        // ------------------------------------------ //
+
+
+        // 后一页
+        var nextPageLi = $("<li class='page-item'></li>")
+            .append($("<a class='page-link' href='#' aria-label='Next'></a>")
+                .append($("<span aria-hidden='true'>&raquo;</span>")).append($("<span class='sr-only'>Next</span>")));
+        // 尾页
+        var lastPageLi = $("<li class='page-item'></li>").append($("<a class='page-link' href='#'></a>").append("首页"));
+        // 判断时候还有下一页，没有则disable
+        if (result.data.last == true) {
+            nextPageLi.addClass("disabled");
+            lastPageLi.addClass("disabled");
+        } else {
+            // 跳转下一页点击事件
+            nextPageLi.click(function () {
+                getArchive(currentPage + 1);
+            });
+            // 跳转最后一页点击事件
+            lastPageLi.click(function () {
+                getArchive(totalPages);
+            });
+        }
+
+        ul.append(nextPageLi).append(lastPageLi).appendTo("#page-ul");
+    }
+
+    $(document).on("click", ".page-jump", function () {
+        var page = $(this).text();
+        getArchive(page - 1);
+    });
+
 </script>
 </body>
 </html>

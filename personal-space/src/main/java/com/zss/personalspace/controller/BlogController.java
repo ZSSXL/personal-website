@@ -4,10 +4,7 @@ import com.zss.personalspace.common.Const;
 import com.zss.personalspace.common.ResponseCode;
 import com.zss.personalspace.common.ServerResponse;
 import com.zss.personalspace.config.FtpProperties;
-import com.zss.personalspace.entity.Blog;
-import com.zss.personalspace.entity.BlogItem;
-import com.zss.personalspace.entity.Like;
-import com.zss.personalspace.entity.User;
+import com.zss.personalspace.entity.*;
 import com.zss.personalspace.service.*;
 import com.zss.personalspace.util.UUIDUtil;
 import com.zss.personalspace.vo.BlogDetailVo;
@@ -37,14 +34,16 @@ public class BlogController {
     private final BlogItemService blogItemService;
     private final UserService userService;
     private final LikeService likeService;
+    private final ArchiveService archiveService;
 
     @Autowired
-    public BlogController(FileService fileService, BlogService blogService, BlogItemService blogItemService, UserService userService, LikeService likeService) {
+    public BlogController(FileService fileService, BlogService blogService, BlogItemService blogItemService, UserService userService, LikeService likeService, ArchiveService archiveService) {
         this.fileService = fileService;
         this.blogService = blogService;
         this.blogItemService = blogItemService;
         this.userService = userService;
         this.likeService = likeService;
+        this.archiveService = archiveService;
     }
 
     /**
@@ -68,6 +67,7 @@ public class BlogController {
 
             String blogId = UUIDUtil.getUUID();
             String likeId = UUIDUtil.getUUID();
+            String archiveId = UUIDUtil.getUUID();
 
             String url = uploadCoverImg(file, request);
 
@@ -82,13 +82,19 @@ public class BlogController {
                         .blogId(blogId)
                         .content(blogVo.getContent())
                         .build());
-
                 likeService.createLike(Like.builder()
                         .likeId(likeId)
                         .likeOf(blogId)
                         .likeCount(Const.INIT_LIKE_COUNT)
                         .build());
-
+                archiveService.createArchive(Archive.builder()
+                        .archiveId(archiveId)
+                        .archiveOf(blogId)
+                        .coverImg(url)
+                        .theme(blogVo.getTheme())
+                        .type(Const.ArchiveType.BLOG)
+                        .build());
+                log.info("上传日志成功");
                 return ServerResponse.createBySuccessMessage("上传成功");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -149,7 +155,7 @@ public class BlogController {
                     return ServerResponse.createByError();
                 }
                 Like like = likeService.getLikeByLikeOf(blog.getBlogId());
-                if(like == null){
+                if (like == null) {
                     return ServerResponse.createByError();
                 }
                 BlogDetailVo blogDetailVo = BlogDetailVo.builder()

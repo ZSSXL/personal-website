@@ -141,7 +141,7 @@
 											<!-- Item -->
 											<article class="timeline__item row">
 												<span class="timeline__period col-12 col-lg-2" style="float: left;">08-16 16:23<i>&nbsp;</i></span>
-												<h5 class="title title--h5 timeline__title col-12 col-lg-8">University School of the Arts vs
+												<h5 class="title title--h5 timeline__title col-12 col-lg-8 show-detail" archive-of="test" archive-type="ALBUM" style="cursor:pointer;" >University School of the Arts vs
 													vfdkfbdrghaegha</h5>
 												<figure class="gallery-grid__item" style="padding: 20px;">
 													<div class="gallery-grid__image-wrap">
@@ -187,6 +187,12 @@
 													</div>
 												</figure>
 											</article>
+											
+											<!-- Item -->
+											<article class="timeline__item row">
+												<h2 class="title title--h3 timeline__title col-12 col-lg-12" style="margin-bottom: 30px;">结束</h2>
+											</article>
+											
 										</div>
 									</div>
 								</div>
@@ -195,7 +201,7 @@
 							<div class="box-inner box-inner--rounded">
 								<nav>
 									<ul class="pagination pagination-sm justify-content-center">
-										<li class="page-item">
+										<li class="page-item disabled">
 											<a class="page-link" href="#">
 												<span>首页</span>
 											</a>
@@ -263,6 +269,16 @@
 		<script src="assets/js/plugins.js"></script>
 		<script src="assets/js/common.js"></script>
 		<script src="assets/js/clicklove.js"></script>
-
+		
+		<script type="text/javascript">
+			
+			$(document).on("click",".show-detail",function(){
+				var archiveOf = $(this).attr("archive-of");
+				var archiveType = $(this).attr("archive-type");
+				console.log(archiveOf);
+				console.log(archiveType);
+			});
+			
+		</script>
 	</body>
 </html>

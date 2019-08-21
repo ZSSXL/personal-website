@@ -115,6 +115,13 @@
 
 <!-- 退出登录 -->
 <script type="text/javascript">
+
+    $(document).keydown(function(event){
+        if(event.keyCode==13){
+            $("#login-btn").click();
+        }
+    });
+
     window.onload = function () {
         $.ajax({
             url: "/api/util/logout",

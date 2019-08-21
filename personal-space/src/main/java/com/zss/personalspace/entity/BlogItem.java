@@ -18,7 +18,7 @@ import java.io.Serializable;
 /**
  * @author ZSS
  * @date 2019/8/16 18:13
- * @description
+ * @description 博客详情实体
  */
 @Entity(name = "ls_blog_item")
 @Table(appliesTo = "ls_blog_item", comment = "博客详情表")
