@@ -6,6 +6,8 @@ import com.zss.personalspace.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author ZSS
  * @date 2019/8/17 9:26
@@ -29,5 +31,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(String userId) {
         return userRepository.findById(userId).orElse(null);
+    }
+
+    @Override
+    public List<User> getAllUser() {
+        return userRepository.findAll();
     }
 }

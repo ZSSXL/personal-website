@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author ZSS
@@ -138,6 +139,27 @@ public class UserController {
             } catch (Exception e) {
                 e.printStackTrace();
                 return ServerResponse.createByError();
+            }
+        }
+    }
+
+    /**
+     * 查询所有用户信息
+     *
+     * @param session session
+     * @return ServerResponse<List < User>>
+     */
+    @GetMapping
+    public ServerResponse<List<User>> getUserInfo(HttpSession session) {
+        UserAccountVo userAccount = (UserAccountVo) session.getAttribute(Const.CURRENT_USER);
+        if (userAccount == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+        } else {
+            List<User> userList = userService.getAllUser();
+            if (userList != null) {
+                return ServerResponse.createBySuccess(userList);
+            } else {
+                return ServerResponse.createByErrorMessage("查询失败");
             }
         }
     }

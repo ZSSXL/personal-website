@@ -178,29 +178,29 @@
                         <h2 class="title title--h3">站主</h2>
 
                         <div class="swiper-container js-carousel-review">
-                            <div class="swiper-wrapper">
+                            <div class="swiper-wrapper" id="user-list">
                                 <!-- Item review -->
                                 <div class="swiper-slide review-item">
                                     <svg class="avatar avatar--80" viewBox="0 0 84 84">
                                         <g class="avatar__hexagon">
-                                            <image th:href="@{http://60.205.179.156:8001/images/boy.jpg}" height="100%"
-                                                   width="100%"/>
+                                            <image href="#" height="100%"
+                                                   width="100%" id="girl-img"/>
                                         </g>
                                     </svg>
-                                    <h4 class="title title--h5">ZSS</h4>
-                                    <p class="review-item__caption">他生莫作有情痴，人间无地著相思</p>
+                                    <h4 class="title title--h5" id="girl-name">ZSS</h4>
+                                    <p class="review-item__caption" id="girl-mood">他生莫作有情痴，人间无地著相思</p>
                                 </div>
 
                                 <!-- Item review -->
                                 <div class="swiper-slide review-item">
                                     <svg class="avatar avatar--80" viewBox="0 0 84 84">
                                         <g class="avatar__hexagon">
-                                            <image th:href="@{http://60.205.179.156:8001/images/girl.jpg}" height="100%"
-                                                   width="100%"/>
+                                            <image href="#" height="100%"
+                                                   width="100%" id="boy-img"/>
                                         </g>
                                     </svg>
-                                    <h4 class="title title--h5">XL</h4>
-                                    <p class="review-item__caption">愿我如星君如月，夜夜流光相皎洁</p>
+                                    <h4 class="title title--h5" id="boy-name">XL</h4>
+                                    <p class="review-item__caption" id="boy-mood">愿我如星君如月，夜夜流光相皎洁</p>
                                 </div>
                             </div>
 
@@ -286,7 +286,8 @@
                     window.location.href = "/login";
                 }
             }
-        })
+        });
+        getUserInfo();
     };
 
     // 退出登录
@@ -301,6 +302,28 @@
             }
         })
     });
+
+    function getUserInfo() {
+        $.ajax({
+            url: "/api/user",
+            post: "get",
+            success: function (result) {
+                analyticalData(result);
+            }
+        });
+    }
+
+    function analyticalData(result) {
+        let users = result.data;
+        $("#girl-img").attr("href",users[0].headImg);
+        $("#girl-name").text(users[0].username);
+        $("#girl-mood").text(users[0].mood);
+
+        $("#boy-img").attr("href",users[1].headImg);
+        $("#boy-name").text(users[1].username);
+        $("#boy-mood").text(users[1].mood);
+    }
+
 </script>
 
 

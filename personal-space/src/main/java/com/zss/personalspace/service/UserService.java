@@ -2,6 +2,8 @@ package com.zss.personalspace.service;
 
 import com.zss.personalspace.entity.User;
 
+import java.util.List;
+
 /**
  * @author ZSS
  * @date 2019/8/17 9:25
@@ -24,4 +26,11 @@ public interface UserService {
      * @return User
      */
     User getUser(String userId);
+
+    /**
+     * 获取所有用户信息
+     *
+     * @return List<User>
+     */
+    List<User> getAllUser();
 }
