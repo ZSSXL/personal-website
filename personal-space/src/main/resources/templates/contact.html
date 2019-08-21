@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title>Contact</title>
+    <title>小艾驿站</title>
 
     <!-- Meta Data -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,6 +34,9 @@
     <link rel="apple-touch-icon" sizes="72x72" th:href="@{/images/favicons/apple-touch-icon-72x72.png}">
     <link rel="apple-touch-icon" sizes="57x57" th:href="@{/images/favicons/apple-touch-icon-57x57.png}">
     <link rel="shortcut icon" th:href="@{/images/favicons/favicon.png}" type="image/png">
+
+    <!-- map -->
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"/>
 
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" th:href="@{/styles/style.css}"/>
@@ -113,8 +116,6 @@
                     </div>
                 </div>
             </aside>
-            >
-            </aside>
 
             <!-- Content -->
             <div class="col-12 col-md-12 col-xl-9">
@@ -130,58 +131,50 @@
                     <div class="inner-menu">
                         <ul class="nav">
                             <li class="nav__item"><a th:href="@{/index}">主页</a></li>
-                            <li class="nav__item"><a th:href="@{/resume}">归档</a></li>
-                            <li class="nav__item"><a class="active" th:href="@{/portfolio}">相册集</a></li>
+                            <li class="nav__item"><a class="active" th:href="@{/album}">相册集</a></li>
                             <li class="nav__item"><a th:href="@{/blog}">日志</a></li>
-                            <li class="nav__item"><a th:href="@{/contact}">Contact</a></li>
+                            <li class="nav__item"><a th:href="@{/archive}">归档</a></li>
+                            <li class="nav__item"><a th:href="@{/contact}">留言</a></li>
                         </ul>
                     </div>
 
                     <!-- About -->
                     <div class="pb-2">
-                        <h1 class="title title--h1 title__separate">Contact</h1>
+                        <h1 class="title title--h1 title__separate">Position</h1>
                     </div>
 
                     <!-- Contact -->
                     <div class="map" id="map"></div>
-                    <h2 class="title title--h3">Contact Form</h2>
 
-                    <form id="contact-form" class="contact-form" data-toggle="validator">
-                        <div class="row">
-                            <div class="form-group col-12 col-md-6">
-                                <i class="font-icon icon-user"></i>
-                                <input type="text" class="input input__icon form-control" id="nameContact"
-                                       name="nameContact" placeholder="Full name" required="required" autocomplete="on"
-                                       oninvalid="setCustomValidity('Fill in the field')"
-                                       onkeyup="setCustomValidity('')">
-                                <div class="help-block with-errors"></div>
-                            </div>
-                            <div class="form-group col-12 col-md-6">
-                                <i class="font-icon icon-envelope"></i>
-                                <input type="email" class="input input__icon form-control" id="emailContact"
-                                       name="emailContact" placeholder="Email address" required="required"
-                                       autocomplete="on" oninvalid="setCustomValidity('Email is incorrect')"
-                                       onkeyup="setCustomValidity('')">
-                                <div class="help-block with-errors"></div>
-                            </div>
-                            <div class="form-group col-12 col-md-12">
-                                <textarea class="textarea form-control" id="messageContact" name="messageContact"
-                                          placeholder="Your Message" rows="4" required="required"
-                                          oninvalid="setCustomValidity('Fill in the field')"
-                                          onkeyup="setCustomValidity('')"></textarea>
-                                <div class="help-block with-errors"></div>
-                            </div>
+                    <h2 class="title title--h3">留言</h2>
+
+                    <div class="row">
+                        <div class="form-group col-12 col-md-6">
+                            <i class="font-icon icon-user"></i>
+                            <input type="email" class="input input__icon form-control" id="userContact"
+                                   name="userContact" placeholder="Tell me who you are">
+                            <div class="help-block with-errors"></div>
                         </div>
-                        <div class="row">
-                            <div class="col-12 col-md-6 order-2 order-md-1 text-center text-md-left">
-                                <div id="validator-contact" class="hidden"></div>
-                            </div>
-                            <div class="col-12 col-md-6 order-1 order-md-2 text-right">
-                                <button type="submit" class="btn"><i class="font-icon icon-send"></i> Send Message
-                                </button>
-                            </div>
+                        <div class="form-group col-12 col-md-6">
+                            <i class="font-icon icon-envelope"></i>
+                            <input type="email" class="input input__icon form-control" id="emailContact"
+                                   name="emailContact" placeholder="Your email address">
+                            <div class="help-block with-errors"></div>
                         </div>
-                    </form>
+                        <div class="form-group col-12 col-md-12">
+                            <textarea class="textarea form-control" id="messageContact" name="messageContact"
+                                      placeholder="What's your problem" rows="4"></textarea>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6 order-2 order-md-1 text-center text-md-left">
+                            <div id="validator-contact" class="hidden"></div>
+                        </div>
+                        <div class="col-12 col-md-6 order-1 order-md-2 text-right">
+                            <button id="contact-btn" class="btn"><i class="font-icon icon-send"></i>留言</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Footer -->
@@ -210,8 +203,8 @@
 <script th:src="@{/js/clicklove.js}"></script>
 
 <!-- Google Maps -->
-<script th:src="@{http://ditu.google.cn/maps/api/js?key=AIzaSyCRGVSzcdx25I5nhL5gzJwnaw3Q5vDHiGI}"></script>
-<script th:src="@{/js/map.init.js}"></script>
+<script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=1.4.15&key=7b4b13243e3bb0c9cfef5cee91268600&plugin=AMap.Geocoder"></script>
 
 <!-- 判断是否登录 -->
 <script type="text/javascript">
@@ -224,7 +217,8 @@
                     window.location.href = "/login";
                 }
             }
-        })
+        });
+        showMap();
     };
 
     // 退出登录
@@ -238,6 +232,43 @@
                 }
             }
         })
+    });
+
+    // 显示地图
+    function showMap() {
+        //初始化地图对象，加载地图
+        var map = new AMap.Map("map", {
+            resizeEnable: true
+        });
+        var options = {
+            'showButton': true,//是否显示定位按钮
+            'buttonPosition': 'RB',//定位按钮的位置
+            /* LT LB RT RB */
+            'buttonOffset': new AMap.Pixel(10, 20),//定位按钮距离对应角落的距离
+            'showMarker': true,//是否显示定位点
+            'markerOptions': {//自定义定位点样式，同Marker的Options
+                'offset': new AMap.Pixel(-18, -36),
+                'content': '<img src="https://a.amap.com/jsapi_demos/static/resource/img/user.png" style="width:36px;height:36px"/>'
+            },
+            'showCircle': true,//是否显示定位精度圈
+            'circleOptions': {//定位精度圈的样式
+                'strokeColor': '#0093FF',
+                'noSelect': true,
+                'strokeOpacity': 0.5,
+                'strokeWeight': 1,
+                'fillColor': '#02B0FF',
+                'fillOpacity': 0.25
+            }
+        };
+        AMap.plugin(["AMap.Geolocation"], function () {
+            var geolocation = new AMap.Geolocation(options);
+            map.addControl(geolocation);
+            geolocation.getCurrentPosition()
+        });
+    }
+
+    $("#contact-btn").click(function () {
+       alert("留言功能暂未开启，敬请期待!!!");
     });
 </script>
 

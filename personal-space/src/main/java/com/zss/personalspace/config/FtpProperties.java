@@ -13,10 +13,10 @@ public class FtpProperties {
 
     public static final String FTP_PASSWORD = "20171109";
 
-    public static final String FTP_REMOTE_PATH = "test";
+    public static final String FTP_REMOTE_PATH = "images";
 
     public static final Integer FTP_PORT = 21;
 
-    public static final String HTTP_PREFIX = "http://60.205.179.156:8001/test/";
+    public static final String HTTP_PREFIX = "http://60.205.179.156:8001/images/";
 
 }

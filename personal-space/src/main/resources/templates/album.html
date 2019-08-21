@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title>Archive</title>
+    <title>小艾驿站</title>
 
     <!-- Meta Data -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -128,37 +128,52 @@
                     <div class="inner-menu">
                         <ul class="nav">
                             <li class="nav__item"><a th:href="@{/index}">主页</a></li>
-                            <li class="nav__item"><a class="active" th:href="@{/resume}">归档</a></li>
-                            <li class="nav__item"><a th:href="@{/portfolio}">相册集</a></li>
+                            <li class="nav__item"><a class="active" th:href="@{/album}">相册集</a></li>
                             <li class="nav__item"><a th:href="@{/blog}">日志</a></li>
-                            <li class="nav__item"><a th:href="@{/contact}">Contact</a></li>
+                            <li class="nav__item"><a th:href="@{/archive}">归档</a></li>
+                            <li class="nav__item"><a th:href="@{/contact}">留言</a></li>
                         </ul>
                     </div>
 
                     <!-- About -->
-                    <div class="pb-3">
-                        <h1 class="title title--h1 title__separate">归档</h1>
+                    <div class="pb-2">
+                        <h1 class="title title--h1 title__separate">相册集</h1>
                     </div>
 
-                    <!-- Experience -->
+                    <!-- Gallery -->
                     <div class="pb-0">
-                        <div class="row">
-                            <div class="col-12 col-lg-12">
-                                <p class="title title--h5">
-                                    <i class="fa fa-history fa-2x" aria-hidden="true"></i> 太棒了,现在共有<strong
-                                        id="total-number"></strong>条记录,继续努力吧!!!
-                                </p>
-                                <div class="timeline" id="archive-list">
-                                    <!-- 归档时间轴 -->
-                                </div>
-                            </div>
+                        <!-- Filter -->
+                        <div class="select">
+                            <span class="placeholder">Select category</span>
+                            <ul class="filter">
+                                <li class="filter__item">Category</li>
+                                <li class="filter__item active" data-filter="*"><a class="filter__link active"
+                                                                                   href="#filter">所有</a></li>
+                                <li class="filter__item" data-filter=".category-tourism"><a class="filter__link"
+                                                                                            href="#filter">旅游</a></li>
+                                <li class="filter__item" data-filter=".category-life"><a class="filter__link"
+                                                                                         href="#filter">生活</a></li>
+                                <li class="filter__item" data-filter=".category-food"><a class="filter__link"
+                                                                                         href="#filter">美食</a></li>
+                                <li class="filter__item" data-filter=".category-movie"><a class="filter__link"
+                                                                                          href="#filter">电影</a></li>
+                                <li class="filter__item" data-filter=".category-study"><a class="filter__link"
+                                                                                          href="#filter">学习</a></li>
+                                <li class="filter__item" data-filter=".category-love"><a class="filter__link"
+                                                                                         href="#filter">爱人</a></li>
+                            </ul>
+                            <input type="hidden" name="changemetoo"/>
+                        </div>
+
+                        <div class="gallery-grid js-masonry js-filter-container row" style="margin-top: 20px;"
+                             id="album-list">
+                            <div class="gutter-sizer col-12 col-lg-12"></div>
+
                         </div>
                     </div>
 
-                    <div class="box-inner box-inner--rounded">
-                        <nav id="page-ul">
-
-                        </nav>
+                    <div class="box-inner box-inner--rounded box-inner--white text-center">
+                        <p id="point"></p>
                     </div>
                 </div>
 
@@ -188,10 +203,12 @@
 
 <!-- 判断是否登录 -->
 <script type="text/javascript">
+
     var totalPages = 0; // 总页数
     var currentPage = 0; // 当前页
 
     window.onload = function () {
+        getALlPage(0);
         $.ajax({
             url: "/api/util/isLogin",
             type: "post",
@@ -201,7 +218,6 @@
                 }
             }
         });
-        getArchive(currentPage);
     };
 
     // 退出登录
@@ -219,14 +235,34 @@
 </script>
 
 <script type="text/javascript">
-    function getArchive(page) {
+    window.onscroll = function () {
+        // 总高度
+        var winScrollHeight = document.documentElement.scrollHeight;
+        // 滚动的高度
+        var winScrollTop = document.documentElement.scrollTop;
+        // 屏幕高度
+        var winClientHeight = document.documentElement.clientHeight;
+
+        if (winScrollTop + winClientHeight == winScrollHeight) {
+            if (currentPage < totalPages - 1) {
+                getALlPage(currentPage + 1);
+            } else {
+                $("#point").text("到底了!!!");
+            }
+        } else {
+            $("#point").text("");
+        }
+
+    };
+
+    function getALlPage(page) {
         $.ajax({
-            url: "/api/archive?page=" + page,
+            url: "/api/album?page=" + page,
             type: "get",
+            async: false,
             success: function (result) {
-                $("#total-number").text(result.data.totalElements);
+                // console.log(result);
                 analyticalData(result);
-                build_page_li(result);
             }
         })
     }
@@ -235,162 +271,33 @@
         totalPages = result.data.totalPages;
         currentPage = result.data.number;
 
-        $("#archive-list").empty();
-        let archives = result.data.content;
+        var albums = result.data.content;
+        $.each(albums, function (index, album) {
+            var aJump = $("<a class='news-item__link jump'></a>").attr("album-id", album.albumId);
+            var coverImg = $("<img class='gallery-grid__image cover lazyload' data-zoom/>").attr("src", album.coverImg);
+            var headDiv = $("<div class='gallery-grid__image-wrap'></div>").append(aJump).append(coverImg);
 
-        var startArticle = $("<article class='timeline__item row'></article>")
-            .append($("<h2 class='title title--h3 timeline__title col-12 col-lg-12' style='margin-bottom: 30px;'>现在</h2>"));
-        if (currentPage == 0) {
-            $("#archive-list").append(startArticle);
-        }
+            var theme = $("<h4 class='title gallery-grid__title'></h4>").append(album.theme);
+            var type = $("<span class='gallery-grid__category'></span>").append(album.type);
+            var body = $("<figcaption class='gallery-grid__caption'></figcaption>").append(theme).append(type);
 
-        $.each(archives, function (index, archive) {
-            var timeSpan = $("<span class='timeline__period col-12 col-lg-3' style='float: left;'></span>").append(printTimeFormat(archive.createTime));
-            var theme = $("<h5 class='title title--h5 timeline__title col-12 col-lg-9 show-detail' style='cursor:pointer;'></h5>").append(archive.theme)
-                .attr("archive-of", archive.archiveOf).attr("archive-type", archive.type);
+            var figureBox = $("<figure></figure>").attr("class", "gallery-grid__item col-12 col-lg-12 category-" + album.type).append(headDiv).append(body);
 
-            var img = $("<img class='gallery-grid__image-wrap cover lazyload' data-zoom alt=''>").attr("src", archive.coverImg);
-            var imgDiv = $("<div class='gallery-grid__image'></div>").append(img);
-            var figure = $("<figure class='gallery-grid__item' style='padding: 20px;'></figure>").append(imgDiv);
-
-            $("<article class='timeline__item row'></article>").append(timeSpan).append(theme).append(figure).appendTo("#archive-list");
-
+            $("#album-list").append(figureBox);
         });
-
-        var endArticle = $("<article class='timeline__item row'></article>")
-            .append($("<h2 class='title title--h3 timeline__title col-12 col-lg-12' style='margin-bottom: 30px;'>啊呀，被你抓住尾巴了!!!</h2>"));
-
-        if (currentPage == totalPages - 1) {
-            $("#archive-list").append(endArticle);
-        }
 
         // 重新加载common.js文件
         $.getScript("/js/common.js");
-
     }
-
-    // 格式化时间
-    function printTimeFormat(timestamp) {
-        var date = new Date(timestamp);
-
-        y = date.getFullYear() + "-";
-
-        M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';  // 获取月份(0-11,0代表1月,用的时候记得加上1)
-        d = date.getDate() + " ";  // 获取日(1-31)
-
-        h = date.getHours() + ":";  // 获取小时数(0-23)
-        m = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();  // 获取分钟数(0-59)
-        return y + M + d + h + m;
-    }
-
-    $(document).on("click", ".show-detail", function () {
-        var archiveOf = $(this).attr("archive-of");
-        var archiveType = $(this).attr("archive-type");
-        if (archiveType == "ALBUM") {
-            localStorage.setItem("albumId", archiveOf);
-            window.location.href = "/photo-detail";
-        } else if (archiveType == "BLOG") {
-            localStorage.setItem("blogId", archiveOf);
-            window.location.href = "/blog-detail";
-        } else {
-            return false;
-        }
-    });
-
 </script>
 
-<!-- 解析分页 -->
-<script>
-
-    function build_page_li(result) {
-        $("#page-ul").empty();
-
-        var ul = $("<ul class='pagination pagination-sm justify-content-center'></ul>");
-        // 首页
-        var firstPageLi = $("<li class='page-item'></li>").append($("<a class='page-link' href='#'></a>").append("首页"));
-        // 前一页
-        var prePageLi = $("<li class='page-item'></li>")
-            .append($("<a class='page-link' href='#' aria-label='Previous'></a>")
-                .append($("<span aria-hidden='true'>&laquo;</span>")).append($("<span class='sr-only'>Previous</span>")));
-        // 判断是否还有上一页，没有则disable
-        if (result.data.first == true) {
-            firstPageLi.addClass("disabled");
-            prePageLi.addClass("disabled");
-        } else {
-            firstPageLi.click(function () {
-                getArchive(0);
-            });
-            prePageLi.click(function () {
-                getArchive(currentPage - 1);
-            });
-        }
-
-        ul.append(firstPageLi).append(prePageLi);
-        // ------------------------------------------  //
-
-        if (totalPages >= 5) {
-            if (currentPage >= 2) {
-                for (i = currentPage - 2; i <= currentPage + 2; i++) {
-                    var numLi = $("<li class='page-item'></li>").append($("<a class='page-link page-jump'></a>").append(i + 1));
-                    if (currentPage == i) {
-                        numLi.addClass("active");
-                    }
-                    if(totalPages == i){
-                        break;
-                    }
-                    ul.append(numLi);
-                }
-            } else {
-                for (i = 0; i < 5; i++) {
-                    let numLi = $("<li class='page-item'></li>").append($("<a class='page-link page-jump'></a>").append(i + 1));
-                    if (currentPage == i) {
-                        numLi.addClass("active");
-                    }
-                    ul.append(numLi);
-                }
-            }
-        } else { // todo 解决分页的问题
-            for (i = 0; i < totalPages; i++) {
-                let numLi = $("<li class='page-item'></li>").append($("<a class='page-link page-jump'></a>").append(i + 1));
-                if (currentPage == i) {
-                    numLi.addClass("active");
-                }
-                ul.append(numLi);
-            }
-        }
-
-        // ------------------------------------------ //
-
-
-        // 后一页
-        var nextPageLi = $("<li class='page-item'></li>")
-            .append($("<a class='page-link' href='#' aria-label='Next'></a>")
-                .append($("<span aria-hidden='true'>&raquo;</span>")).append($("<span class='sr-only'>Next</span>")));
-        // 尾页
-        var lastPageLi = $("<li class='page-item'></li>").append($("<a class='page-link' href='#'></a>").append("首页"));
-        // 判断时候还有下一页，没有则disable
-        if (result.data.last == true) {
-            nextPageLi.addClass("disabled");
-            lastPageLi.addClass("disabled");
-        } else {
-            // 跳转下一页点击事件
-            nextPageLi.click(function () {
-                getArchive(currentPage + 1);
-            });
-            // 跳转最后一页点击事件
-            lastPageLi.click(function () {
-                getArchive(totalPages);
-            });
-        }
-
-        ul.append(nextPageLi).append(lastPageLi).appendTo("#page-ul");
-    }
-
-    $(document).on("click", ".page-jump", function () {
-        var page = $(this).text();
-        getArchive(page - 1);
+<script type="text/javascript">
+    $(document).on("click", ".jump", function () {
+        var albumId = $(this).attr("album-id");
+        localStorage.setItem("albumId",albumId);
+        window.location.href = "/photo-detail";
     });
-
 </script>
+
 </body>
 </html>
