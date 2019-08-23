@@ -69,6 +69,8 @@ public class AccountController {
                             .headImg(user.getHeadImg())
                             .build();
                     session.setAttribute(Const.CURRENT_USER, userAccountVo);
+                    // 有效时间，三天
+                    session.setMaxInactiveInterval(60 * 60 * 24 * 3);
                     log.info("登录成功");
                     return ServerResponse.createBySuccess("登录成功");
                 }
