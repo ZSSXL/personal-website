@@ -1,15 +1,21 @@
 package com.zss.personalspace.common;
 
 /**
- * 枚举类
+ * @author ZSS
+ * @date 2019/8/17 9:11
+ * @description 枚举类
  */
-
 public enum ResponseCode {
 
+    // 成功
     SUCCESS(200, "SUCCESS"),
+    // 失败
     ERROR(404, "ERROR"),
+    // 需要登录
     NEED_LOGIN(401, "NEED_LOGIN"),
+    // 参数错误
     PARAM_ERROR(402, "PARAM_ERROR"),
+    // 密码相同
     SAME_PASSWORD(100, "SAME_PASSWORD");
 
     private final int code;

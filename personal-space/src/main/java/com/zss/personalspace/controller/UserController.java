@@ -62,7 +62,7 @@ public class UserController {
             // 上传头像
             String url = uploadHeadImg(file, request);
 
-            String userId = UUIDUtil.getUUID();
+            String userId = UUIDUtil.getUuid();
             try {
                 // 保存User
                 userService.createUser(User.builder()

@@ -73,9 +73,9 @@ public class AlbumController {
         } else if (userAccount == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         } else {
-            String albumId = UUIDUtil.getUUID();
-            String likeId = UUIDUtil.getUUID();
-            String archiveId = UUIDUtil.getUUID();
+            String albumId = UUIDUtil.getUuid();
+            String likeId = UUIDUtil.getUuid();
+            String archiveId = UUIDUtil.getUuid();
             // 上传封面
             String url = uploadCoverImg(file, request);
             // 上传其他图片

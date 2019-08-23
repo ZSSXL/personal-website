@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Ftp工具类
+ * @author ZSS
+ * @date 2019/8/11 16:03
+ * @description Ftp 工具
  */
 @Slf4j
 public class FTPUtil {
@@ -37,14 +39,19 @@ public class FTPUtil {
         //连接FTP服务器
         if (connectServer(this.ip, this.port, this.user, this.pwd)) {
             try {
-                ftpClient.changeWorkingDirectory(FtpProperties.FTP_REMOTE_PATH); // 是否需要切换文件夹，如果传过来的是null，那就不切换
-                ftpClient.setBufferSize(102400);      // 缓冲区
+                // 是否需要切换文件夹，如果传过来的是null，那就不切换
+                ftpClient.changeWorkingDirectory(FtpProperties.FTP_REMOTE_PATH);
+                // 缓冲区
+                ftpClient.setBufferSize(102400);
                 ftpClient.setControlEncoding("UTF-8");
-                ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE); // 文件类型设置成二进制类型，避免出现乱码
-                ftpClient.enterLocalPassiveMode();  // 打开被动模式
+                // 文件类型设置成二进制类型，避免出现乱码
+                ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
+                // 打开被动模式
+                ftpClient.enterLocalPassiveMode();
                 for (File fileItem : fileList) {
                     fis = new FileInputStream(fileItem);
-                    ftpClient.storeFile(fileItem.getName(), fis); // 存储文件
+                    // 存储文件
+                    ftpClient.storeFile(fileItem.getName(), fis);
                 }
             } catch (IOException e) {
                 log.error("上传文件异常", e);
@@ -52,9 +59,11 @@ public class FTPUtil {
                 e.printStackTrace();
             } finally {
                 if (fis != null) {
-                    fis.close(); // 关闭文件流
+                    // 关闭文件流
+                    fis.close();
                 }
-                ftpClient.disconnect(); // 关闭连接
+                // 关闭连接
+                ftpClient.disconnect();
             }
         }
         return uploaded;

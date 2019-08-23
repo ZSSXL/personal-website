@@ -1,9 +1,8 @@
 package com.zss.personalspace.config;
-
 /**
  * @author ZSS
  * @date 2019/8/11 16:03
- * @description
+ * @description ftp 配置
  */
 public class FtpProperties {
 

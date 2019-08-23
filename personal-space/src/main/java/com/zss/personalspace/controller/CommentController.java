@@ -53,8 +53,8 @@ public class CommentController {
         } else if (userAccount == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         } else {
-            String commentId = UUIDUtil.getUUID();
-            String likeId = UUIDUtil.getUUID();
+            String commentId = UUIDUtil.getUuid();
+            String likeId = UUIDUtil.getUuid();
             try {
                 commentService.createComment(Comment.builder()
                         .commentId(commentId)

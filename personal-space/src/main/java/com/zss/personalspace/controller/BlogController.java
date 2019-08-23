@@ -65,9 +65,9 @@ public class BlogController {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         } else {
 
-            String blogId = UUIDUtil.getUUID();
-            String likeId = UUIDUtil.getUUID();
-            String archiveId = UUIDUtil.getUUID();
+            String blogId = UUIDUtil.getUuid();
+            String likeId = UUIDUtil.getUuid();
+            String archiveId = UUIDUtil.getUuid();
 
             String url = uploadCoverImg(file, request);
 
