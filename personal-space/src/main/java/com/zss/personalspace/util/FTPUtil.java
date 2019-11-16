@@ -41,8 +41,8 @@ public class FTPUtil {
             try {
                 // 是否需要切换文件夹，如果传过来的是null，那就不切换
                 ftpClient.changeWorkingDirectory(FtpProperties.FTP_REMOTE_PATH);
-                // 缓冲区
-                ftpClient.setBufferSize(102400);
+                // 缓冲区 单位 k, 将缓冲区设置为50M
+                ftpClient.setBufferSize(1024 * 1024 * 100);
                 ftpClient.setControlEncoding("UTF-8");
                 // 文件类型设置成二进制类型，避免出现乱码
                 ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
